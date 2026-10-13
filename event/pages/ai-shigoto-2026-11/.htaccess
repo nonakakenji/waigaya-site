@@ -1,0 +1,6 @@
+# ページ本体（HTML）は毎回サーバーに確かめさせる（直したのに古い写しが出るのを防ぐ）。写真とCSSは今のまま
+<IfModule mod_headers.c>
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>

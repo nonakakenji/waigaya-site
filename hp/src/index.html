@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>シェアハウス わいが舎｜枚方（プレビュー）</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   わいが舎 作り直し プレビュー
+   設計：写真が主役・地は写真の台紙・一日の光（昼→夕方→夜）
+   地・文字・差し色の3役だけ。緑のボタンは使わない。絵文字なし。
+   ============================================================ */
+:root{
+  /* 昼（論理） */
+  --day-bg:#FFFFFF; --day-ink:#2F2F2F; --day-sub:#6B655D; --day-accent:#7A6450; --day-line:#E4DDD2;
+  /* 夕方（事実） */
+  --dusk-bg:#F1E9DD; --dusk-ink:#2F2A26; --dusk-sub:#6A6057; --dusk-accent:#6E5A47; --dusk-line:#DCCFBD;
+  /* 夜（情緒・スイッチ・ご案内） 地は夜の写真の闇に合わせた色 */
+  --night-bg:#171411; --night-ink:#F3EDE4; --night-sub:#B5AB9C; --night-accent:#ECB976; --night-line:#3A332C;
+  /* 一日の時間アイコンの色（朝＝明るいオレンジ／昼＝オレンジ／夕方＝赤みの濃いオレンジ／夜＝金色） */
+  --time-morning:#EC8416; --time-noon:#D9690B; --time-dusk:#C2410C; --time-night:#F2C94C;
+
+  --serif:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  --gutter:20px;
+  --text-w:640px;
+  --wide-w:1080px;
+  --gap:8px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--night-bg);color:var(--day-ink);font-family:var(--sans);
+  font-size:16px;line-height:1.9;letter-spacing:.02em;overflow-x:hidden;
+  font-feature-settings:"palt" 1}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,h3,p,figure,ul,ol,dl,dd,blockquote{margin:0;padding:0}
+ul,ol{list-style:none}
+
+/* ---------- 地の色（台紙） ---------- */
+.tone-day{background:var(--day-bg);color:var(--day-ink);--ink:var(--day-ink);--sub:var(--day-sub);--accent:var(--day-accent);--line:var(--day-line);--bg:var(--day-bg)}
+.tone-dusk{background:var(--dusk-bg);color:var(--dusk-ink);--ink:var(--dusk-ink);--sub:var(--dusk-sub);--accent:var(--dusk-accent);--line:var(--dusk-line);--bg:var(--dusk-bg)}
+.tone-night{background:var(--night-bg);color:var(--night-ink);--ink:var(--night-ink);--sub:var(--night-sub);--accent:var(--night-accent);--line:var(--night-line);--bg:var(--night-bg)}
+
+/* つなぎ目：ゆっくり暮れる */
+.seam{height:140px}
+.seam.day-dusk{background:linear-gradient(to bottom,var(--day-bg),var(--dusk-bg))}
+.seam.day-night{height:220px;background:linear-gradient(to bottom,var(--day-bg) 0%,#E2D5C3 20%,#B9A791 38%,#7E6D5C 56%,#463B31 74%,#262019 88%,var(--night-bg) 100%)}
+.seam.dusk-night{height:280px;background:linear-gradient(to bottom,var(--dusk-bg) 0%,#E2D5C3 18%,#B9A791 36%,#7E6D5C 54%,#463B31 72%,#262019 86%,var(--night-bg) 100%)}
+
+/* ---------- 共通の組み ---------- */
+.sec{padding:88px 0 96px}
+.inner{max-width:calc(var(--text-w) + var(--gutter)*2);margin:0 auto;padding:0 var(--gutter)}
+.wide{max-width:calc(var(--wide-w) + var(--gutter)*2);margin:0 auto;padding:0 var(--gutter)}
+.bleed{width:100%}
+.eyebrow{font-family:var(--serif);font-size:12px;letter-spacing:.24em;color:var(--accent);margin-bottom:14px;display:block}
+.h2{font-family:var(--sans);font-weight:700;font-size:24px;line-height:1.55;letter-spacing:.04em;margin-bottom:28px}
+.tone-dusk .h2,.tone-night .h2{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.6}
+.lead{font-size:16px;color:var(--ink)}
+.lead + .lead{margin-top:1.2em}
+.note{font-size:13px;color:var(--sub);line-height:1.8}
+.dummy{color:var(--sub)}
+.stack > * + *{margin-top:24px}
+.mt-s{margin-top:24px}.mt-m{margin-top:48px}.mt-l{margin-top:72px}
+
+/* ---------- 写真の枠（ダミー時は枠だけ） ---------- */
+.ph{position:relative;margin:0}
+.ph-box{position:relative;width:100%;aspect-ratio:var(--r,3/2);overflow:hidden;background:rgba(127,112,96,.14)}
+.tone-night .ph-box{background:rgba(236,185,118,.07)}
+.ph-box img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%)}
+.ph-dummy{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;
+  font-size:11px;line-height:1.6;color:var(--sub);letter-spacing:.04em;
+  background-image:repeating-linear-gradient(135deg,transparent 0 14px,rgba(127,112,96,.08) 14px 15px)}
+.ph figcaption{font-size:12px;color:var(--sub);margin-top:8px;letter-spacing:.06em;line-height:1.6}
+.bleed .ph figcaption{padding:0 var(--gutter)}
+
+/* グリッド */
+.grid{display:grid;gap:var(--gap);grid-template-columns:repeat(2,1fr)}
+.grid .span2{grid-column:span 2}
+.grid .span4{grid-column:1 / -1}
+.ib{display:inline-block}
+@media (min-width:760px){.record .span4 .ph-box{--r:5/2 !important}}
+/* 3章の5枚組：下の行は左1枚＋右2枚ぶん。左を行の高さいっぱいに伸ばして余白を消す */
+@media (min-width:760px){
+  .s3five > .ph:nth-child(4) .ph-box{aspect-ratio:auto;height:100%}
+}
+@media (min-width:760px){
+  .grid.c3{grid-template-columns:repeat(3,1fr)}
+  .grid.c4{grid-template-columns:repeat(4,1fr)}
+  .grid.c6{grid-template-columns:repeat(6,1fr)}
+  .grid.c4 .span2-pc{grid-column:span 2}
+}
+
+/* ---------- 固定ヘッダー ---------- */
+.hd{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:12px var(--gutter);padding-top:calc(12px + env(safe-area-inset-top));
+  transition:background-color .5s,color .5s;color:var(--day-ink)}
+.hd.is-scrolled{background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.hd.is-dusk.is-scrolled{background:rgba(241,233,221,.92)}
+.hd.is-night{color:var(--night-ink)}
+.hd.is-night.is-scrolled{background:rgba(23,20,17,.88)}
+.hd-logo{font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.12em;text-decoration:none}
+.hd-logo{display:inline-flex;align-items:center;line-height:0}
+.hd-logo .logo-mark{width:110px;height:44px;display:block}
+/* 写真の上（スクロール前）でも細い英字が沈まないよう、地の色で縁どる */
+.hd:not(.is-scrolled):not(.is-night) .logo-mark{filter:drop-shadow(0 0 1px rgba(255,255,255,.95)) drop-shadow(0 0 3px rgba(255,255,255,.9))}
+.hd-logo small{font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:.16em;margin-right:8px;opacity:.8}
+.hd-line{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;text-decoration:none;
+  border:1px solid currentColor;border-radius:999px;padding:6px 12px;letter-spacing:.06em}
+.hd-line svg{width:15px;height:15px}
+/* 一日の時間アイコン：形は画面中央の章、色はヘッダーの地に合わせる */
+.hd-time{margin-left:auto;margin-right:12px;display:inline-flex;align-items:center;gap:4px}
+/* アイコンは時間の色。文字はヘッダーの文字色のまま（11pxのオレンジは生成りの地で読みにくいため） */
+.hd-time svg{color:var(--time-morning);stroke-width:2;transition:color .5s}
+.hd-time[data-time="noon"] svg{color:var(--time-noon)}
+.hd-time[data-time="dusk"] svg{color:var(--time-dusk)}
+.hd-time[data-time="night"] svg{color:var(--time-night)}
+/* ファーストビューの写真の上ではオレンジが沈むので、生成りの縁どりで浮かせる */
+.hd:not(.is-scrolled):not(.is-night) .hd-time svg{filter:drop-shadow(0 0 1px rgba(255,255,255,.95)) drop-shadow(0 0 2.5px rgba(255,255,255,.85))}
+.hd-time svg{width:18px;height:18px;overflow:visible}
+.hd-time svg g{opacity:0;transition:opacity .4s}
+.hd-time[data-time="morning"] .t-sun,.hd-time[data-time="noon"] .t-sun,.hd-time[data-time="dusk"] .t-dusk,.hd-time[data-time="night"] .t-moon{opacity:1}
+.hd-time-label{font-family:var(--serif);font-size:11px;font-weight:700;letter-spacing:.08em;line-height:1;min-width:3em}
+
+/* ---------- ボタン ---------- */
+.btns{display:flex;flex-direction:column;gap:10px}
+@media (min-width:560px){.btns.row{flex-direction:row}.btns.row .btn{flex:1}}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:14px 20px;border-radius:6px;
+  font-size:15px;font-weight:700;letter-spacing:.06em;text-decoration:none;text-align:center;line-height:1.5}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-main{background:#453A2E;color:#fff}
+.btn-sub{border:1px solid var(--accent);color:var(--ink)}
+.tone-night .btn-main{background:var(--night-accent);color:#171411}
+.tone-night .btn-sub{border-color:rgba(236,185,118,.6);color:var(--night-ink)}
+.btn-note{display:block;font-size:11px;font-weight:500;opacity:.8;letter-spacing:.04em}
+
+
+/* ---------- 1 ファーストビュー ---------- */
+.fv{padding:0 0 72px}
+.fv-photo{position:relative}
+.fv-photo .ph-box{--r:4/5}
+@media (min-width:760px){.fv-photo .ph-box{--r:16/9;max-height:86vh}}
+.fv-photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(255,255,255,0) 55%,rgba(255,255,255,.85) 82%,var(--day-bg) 92%)}
+.fv-text{position:relative;z-index:2;margin-top:-10vw}
+@media (min-width:760px){.fv-text{margin-top:-96px}}
+.fv h1{font-family:var(--sans);font-weight:700;font-size:28px;line-height:1.5;letter-spacing:.04em}
+@media (min-width:760px){.fv h1{font-size:40px}}
+.fv-sub{margin-top:14px;font-size:15px;color:var(--sub)}
+.fv-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:32px 0 32px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fv-nums div{padding:16px 4px;text-align:center}
+.fv-nums div + div{border-left:1px solid var(--line)}
+.num{font-family:var(--sans);font-weight:700;font-size:26px;line-height:1.2;letter-spacing:.01em;font-feature-settings:"tnum" 1}
+.num small{font-size:13px;font-weight:500;margin-left:2px}
+.num-label{display:block;font-size:11px;color:var(--sub);margin-top:6px;letter-spacing:.08em}
+
+/* ---------- 2 79,000円の中身 ---------- */
+.price{border-top:2px solid var(--ink);padding-top:24px}
+.price-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.price-row .k{font-size:14px;color:var(--sub)}
+.price-row .v{font-weight:700;font-size:20px;font-feature-settings:"tnum" 1}
+.price-row.total .v{font-size:34px}
+.price-row.total .k{color:var(--ink);font-weight:700}
+.unit-steps{display:grid;gap:10px;margin-top:8px}
+.unit-step{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:12px;padding:16px 18px;background:rgba(122,100,80,.07);border-left:3px solid var(--accent)}
+.unit-step .k{font-size:12px;color:var(--sub);line-height:1.6}
+.unit-step .v{font-weight:700;font-size:24px;font-feature-settings:"tnum" 1;white-space:nowrap}
+.unit-step .v small{font-size:12px;font-weight:500;margin-left:2px}
+.unit-step.last{background:rgba(122,100,80,.14)}
+.unit-step.last .v{font-size:32px}
+.facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.facts li{background:var(--bg);padding:14px 12px}
+.facts .k{display:block;font-size:11px;color:var(--sub);letter-spacing:.06em}
+.facts .v{display:block;font-weight:700;font-size:17px;margin-top:2px}
+.weak{border:1px solid var(--line);padding:16px 18px}
+.weak .v{font-weight:700}
+
+.fv-text .btns{margin-top:32px}
+.tone-night .jobs li{background:transparent}
+.space-nums{margin:8px 0 28px}
+.only-one{font-family:var(--serif);font-weight:700;font-size:23px;line-height:1.75;letter-spacing:.04em;text-align:center;padding:26px 8px;border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);color:var(--ink)}
+@media (min-width:760px){.only-one{font-size:30px}}
+.gens-hist{margin:26px auto 0;max-width:420px;text-align:left}
+.gens-hist .gh-t{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;text-align:center;margin-bottom:8px}
+.gens-hist ol{counter-reset:g;border-top:1px solid var(--line)}
+.gens-hist li{counter-increment:g;display:grid;grid-template-columns:2.2em 1fr;padding:7px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.gens-hist li::before{content:counter(g);font-family:var(--serif);color:var(--accent)}
+.gens-hist .gh-own{font-size:13.5px;color:var(--sub);margin-top:10px;text-align:center}
+/* ---------- 2 思い込みがほどける・一日 ---------- */
+.qa{border-top:1px solid var(--line)}
+.qa-row{padding:18px 0;border-bottom:1px solid var(--line)}
+.qa dt{font-weight:700;font-size:17px}
+.qa dt::before{content:"Q";font-family:var(--serif);color:var(--accent);margin-right:10px}
+.qa dd{margin:8px 0 0;font-size:15px;color:var(--ink);padding-left:1.6em}
+.day-title{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:16px}
+.day-flow{border-left:2px solid var(--accent);padding-left:18px;display:grid;gap:18px}
+.day-flow li{display:grid;grid-template-columns:4.5em 1fr;gap:10px;font-size:15px}
+.day-flow .t{font-family:var(--serif);font-weight:600;color:var(--accent)}
+.to-owners{display:inline-block;font-size:15px;text-underline-offset:4px;color:var(--accent);font-weight:700}
+.events{border-top:1px solid var(--line);padding-top:20px}
+.events-lead{font-size:15px}
+.events-list{margin-top:12px}
+.events-list li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+.ev-when{color:var(--sub);font-size:13px}
+
+/* ファーストビューの下：次の集まり（イベントページへの入口） */
+.fv-next{margin-top:28px;border-top:1px solid var(--line)}
+.fv-next-h{font-size:12px;letter-spacing:.14em;color:var(--sub);padding:14px 0 2px}
+.fv-next a{display:flex;align-items:center;gap:14px;padding:12px 2px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.fv-next a::after{content:"";margin-left:auto;width:7px;height:7px;flex:none;border-top:1.5px solid var(--accent);border-right:1.5px solid var(--accent);transform:rotate(45deg)}
+.fv-next-d{font-family:var(--serif);font-weight:700;font-size:17px;min-width:4.2em;letter-spacing:.02em}
+.fv-next-d small{font-size:11px;font-weight:500;margin-left:3px;color:var(--sub)}
+.fv-next-t{font-size:15px;font-weight:700;letter-spacing:.04em;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.fv-next-t .ib{text-decoration:inherit;text-decoration-color:inherit;text-underline-offset:inherit}
+.space .h3{font-family:var(--serif);font-weight:600;font-size:19px}
+
+/* ---------- 3 ひとりも、誰かとも ---------- */
+.choose-list{display:grid;gap:0;border-top:1px solid var(--line)}
+.choose-list li{padding:14px 0;border-bottom:1px solid var(--line);font-size:15px;display:flex;gap:12px}
+.choose-list li::before{content:"";flex:none;width:6px;height:6px;margin-top:.8em;border-radius:50%;background:var(--accent)}
+
+/* 住人の言葉 */
+.voice{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.85;letter-spacing:.04em}
+.voice cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--sub);margin-top:12px;letter-spacing:.08em}
+@media (min-width:760px){.voice{font-size:24px}}
+
+/* ---------- 蝶番 ---------- */
+.hinge{min-height:78svh;display:flex;align-items:center;justify-content:center;text-align:center;padding:96px var(--gutter);
+  background:var(--day-bg);color:var(--day-ink)}
+.hinge p{font-family:var(--serif);font-weight:600;font-size:27px;line-height:1.8;letter-spacing:.08em}
+@media (min-width:760px){.hinge p{font-size:38px}}
+
+/* ---------- 4 住んでいる人・住んだ人 ---------- */
+.years .ph-box{--r:4/5}
+.years figcaption{font-family:var(--serif);font-size:13px;color:var(--ink)}
+.jobs{display:flex;flex-wrap:wrap;gap:8px}
+.jobs li{font-size:14px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.35)}
+.person{display:grid;grid-template-columns:40% 1fr;gap:18px;align-items:start}
+.person .ph-box{--r:4/5}
+.person .voice{font-size:18px}
+.dest{border-top:1px solid var(--line)}
+.dest li{display:flex;gap:14px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.dest .where{font-family:var(--serif);font-weight:600;font-size:18px;min-width:6.5em}
+.dest .what{font-size:14px;color:var(--sub)}
+.gens{padding:0}
+.gens-box{border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);padding:32px 4px 34px;text-align:center}
+.gens-title{font-family:var(--sans);font-weight:700;font-size:22px;line-height:1.65;letter-spacing:.04em;margin-bottom:22px;color:var(--ink)}
+.gens .lead{text-align:center}
+@media (min-width:760px){.gens-title{font-size:26px}.gens .sp{display:none}}
+.rich{list-style:none;padding:0;margin:0}
+.rich li{font-size:17px;font-weight:700;padding:12px 16px;border-left:3px solid var(--accent);background:rgba(122,100,80,.07)}
+.rich li + li{margin-top:8px}
+.rich-close{font-weight:700}
+.closing-line{font-family:var(--serif);font-weight:600;font-size:22px;line-height:1.8;text-align:center;padding:24px 0}
+
+/* ---------- 5 5年分の記録 ---------- */
+.record-head{text-align:center}
+.record-head .h2{margin-bottom:12px}
+.record .ph-box{--r:1/1}
+.record .span2 .ph-box{--r:2/1}
+.record .ph figcaption{font-size:11px}
+.more{margin-top:24px}
+.more summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;
+  border:1px solid var(--line);border-radius:6px;font-size:14px;font-weight:700;letter-spacing:.06em}
+.more summary::-webkit-details-marker{display:none}
+.more summary svg{width:14px;height:14px;transition:transform .3s}
+.more[open] summary svg{transform:rotate(180deg)}
+.more .grid{margin-top:var(--gap)}
+
+/* ---------- 6 帰ってくる ---------- */
+.return-item + .return-item{margin-top:72px}
+.return-item .ph-box{--r:4/3}
+@media (min-width:760px){.return-item .ph-box{--r:16/9}}
+.return-item .voice{margin-top:28px}
+.dinner{border:1px solid var(--line);padding:24px 20px}
+.dinner-rows{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin-top:14px;font-size:15px}
+.dinner-rows dt{color:var(--sub);font-size:13px;padding-top:2px}
+.dinner-rows dd{font-weight:700}
+
+/* ---------- 7 スイッチ ---------- */
+.switch{padding:0 0 96px}
+.switch-photo{position:relative}
+.switch-photo .ph-box{--r:4/5}
+@media (min-width:760px){.switch-photo .ph-box{--r:16/9;max-height:90vh}}
+.switch-photo::before{content:"";position:absolute;left:0;right:0;top:0;height:18%;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,var(--night-bg),rgba(23,20,17,0))}
+.switch-photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(23,20,17,0) 50%,rgba(23,20,17,.85) 80%,var(--night-bg) 92%)}
+.switch-text{position:relative;z-index:2;margin-top:-10vw;text-align:center}
+@media (min-width:760px){.switch-text{margin-top:-120px}}
+.switch-copy{font-family:var(--serif);font-weight:600;font-size:23px;line-height:1.95;letter-spacing:.06em}
+@media (min-width:760px){.switch-copy{font-size:32px}}
+.switch-copy .l2{display:block;margin-top:.5em}
+.switch-act{margin-top:44px;text-align:left}
+.switch-act .btn-main{min-height:64px;font-size:17px}
+.step-links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.step-links .btn{min-height:58px;font-size:14px;flex-direction:column;gap:0}
+.contact-person{display:flex;align-items:center;gap:16px;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}
+.contact-person .ph{width:72px;flex:none}
+.contact-person .ph-box{--r:1/1;border-radius:50%}
+.contact-person p{font-size:14px;line-height:1.8}
+
+/* ---------- 8 ご案内 ---------- */
+.guide .h3{font-family:var(--serif);font-weight:600;font-size:19px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.table{width:100%;border-collapse:collapse;font-size:14px}
+.table th,.table td{text-align:left;padding:12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.table th{width:36%;color:var(--sub);font-weight:500;padding-right:12px}
+.table td{font-weight:500}
+.flow{counter-reset:f;display:grid;gap:0}
+.flow li{counter-increment:f;display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.flow li::before{content:counter(f,decimal-leading-zero);font-family:var(--serif);font-size:20px;color:var(--accent);line-height:1.5}
+.flow .note{display:block;margin-top:2px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr 18px;gap:12px;align-items:center;padding:16px 0;font-size:15px;font-weight:700}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary svg{width:14px;height:14px;transition:transform .3s;color:var(--accent)}
+.faq details[open] summary svg{transform:rotate(45deg)}
+.faq .a{padding:0 0 18px;font-size:14px;color:var(--sub);line-height:1.9}
+.owners{display:grid;gap:18px}
+.owner{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start}
+.owner .ph-box{--r:1/1;border-radius:50%}
+.owner .name{font-weight:700;font-size:15px}
+.owner .role{font-family:var(--serif);font-size:14px;color:var(--accent)}
+.owner p{font-size:13px;color:var(--sub);line-height:1.8;margin-top:4px}
+
+/* ---------- フッター ---------- */
+.ft{padding:40px var(--gutter) calc(150px + env(safe-area-inset-bottom));text-align:center;border-top:0;
+  background:radial-gradient(ellipse 140% 90% at 50% 100%,rgba(236,185,118,.30),rgba(236,185,118,0) 70%),linear-gradient(180deg,#3A2819 0%,#47301C 100%)}
+.ft p,.ft .perm{color:#D8C7AE}
+.ft .perm{border-color:rgba(236,185,118,.3)}
+.ft .lamp{display:block;width:30px;height:30px;margin:0 auto 14px;color:var(--night-accent)}
+/* ページの終わりを温める：案内の地を、下に向かって灯りの色へ少しずつ寄せる（光らせない・動かさない） */
+/* 2026-09-29 ご案内は明るい地へ（暗いのは焚き火から下だけ） */
+/* 案内のあと、フッターの手前に置く灯りの下の食卓。上下を地に溶かす */
+.coda{position:relative;background:#171411}
+.coda .ph{margin:0}
+.coda .ph-box{--r:3/2;border-radius:0}
+.coda img{filter:sepia(.22) saturate(1.08) brightness(.92)}
+.coda::before,.coda::after{content:"";position:absolute;left:0;right:0;z-index:1;pointer-events:none}
+.coda::before{top:0;height:38%;background:linear-gradient(180deg,#171411,rgba(23,20,17,0))}
+.coda::after{bottom:0;height:45%;background:linear-gradient(0deg,#3A2819,rgba(58,40,25,0))}
+@media (min-width:760px){.coda{padding:0 var(--gutter)}.coda .ph{max-width:960px;margin:0 auto}}
+.ft .logo{line-height:0;color:var(--night-ink)}
+.ft .logo .logo-mark{width:160px;height:64px;display:inline-block}
+.ft p{font-size:12px;color:var(--night-sub);margin-top:10px}
+.ft .perm{display:inline-block;margin-top:22px;font-size:11px;color:var(--night-sub);border:1px solid var(--night-line);padding:6px 12px;border-radius:3px}
+
+/* ---------- スマホ下の常設ボタン ---------- */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;gap:8px;padding:10px 12px;padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid var(--day-line);
+  transform:translateY(110%);transition:transform .4s,background-color .5s}
+.dock.show{transform:none}
+.dock.is-night{background:rgba(23,20,17,.92);border-top-color:var(--night-line)}
+.dock.hide{transform:translateY(110%)}
+.dock a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;letter-spacing:.04em}
+.dock svg{width:16px;height:16px}
+.dock .d-main{background:#453A2E;color:#fff}
+.dock .d-sub{border:1px solid var(--day-accent);color:var(--day-ink)}
+.dock.is-night .d-main{background:var(--night-accent);color:#171411}
+.dock.is-night .d-sub{border-color:rgba(236,185,118,.6);color:var(--night-ink)}
+@media (min-width:900px){.dock{display:none}}
+
+
+/* ---------- 確定原稿に合わせた追加 ---------- */
+.fv-photo .ph-box{--r:1/1}
+@media (min-width:760px){.fv-photo .ph-box{--r:16/9}}
+.fv-nums .num{font-size:24px}
+.fv-nums .num-pre{display:block;font-size:11px;font-weight:500;color:var(--sub);letter-spacing:.08em;margin-bottom:2px}
+.src{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);font-size:11px;color:var(--sub);line-height:1.8}
+.src p + p{margin-top:4px}
+.years .ph-box{--r:1/1}
+.voice .vq{display:block}
+.oka .voice{font-size:19px}
+@media (min-width:760px){.oka .voice{font-size:22px}}
+.dest-list{border-top:1px solid var(--line)}
+.dest-list li{font-family:var(--serif);font-weight:600;font-size:18px;padding:13px 0;border-bottom:1px solid var(--line);letter-spacing:.04em}
+.return-lines p{font-family:var(--serif);font-weight:500;font-size:15px;line-height:2}
+@media (min-width:760px){.return-lines p{font-size:18px}}
+.dinner p + p{margin-top:.6em}
+.dinner p{font-size:16px}
+.switch-copy .glow{color:var(--night-accent)}
+.switch-after{font-size:15px;margin-top:28px;text-align:center;color:var(--night-sub)}
+.switch-note{font-size:13px;margin-top:8px;text-align:center;color:var(--night-sub);line-height:1.8}
+.small-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.small-btns .btn{min-height:50px;font-size:13px;padding:10px 8px}
+.small-btns.one{grid-template-columns:1fr}
+.record .span4 .ph-box{--r:2/1}
+.switch-act .btn-second{margin-top:10px;min-height:54px}
+.an-line{margin-top:32px;padding-top:24px;border-top:1px solid var(--line);font-size:14px;text-align:center}
+.owner-t .role{display:block;font-family:var(--serif);font-size:14px;color:var(--accent)}
+.owner-t .name{font-weight:700;font-size:16px;margin-top:2px}
+.owner-t p{font-size:14px;color:var(--sub);line-height:1.9;margin-top:6px}
+.owner-t + .owner-t{margin-top:24px}
+.history{border-left:1px solid var(--line);padding-left:16px}
+.history p{font-size:15px;line-height:2;color:var(--ink)}
+.history p + p{margin-top:6px}
+.solo{max-width:880px;margin:0 auto}
+.rec3{grid-template-columns:1fr 1fr}
+.rec3 > :first-child{grid-column:1 / -1}
+.rec3 > :first-child .ph-box{--r:3/2 !important}
+@media (min-width:760px){.rec3{grid-template-columns:repeat(3,1fr)}.rec3 > :first-child{grid-column:auto}.rec3 > :first-child .ph-box{--r:4/5 !important}}
+.talk{grid-template-columns:repeat(2,1fr)}
+@media (min-width:760px){.talk{grid-template-columns:repeat(4,1fr)}}
+.return-next{margin-top:-8px}
+.owners-lead{font-size:14px;color:var(--sub);line-height:1.9;margin-top:10px}
+.profile{margin-top:28px;padding-top:24px;border-top:1px solid var(--line)}
+.pf-head{display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:end}
+.pf-photo .ph-box{border-radius:2px}
+.pf-id{display:flex;flex-direction:column;gap:4px;padding-bottom:4px}
+.pf-yomi{font-size:12px;letter-spacing:.14em;color:var(--accent)}
+.pf-name{font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.08em}
+.pf-role{font-size:12px;color:var(--sub);letter-spacing:.08em}
+.pf-body{margin-top:18px}
+.pf-body p{font-size:14px;color:var(--sub);line-height:1.95}
+.pf-body p + p{margin-top:8px}
+.pf-body .pf-word{font-family:var(--serif);font-weight:500;font-size:17px;color:var(--ink);line-height:1.8;margin-top:18px}
+.pf-word cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--sub);margin-top:6px}
+.pair-word{margin-top:36px;padding:28px 0 4px;border-top:1px solid var(--line);font-family:var(--serif);font-weight:500;font-size:19px;line-height:1.9}
+.pair-word cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:var(--sub);margin-top:12px}
+@media (min-width:760px){
+  .pf-head{display:block}
+  .profile{display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:start}
+  .pf-id{margin-top:14px}
+  .pf-body{margin-top:0}
+  .pair-word{font-size:22px}
+}
+.owner-link{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 0;font-size:14px;color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.owner-link svg{width:14px;height:14px;flex:none}
+/* 住人の言葉の出典（noteのインタビュー記事）。控えめに、名前の下に小さく */
+.note-link{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:6px 0;font-family:var(--sans);font-size:12px;letter-spacing:.06em;color:var(--sub);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.note-link svg{width:12px;height:12px;flex:none}
+.note-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.owner-link:hover{text-decoration-thickness:2px}
+.owner-link:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.guide .btns{margin-top:28px}
+@media (min-width:760px){.trio .span2{grid-column:auto}.return-item .ph-box{max-height:82vh}}
+.record-lead{font-family:var(--serif);font-size:17px}
+@media (min-width:760px){.record-lead{font-size:21px}}
+.small-btns .btn:has(.btn-note){flex-direction:column;gap:0}
+
+
+/* ---------- 横棒グラフ（広さの比較） ---------- */
+.bars{margin-left:0;margin-right:0;--max:27.5;--val-w:112px}
+@media (min-width:760px){.bars{--val-w:150px}}
+.bars-title{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--ink);margin-bottom:14px}
+.bar-row + .bar-row{margin-top:14px}
+.bar-label{display:block;font-size:12px;color:var(--sub);letter-spacing:.04em;line-height:1.5;margin-bottom:4px}
+.bar-track{display:flex;align-items:center;gap:10px}
+.bar{display:block;flex:none;height:22px;border-radius:0 3px 3px 0;background:#D9D3CA;
+  width:calc(var(--v) / var(--max) * (100% - var(--val-w)));transform-origin:left center}
+.bar-val{flex:none;font-weight:700;font-size:16px;line-height:1.2;color:var(--sub);font-feature-settings:"tnum" 1;white-space:nowrap}
+.bar-val small{font-size:11px;font-weight:500;margin-left:1px}
+.bar-val em{display:block;font-style:normal;font-weight:500;font-size:11px;color:var(--sub);margin-top:3px}
+.is-us .bar-label{color:var(--ink);font-weight:700}
+.is-us .bar{height:30px;background:var(--day-accent)}
+.is-us .bar-val{color:var(--day-accent);font-size:22px}
+.is-range .bar{background:linear-gradient(to right,#D9D3CA 0 var(--from),#ECE7DF var(--from) 100%)}
+.is-stack .bar{background:linear-gradient(to right,var(--day-accent) 0 var(--split),#C2AE98 var(--split) 100%)}
+.bars-legend{display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px 16px;margin-top:14px;font-size:11px;color:var(--sub)}
+.lg{display:inline-block;width:12px;height:12px;border-radius:2px}
+.lg-a{background:var(--day-accent)}.lg-b{background:#C2AE98}
+.bars-legend{line-height:1.6}
+.lg-item{display:inline-flex;align-items:flex-start;gap:6px}
+.lg-item .lg{margin:3px 0 0}
+.bars-note{margin-top:14px;font-size:11px;line-height:1.8;color:var(--sub)}
+.js-bars .bars .bar{transform:scaleX(0);transition:transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:calc(var(--i,0) * 90ms)}
+.js-bars .bars.is-in .bar{transform:none}
+@media (prefers-reduced-motion:reduce){.js-bars .bars .bar{transform:none}}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- SVG部品（線で描く。絵文字は使わない） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-line" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 3.5c-5 0-9 3.2-9 7.2 0 3.6 3.2 6.6 7.5 7.1l-.4 2.7c-.1.4.3.7.7.5 2.7-1.5 6.7-4.2 8.5-6.5 1.1-1.1 1.7-2.4 1.7-3.8 0-4-4-7.2-9-7.2z"/><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M7.5 9v3.5h2M11.5 9v3.5M14 12.5V9l2.5 3.5V9M19 9h-1.6v3.5H19M17.4 10.75H19"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g></symbol>
+  <symbol id="i-dusk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round"><path d="M6.5 17a5.5 5.5 0 0 1 11 0M2.5 17h19M5.5 20.5h13M12 6.5v2.5M4.9 9.9l1.8 1.8M19.1 9.9l-1.8 1.8"/></g></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 14.8A8 8 0 0 1 9.2 4.5a8 8 0 1 0 10.3 10.3z"/></g></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M6 20.5V4.5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v16M3.5 20.5h17M14.5 12.5v.01"/></symbol>
+  <symbol id="i-bowl" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M3.5 11.5h17c0 4.4-3.8 8-8.5 8s-8.5-3.6-8.5-8zM9 8.5c0-1.2 1-1.5 1-2.7M13 8.5c0-1.2 1-1.5 1-2.7M8 19.5h8"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol><symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol><symbol id="i-logo" viewBox="4 51 492 196"><g fill="currentColor"><g><path d="M83.43,183.33l-.29-12.74c.48-3.42.86-6.94,1.24-10.65-3.23,2.47-6.47,4.37-9.7,5.8-1.62-3.04-2.66-6.18-3.33-9.41l2.76-2.09c1.62-2.28,3.42-4.18,5.32-5.89s3.8-3.42,5.9-5.23l1.14-6.75-3.33-1.81c-3.99,2-8.08,3.9-12.36,5.42l-1.43-.86c-.86-2.66-1.43-5.42-1.9-8.46l-.95-2.47c3.71-1.05,7.23-2.19,10.65-3.33,3.42-1.24,6.85-2.38,10.27-3.61.38-2.66.57-5.23.67-7.89.09-2.57.67-5.04,1.81-7.23,1.14-1.05,2.57-1.43,4.09-1.24,2.47,1.05,5.23,1.52,8.18,1.52l.29,3.04c-.95,3.42-1.52,6.94-1.81,10.55-.19,3.61-.57,7.23-1.14,10.93h1.24c3.99-1.81,7.99-3.52,11.88-5.13,3.9-1.62,8.18-2.57,12.84-2.76l4.18.95,1.24-.29c3.99.57,7.51,2.09,10.55,4.47,1.43,1.71,2.95,3.33,4.47,4.85,2.09,3.9,3.33,7.99,3.61,12.46-.1,4.85-1.62,9.22-4.28,13.12-2.76,3.99-5.8,7.7-9.22,11.41-2.85,2.38-5.9,4.37-9.13,5.89s-6.56,2.76-9.89,3.71c-1.43-1.9-2.19-4.28-2.19-6.94l-.86-2.09,3.04-1.81,1.14-1.81c3.42-1.05,6.56-2.95,9.41-5.8,2.57-2.38,4.66-5.04,6.27-7.99,1.62-2.85,2.28-6.28,1.9-10.08-.67-2.09-1.43-3.9-2.38-5.51-3.23-2.38-7.04-3.42-11.31-3.04-4.37.57-8.56,1.9-12.46,3.9-3.9,2.09-7.8,4.09-11.69,6.08-.29,6.66-1.05,13.31-2,19.97-1.05,6.75-2.19,13.31-3.33,19.68-2.47,1.24-4.94,2-7.51,2.19-1.24-.86-1.81-1.81-1.62-3.04l.02.01Z"/><path d="M174.33,173.91c-1.62-3.99-2.85-8.08-3.71-12.26-.95-4.18-1.24-8.65-.86-13.5l.29-2.09-.29-10.27c.48-3.23.76-6.56.95-9.89s.76-6.47,1.81-9.51l2.38-.29,1.9.29.86-.29c2.85.76,5.61,1.33,8.46,1.52-.76,5.23-1.43,10.17-2,14.93-.48,4.75-.86,9.7-1.05,14.74,1.14,3.8,1.24,7.61.29,11.5l9.03-3.99c2.85-1.14,5.8-2.19,8.75-3.04,1.43,2.09,2.38,4.37,2.76,7.04-4.37,3.42-8.84,6.85-13.41,10.27-4.47,3.42-9.32,6.28-14.36,8.46-1.05-.76-1.62-2-1.81-3.61l.01-.01ZM219.87,143.68c-2.19-6.46-4.94-12.65-8.37-18.54,2.76-1.14,5.8-1.71,9.03-1.71l1.14.29,3.33-.29,2.47,3.61.95.29c3.33,3.99,5.89,8.46,7.61,13.31,1.71,4.85,3.33,9.7,4.94,14.55-.76,1.43-2.09,2.19-3.9,2.38-3.33,2.57-7.04,4.47-10.84,5.51-2-6.56-4.18-13.03-6.37-19.4h.01Z"/><path d="M267.61,183.8c-2.85-1.33-5.99-2.09-9.41-2.38l-.57-3.33c2.95-5.61,5.51-11.6,7.51-17.78l5.99-18.35h-3.23l-8.46,2.38c-.67-2.19-.86-4.56-.57-7.23-.29-3.04.19-5.61,1.43-7.89,2.66-.19,5.23-.67,7.7-1.24s5.13-.76,7.99-.57c1.43-3.52,2.47-7.13,3.14-10.84.76-3.8,1.9-7.23,3.52-10.46l2.95-.29c3.8.86,7.7,1.43,11.69,1.81l.95,2.76c-1.14,2.38-2.19,4.94-2.95,7.61-.86,2.57-1.71,5.23-2.76,7.89,3.99.76,7.8,2,11.41,3.52,3.61,1.52,6.94,3.71,9.98,6.47,2.76,3.61,3.8,7.99,2.95,13.03l-.29,1.9.29,2.66c-1.14,4.66-2.95,9.03-5.23,13.22-2.28,4.18-4.85,8.18-7.7,12.08-1.52,2-3.61,3.33-5.99,3.9-2-3.23-4.18-6.27-6.28-9.13l-.95-4.56,2.38-.29,2.76.57c2.19-3.61,4.18-7.42,5.89-11.22,1.62-3.8,2.19-8.08,1.62-12.74l-1.24-2.38c-3.61-2.28-7.61-3.33-11.98-3.33l-3.04.86c-3.04,7.32-5.9,14.55-8.75,21.87-2.76,7.32-5.99,14.36-9.6,21.2l-1.14.29-.01-.01ZM324.37,146.25l1.52-.95,2.09-1.24c-5.89-8.56-12.74-16.45-20.35-23.67l2.28-3.04,5.99-2.76,4.28,3.04v-1.52c-.38-2.66-.86-5.23-1.24-7.89l-1.14-7.89c2.76-.19,5.42-.57,7.8-1.14.38,3.04.86,5.99,1.33,8.94.57,2.95.86,5.9,1.05,8.94l-.86,1.81c-1.24.57-2.57.95-4.18.95l4.47,4.47c2,2.28,3.99,4.56,6.08,6.85,2,2.38,3.8,4.75,5.42,7.23,1.52,2.57,2.38,5.42,2.66,8.46,0,1.62-.76,2.66-2.09,3.33-3.42,1.62-7.13,2.57-11.22,2.76l-3.9-6.66.01-.02ZM333.4,119.82c-.67-6.75-1.24-13.6-1.81-20.35,2.19-.86,4.47-1.33,6.94-1.52,1.05,1.05,1.33,2.19.95,3.61-.19,2.47-.29,4.85-.29,7.23.76,3.04,1.05,6.18.86,9.51-1.05,1.43-2.19,2.28-3.61,2.66l-3.04-1.14h0Z"/><path d="M347.86,131.51c8.65-5.13,16.92-10.36,25.01-15.88,7.99-5.51,16.35-10.46,25-14.74l1.43.67,2.19,2.95,2.66,1.62.86,2.66c5.04,2.47,10.08,4.94,15.12,7.51,5.04,2.66,10.17,4.85,15.31,6.75l.86,1.14,1.9.57.29,1.52c-1.43,1.81-2.57,3.8-3.33,5.7l-3.04,1.24c-6.94-2-13.69-4.66-20.16-7.99-6.37-3.33-12.83-6.56-19.21-9.79l-19.68,11.88c-6.56,3.99-13.31,7.51-20.35,10.74-2.38-1.81-3.99-3.99-4.85-6.56l-.01.01ZM355.18,156.8l-.95-6.37c2.76-1.24,5.61-1.9,8.56-2.09,2.85-.19,5.8-.57,8.56-.86l2.76.29,11.12-1.81.29-4.85-8.18-.38-4.18.67c-1.81-3.04-2.66-6.46-2.66-10.27l1.71-1.81c4.56.38,9.03.57,13.6.57l1.43-.57.95-5.71-.29-1.52,1.24-1.52,6.85-.38,4.28,1.62.29,1.81-.29,4.75,3.61.29,5.7-.29c.95,2.47,1.33,5.04,1.24,7.89-3.9,1.62-7.7,2.76-11.5,3.33l-.29,4.28,1.81.19c3.8-.29,7.7-.67,11.6-.86s7.8-.67,11.6-1.52l.86,1.52c-1.14,2-1.9,4.37-2.09,6.94l-1.52,1.24c-4.18,1.24-8.56,2-13.03,2.38-4.56.48-9.03.86-13.41,1.24-4.66.38-8.94.76-12.93,1.05-4.09.29-8.08.67-12.08,1.05h-9.32l-4.18.29-1.14-.57-.02-.02ZM360.5,152.81l-2.38.38,2.09.57.29-.95h0ZM368.01,180l.29-10.27c-.19-2.95.29-5.42,1.24-7.23l1.81-.29,1.81.29c6.18-2.19,12.64-3.61,19.4-4.18,6.75-.67,13.5-1.14,20.35-1.52l5.13,1.52.57,4.18c-1.05,3.04-1.81,6.18-2.28,9.51-.48,3.33-1.24,6.47-2.19,9.51-2.47.67-4.94,1.14-7.51,1.52l-.95-.29c-4.09,1.24-8.27,2.09-12.64,2.66-4.37.67-8.84,1.14-13.31,1.62l-1.14-.67c-2.47,1.43-5.23,2-8.37,1.81-1.43-2.38-2.19-5.13-2.19-8.18l-.02.01ZM407.38,165.55h-1.43c-3.8.95-7.61,1.81-11.6,2.38-3.9.67-7.8,1.24-11.5,1.81-.86,2.66-1.33,5.42-1.62,8.18h3.33c3.42-1.05,6.94-1.71,10.55-2.28,3.61-.48,7.23-1.05,10.84-1.62l1.43-8.46v-.01Z"/></g><g><path d="M19.75,133.61c-2.13.44-4.29.61-6.47.49-2.16-.1-4.34-.29-6.5-.58-.2-.4-.23-.86-.1-1.4l.07-1.08c.94.05,1.84.14,2.76.29l.27.12c1.34.24,2.69.3,4.09.18-.8-.44-1.58-.9-2.25-1.39-.7-.5-1.46-.91-2.23-1.25l-.17-.95c.94-.26,1.88-.38,2.82-.38.95-.02,1.92-.01,2.91,0-1.12-.71-2.3-1.26-3.54-1.65-1.22-.41-2.44-.79-3.69-1.21-.14-.31-.16-.68-.05-1.07.16-.39.33-.75.48-1.06h.53c2.09.58,4.06,1.3,5.95,2.2,1.9.88,3.78,1.85,5.62,2.92l.05.64-.61.66c-1.02.15-1.97.18-2.85.09-.91-.09-1.76-.06-2.6.05l-.13.22c.98.4,1.92.88,2.8,1.43.91.55,1.82,1.04,2.78,1.45l.11.38c.2.13.26.33.22.59l-.29.32.02-.01Z"/><path d="M19.91,122.8c-1.19.36-2.39.34-3.63-.05-.71-.34-1.21-.9-1.56-1.72-.47-.82-.76-1.68-.84-2.56-.06-.88-.09-1.79-.09-2.73l-.98-.23-.96.71-.11.47-.13,3.54c-.62.22-1.29.26-1.99.09-.18-1-.27-1.98-.28-2.97-.01-.99.16-2.03.47-3.11l1.29-1.39c.93-.2,1.9-.14,2.94.16l1.55.74h.32l1.65.71c.64.1,1.3.14,1.97.08.67-.04,1.33-.1,1.97-.22l.42.49c.01.47.08.93.17,1.34l-.73.47-.29.79c.11.69.24,1.38.37,2.08.16.68.11,1.4-.12,2.18-.31.49-.8.89-1.43,1.14l.02-.01ZM19.56,118.9c-.18-.61-.47-1.12-.96-1.56-.92-.39-1.87-.71-2.84-.97l-.25.31c.05,1.12.37,2.15.93,3.12.42.62,1.07.99,1.96,1.08l.7-.37c.27-.31.46-.7.53-1.2l-.07-.41Z"/><path d="M11.53,103.47c-.58.07-1.15.07-1.72-.03l-.58-.87c-.22-.59-.16-1.2.15-1.78l.93-.81h1.07l.71.71c.38.64.42,1.24.16,1.83-.15.43-.4.75-.72.94v.01ZM24.37,109.36l-1.04-.29-3.8-1.66c-1.25-.55-2.53-1.11-3.83-1.6-.4.7-.84,1.35-1.32,1.92h-.73l-.5-.67c.04-.95.25-1.9.64-2.85l.61-1.28v-.33l.72-.56.45.09c1.49,1.02,3.06,1.91,4.73,2.71,1.66.77,3.24,1.67,4.73,2.68l-.12.54-.19.31v.66l-.35.33Z"/><path d="M28.53,100.68c-2.16-.27-4.25-.81-6.28-1.64-2.02-.79-4.01-1.69-5.95-2.66-.06-.44.06-.89.36-1.35l.42-1c.87.35,1.7.73,2.52,1.17l.22.2c1.19.66,2.45,1.16,3.81,1.5-.62-.68-1.2-1.36-1.68-2.05-.5-.7-1.08-1.33-1.7-1.9l.15-.95c.97.05,1.9.25,2.79.56.9.29,1.82.61,2.75.94-.83-1.04-1.76-1.93-2.82-2.71-1.02-.78-2.05-1.54-3.09-2.34-.04-.34.07-.69.3-1.03.27-.31.56-.6.8-.85l.5.18c1.79,1.22,3.42,2.54,4.92,4.01,1.51,1.45,2.97,2.98,4.37,4.58l-.16.62-.79.42c-1.01-.18-1.92-.47-2.72-.84-.83-.38-1.64-.63-2.48-.79l-.2.17c.8.69,1.53,1.46,2.18,2.27.68.82,1.39,1.57,2.15,2.28l-.02.4c.15.19.14.4.02.63l-.38.21.01-.03Z"/><path d="M32.13,90.87c-1.23-.18-2.32-.69-3.27-1.57-.5-.6-.72-1.33-.69-2.22-.08-.94.02-1.84.31-2.68.31-.82.67-1.67,1.06-2.51l-.79-.62-1.16.24-.3.38-1.6,3.16c-.65-.06-1.28-.31-1.85-.75.26-.98.59-1.91.99-2.81.4-.9,1-1.77,1.73-2.63l1.75-.72c.93.21,1.78.67,2.6,1.38l1.1,1.32.29.14,1.2,1.34c.54.36,1.12.67,1.76.9.63.25,1.25.46,1.88.63l.18.63c-.19.43-.32.87-.41,1.29l-.85.12-.59.6c-.19.67-.37,1.36-.54,2.04-.14.68-.49,1.32-1.03,1.93-.49.31-1.1.47-1.77.43v-.02ZM33.45,87.18c.1-.62.04-1.22-.22-1.81-.67-.74-1.4-1.43-2.17-2.07l-.35.18c-.42,1.04-.56,2.11-.47,3.23.12.74.55,1.35,1.32,1.8l.8-.04c.37-.16.71-.44.99-.87l.1-.4v-.02Z"/><path d="M33.68,69.54c-.54-.23-1.02-.52-1.47-.9l-.06-1.04c.11-.62.47-1.11,1.03-1.46l1.21-.23.92.54.25.97c0,.75-.27,1.28-.79,1.66-.35.29-.72.45-1.09.45v.01ZM41.78,81.12l-.75-.78-2.44-3.36c-.8-1.11-1.62-2.23-2.49-3.31-.7.4-1.41.74-2.11.99l-.63-.38-.1-.82c.51-.8,1.17-1.51,1.99-2.13l1.18-.8.18-.27.89-.12.35.3c.77,1.63,1.67,3.19,2.71,4.73,1.04,1.5,1.95,3.08,2.73,4.71l-.38.41-.32.18-.34.56-.47.11v-.02Z"/><path d="M61.45,73.47c-.09-.67-.35-1.22-.79-1.64l.47-.28,1.29-.29,1.05-1.47c.15-.79.16-1.61.06-2.43h-.57c-.75.52-1.54.97-2.39,1.31-.58.06-1.12-.1-1.65-.48-.61-.3-1.14-.69-1.59-1.14-.59-.85-1.04-1.82-1.37-2.97-.15-.7-.2-1.39-.14-2.08.08-.69.26-1.37.55-2.02.44-.72.95-1.31,1.5-1.82s1.2-.94,1.94-1.32l.42-.02.55-.26c1.01.21,2,.3,2.99.27.35,1.22.66,2.42.96,3.63v.25c.62,1.84,1.17,3.7,1.66,5.58.09.85.02,1.66-.16,2.49s-.5,1.64-.96,2.41c-.55.68-1.19,1.26-1.88,1.78l-.24.02-.26.12-.38.06c-.13.24-.34.39-.57.46l-.45-.17-.04.01ZM58.29,65.16l-.18.23.4.28-.22-.51ZM62.33,64.91c.77-.97.89-2.04.36-3.21l-1.06-2.59h-1.27c-.61.21-1.05.68-1.31,1.41-.55,1.03-.69,2.14-.43,3.31l.15.18v.39c.22.46.57.84,1.06,1.07.62.25,1.28.21,1.94-.08l.56-.48Z"/><path d="M69.06,67.32c-.73-1-1.12-2.14-1.16-3.44.08-.78.45-1.44,1.1-2.04.62-.72,1.33-1.27,2.13-1.65.8-.35,1.66-.68,2.54-1l-.11-1-.99-.66-.48.05-3.38,1.06c-.42-.51-.68-1.13-.75-1.84.88-.5,1.78-.91,2.7-1.25.93-.34,1.96-.52,3.09-.6l1.74.75c.5.81.77,1.75.83,2.82l-.18,1.7.1.3-.12,1.79c.12.64.31,1.27.59,1.89.26.62.54,1.22.87,1.78l-.32.56c-.44.17-.85.38-1.21.61l-.68-.53h-.84c-.61.33-1.23.68-1.84,1.04-.58.38-1.29.57-2.1.61-.57-.13-1.11-.46-1.55-.96l.02.01ZM72.61,65.69c.51-.37.9-.82,1.15-1.42.06-.99.05-2-.03-3l-.38-.13c-1.04.42-1.91,1.07-2.63,1.92-.44.6-.58,1.34-.36,2.21l.59.54c.38.15.82.2,1.31.1l.36-.21-.01-.01Z"/><path d="M81.83,70.13l-.07-1.08c.33-.69.61-1.42.83-2.18.24-.78.43-1.54.61-2.31-.68-1.53-1.35-3.1-2-4.65-.67-1.58-1.06-3.26-1.18-5.06l.18-.31c.69-.65,1.46-.97,2.4-.94.42,1.3.74,2.61.99,3.93.23,1.35.6,2.63,1.07,3.88l.21.08c.39-1.11.76-2.25,1.1-3.42.32-1.16.73-2.28,1.22-3.34l.62-.05,2.33.45.06.6c-1.02,2.39-2.09,4.78-3.17,7.19-1.07,2.41-2.05,4.85-2.93,7.27l-1.15.21-1.12-.27Z"/><path d="M92.14,66.85c-.5-1.14-.63-2.33-.4-3.61.25-.74.75-1.31,1.52-1.76.76-.57,1.57-.96,2.44-1.15.86-.17,1.77-.31,2.69-.43l.11-1-.82-.86-.48-.05-3.52.31c-.3-.59-.42-1.25-.34-1.96.97-.3,1.93-.51,2.91-.64s2.03-.09,3.15.08l1.54,1.11c.31.9.37,1.87.21,2.94l-.54,1.63.04.32-.5,1.73c-.02.65.03,1.3.17,1.97.12.66.27,1.31.46,1.93l-.44.48c-.47.07-.91.19-1.31.34l-.55-.66-.82-.19c-.67.19-1.34.41-2.02.62-.65.24-1.38.28-2.18.15-.53-.25-.98-.69-1.3-1.27l-.02-.03ZM95.96,66.02c.58-.25,1.05-.61,1.43-1.14.27-.96.48-1.95.61-2.94l-.34-.21c-1.1.19-2.09.64-2.98,1.31-.56.49-.85,1.18-.83,2.08l.46.65c.34.23.75.37,1.26.38l.4-.12-.01-.01Z"/><path d="M106.44,72.38c.14-.66.09-1.26-.18-1.81l.54-.11,1.31.17,1.49-1.02c.41-.69.71-1.46.88-2.26l-.54-.18c-.88.22-1.78.38-2.69.41-.57-.14-1.02-.48-1.39-1.01-.47-.49-.84-1.04-1.11-1.62-.26-1-.35-2.06-.27-3.26.1-.71.29-1.37.58-2,.31-.63.71-1.2,1.2-1.71.66-.53,1.34-.91,2.03-1.2s1.45-.47,2.27-.58l.4.12.6-.05c.87.54,1.78.97,2.71,1.28-.09,1.27-.21,2.5-.34,3.74l-.09.23c-.04,1.94-.16,3.88-.35,5.8-.2.82-.54,1.57-1,2.28s-1.03,1.36-1.72,1.94c-.75.45-1.54.78-2.38,1.03l-.24-.06-.29.03-.38-.08c-.21.18-.45.26-.69.24l-.36-.31.01-.01ZM106.31,63.5l-.25.15.28.4-.03-.55ZM110.19,64.64c1.05-.64,1.53-1.62,1.43-2.9l-.11-2.79-1.19-.45c-.65,0-1.22.3-1.72.88-.87.78-1.38,1.77-1.53,2.96l.08.22-.12.38c.04.51.24.98.62,1.36.5.44,1.13.63,1.85.59l.69-.26v.01Z"/><path d="M116.88,68.98c-.6-1.09-.85-2.26-.73-3.56.18-.76.62-1.38,1.35-1.89.71-.63,1.48-1.1,2.32-1.37.84-.25,1.73-.47,2.64-.67l.02-1-.9-.78h-.48l-3.48.62c-.35-.56-.53-1.21-.52-1.92.94-.39,1.88-.68,2.84-.91.96-.22,2.02-.27,3.14-.21l1.63.96c.39.87.54,1.83.47,2.9l-.39,1.67.07.31-.34,1.77c.04.65.14,1.29.35,1.94.18.65.38,1.28.64,1.88l-.39.52c-.46.11-.89.27-1.28.46l-.61-.61-.84-.11c-.65.25-1.3.53-1.95.8-.63.3-1.35.41-2.16.34-.55-.2-1.04-.59-1.42-1.15l.02.01ZM120.61,67.81c.56-.3.99-.7,1.32-1.27.18-.98.3-1.98.34-2.99l-.36-.17c-1.08.29-2.02.83-2.85,1.58-.51.54-.74,1.26-.64,2.14l.52.61c.36.2.78.3,1.29.26l.39-.16h-.01Z"/><path d="M131.44,72.78l-.17-1.07c.26-.71.47-1.47.61-2.25.16-.8.27-1.58.38-2.35-.82-1.45-1.65-2.95-2.45-4.43-.83-1.5-1.38-3.14-1.67-4.92l.14-.32c.62-.72,1.36-1.1,2.29-1.17.55,1.26,1,2.52,1.38,3.81.36,1.32.85,2.55,1.44,3.76l.22.06c.28-1.15.53-2.32.76-3.51.2-1.19.5-2.34.88-3.45l.62-.12,2.37.21.11.59c-.78,2.48-1.61,4.96-2.44,7.47-.83,2.51-1.56,5.03-2.2,7.52l-1.13.32-1.14-.16v.01Z"/><path d="M143.69,67.81c-.89-.87-1.45-1.93-1.7-3.2-.04-.78.21-1.5.76-2.2.5-.81,1.11-1.47,1.84-1.97.74-.48,1.53-.94,2.35-1.39l-.27-.97-1.08-.5-.46.13-3.16,1.59c-.49-.44-.85-1.01-1.04-1.7.79-.64,1.61-1.19,2.47-1.67.86-.49,1.86-.83,2.95-1.09l1.84.46c.62.72,1.04,1.6,1.28,2.65l.1,1.71.15.28.17,1.79c.22.61.51,1.2.88,1.77.36.57.73,1.11,1.14,1.62l-.23.61c-.41.24-.78.51-1.1.8l-.76-.41-.83.13c-.55.43-1.1.87-1.65,1.32-.52.47-1.18.77-1.97.94-.58-.04-1.17-.27-1.68-.7ZM146.94,65.62c.45-.45.75-.95.9-1.59-.1-.99-.27-1.98-.52-2.96l-.39-.07c-.96.59-1.71,1.37-2.29,2.32-.34.66-.35,1.41,0,2.24l.67.44c.4.09.84.07,1.31-.11l.32-.26v-.01Z"/></g><g><path d="M481.18,155.98c2.09-.6,4.23-.93,6.41-.97,2.17-.07,4.35-.03,6.52.09.23.38.29.84.2,1.38v1.08c-.93.02-1.84,0-2.77-.08l-.28-.09c-1.36-.13-2.71-.1-4.09.13.83.38,1.64.78,2.35,1.22.73.44,1.52.79,2.31,1.07l.24.93c-.92.33-1.84.52-2.78.59-.94.09-1.91.16-2.9.22,1.17.62,2.39,1.08,3.66,1.37,1.25.32,2.5.61,3.77.93.17.3.21.67.13,1.07-.13.4-.28.77-.4,1.1l-.53.03c-2.13-.41-4.15-.98-6.1-1.74-1.96-.73-3.91-1.56-5.83-2.49l-.09-.63.56-.7c1-.23,1.95-.33,2.83-.3.91.03,1.76-.07,2.59-.25l.11-.23c-1.01-.32-1.98-.74-2.9-1.22-.95-.48-1.9-.9-2.88-1.24l-.14-.37c-.21-.11-.29-.31-.27-.57l.27-.34.01.01Z"/><path d="M481.83,166.78c1.16-.45,2.36-.52,3.62-.23.73.29,1.28.81,1.68,1.6.53.79.88,1.62,1.03,2.49.13.87.23,1.78.3,2.71l.99.16.9-.78.08-.47-.14-3.54c.6-.27,1.27-.36,1.98-.24.26.99.42,1.96.5,2.94.09.98,0,2.03-.23,3.14l-1.18,1.48c-.92.27-1.89.28-2.94.07l-1.6-.62-.32.02-1.7-.58c-.65-.05-1.3-.04-1.97.08-.67.09-1.32.2-1.95.37l-.46-.46c-.05-.47-.15-.92-.27-1.33l.69-.52.23-.81c-.16-.68-.34-1.36-.52-2.04-.21-.66-.21-1.39-.04-2.19.28-.51.73-.95,1.34-1.24l-.02-.01ZM482.48,170.64c.22.59.56,1.08,1.07,1.48.94.32,1.92.57,2.91.75l.22-.33c-.14-1.11-.54-2.12-1.16-3.04-.46-.58-1.14-.91-2.03-.93l-.67.43c-.25.32-.41.73-.44,1.24l.11.4h-.01Z"/><path d="M478.4,180.51l1.06.22,3.92,1.37c1.29.45,2.6.91,3.93,1.3.35-.72.74-1.41,1.17-2.01l.73-.05.55.62c.04.95-.1,1.91-.42,2.89l-.51,1.32v.33l-.66.61-.46-.05c-1.56-.9-3.19-1.67-4.92-2.34-1.71-.64-3.36-1.42-4.92-2.32l.08-.55.16-.33-.04-.66.32-.36.01.01ZM491.65,185.41c.58-.11,1.14-.16,1.71-.1l.64.82c.27.57.25,1.18-.02,1.78l-.86.88-1.06.08-.76-.66c-.43-.61-.51-1.21-.29-1.82.12-.44.34-.78.64-.99v.01Z"/><path d="M474.9,189.47c2.17.11,4.3.49,6.38,1.17,2.07.64,4.12,1.38,6.14,2.21.1.43,0,.89-.26,1.37l-.34,1.02c-.89-.29-1.75-.6-2.6-.98l-.24-.18c-1.24-.57-2.53-.97-3.91-1.21.67.63,1.3,1.27,1.83,1.92.55.66,1.18,1.24,1.84,1.77l-.08.96c-.97.02-1.91-.1-2.83-.34-.92-.22-1.86-.47-2.81-.73.91.97,1.91,1.8,3.01,2.49,1.08.71,2.16,1.39,3.26,2.1.06.34-.02.7-.22,1.05-.25.33-.51.64-.73.91l-.51-.14c-1.88-1.08-3.6-2.28-5.21-3.63-1.61-1.33-3.19-2.75-4.7-4.24l.12-.63.76-.48c1.02.11,1.95.33,2.78.64.85.32,1.69.5,2.53.61l.18-.18c-.85-.63-1.63-1.34-2.35-2.09-.74-.76-1.5-1.46-2.32-2.11v-.4c-.17-.17-.18-.39-.08-.63l.36-.23v-.02Z"/><path d="M472.05,199.53c1.24.08,2.36.52,3.38,1.32.54.57.82,1.27.86,2.16.15.94.12,1.84-.11,2.69-.25.84-.54,1.71-.87,2.59l.83.56,1.14-.33.27-.4,1.36-3.27c.66,0,1.3.21,1.9.61-.18,1-.44,1.95-.78,2.88-.33.93-.86,1.84-1.53,2.75l-1.69.85c-.94-.14-1.83-.54-2.7-1.18l-1.19-1.23-.3-.11-1.3-1.24c-.56-.32-1.17-.58-1.82-.76-.64-.2-1.28-.37-1.92-.48l-.22-.61c.15-.44.25-.89.31-1.32l.84-.18.55-.64c.14-.68.26-1.38.38-2.08.09-.69.39-1.35.88-2,.47-.35,1.06-.55,1.73-.56v-.02ZM471.02,203.31c-.05.63.05,1.21.35,1.79.72.69,1.5,1.33,2.32,1.9l.34-.21c.34-1.07.4-2.15.22-3.25-.18-.72-.65-1.3-1.46-1.7l-.79.1c-.36.19-.68.5-.92.94l-.07.41.01.02Z"/><path d="M463.16,209.98l.8.72,2.68,3.17c.88,1.04,1.78,2.11,2.74,3.12.67-.45,1.35-.85,2.03-1.14l.66.33.16.81c-.45.84-1.05,1.6-1.82,2.28l-1.11.88-.16.29-.88.19-.37-.28c-.89-1.57-1.91-3.05-3.06-4.51-1.15-1.42-2.18-2.92-3.07-4.49l.34-.44.31-.2.29-.59.46-.15v.01ZM472.11,220.91c.56.19,1.06.44,1.53.78l.14,1.03c-.06.63-.39,1.15-.92,1.53l-1.19.32-.96-.47-.33-.95c-.06-.75.17-1.3.67-1.72.33-.32.68-.5,1.06-.53v.01Z"/><path d="M444.13,219.09c.14.66.44,1.19.91,1.58l-.44.32-1.26.39-.94,1.54c-.09.8-.04,1.62.13,2.43l.57-.05c.71-.57,1.47-1.07,2.29-1.48.57-.11,1.13.02,1.68.35.63.25,1.19.61,1.67,1.02.65.81,1.17,1.74,1.59,2.86.2.69.3,1.37.3,2.06-.03.7-.16,1.38-.39,2.06-.39.75-.84,1.38-1.36,1.93-.51.55-1.13,1.03-1.83,1.46l-.42.05-.53.3c-1.02-.13-2.02-.15-3-.04-.44-1.19-.84-2.37-1.23-3.55v-.25c-.77-1.79-1.47-3.6-2.09-5.44-.15-.83-.15-1.65-.02-2.49s.38-1.67.77-2.48c.5-.72,1.09-1.34,1.74-1.92l.24-.04.25-.15.38-.09c.11-.25.31-.42.53-.5l.46.14v-.01ZM443.9,227.69c-.7,1.02-.73,2.11-.11,3.23l1.25,2.5,1.27-.08c.59-.27.99-.77,1.2-1.51.47-1.07.52-2.18.18-3.33l-.16-.17-.04-.39c-.24-.45-.62-.79-1.13-.99-.63-.2-1.29-.11-1.93.23l-.52.52-.01-.01ZM447.9,227.14l.17-.24-.42-.25.26.49h-.01Z"/><path d="M437.01,225.79c.81.95,1.28,2.05,1.42,3.34-.03.78-.34,1.47-.95,2.12-.57.76-1.23,1.37-2,1.81-.78.41-1.6.81-2.46,1.18l.18.99,1.03.59.47-.09,3.29-1.31c.45.48.76,1.08.89,1.78-.84.57-1.7,1.04-2.6,1.45s-1.92.67-3.03.83l-1.79-.62c-.56-.77-.89-1.68-1.04-2.75l.05-1.71-.13-.29-.02-1.8c-.17-.63-.4-1.24-.73-1.84-.31-.6-.63-1.17-1-1.71l.28-.59c.42-.2.82-.44,1.16-.7l.72.47.84-.06c.59-.38,1.17-.78,1.75-1.17.55-.42,1.24-.67,2.05-.77.58.09,1.14.37,1.62.84v.01ZM433.59,227.69c-.48.41-.83.88-1.04,1.51.01,1,.1,2,.26,2.99l.38.1c1-.5,1.82-1.21,2.48-2.11.39-.63.48-1.38.2-2.23l-.63-.49c-.39-.12-.83-.14-1.31,0l-.35.23h.01Z"/><path d="M424.06,223.96l.15,1.07c-.28.71-.5,1.46-.66,2.24-.18.8-.31,1.57-.44,2.34.79,1.47,1.58,2.99,2.35,4.49.79,1.52,1.3,3.17,1.56,4.96l-.15.32c-.64.7-1.39,1.07-2.32,1.12-.52-1.27-.94-2.54-1.29-3.84-.33-1.33-.79-2.57-1.36-3.79l-.22-.06c-.3,1.14-.58,2.3-.84,3.49-.23,1.19-.56,2.33-.96,3.43l-.62.1-2.36-.27-.1-.59c.84-2.46,1.73-4.92,2.62-7.41.89-2.49,1.68-4.99,2.37-7.47l1.14-.3,1.13.19v-.02Z"/><path d="M414.02,228c.59,1.1.81,2.28.67,3.57-.19.76-.64,1.37-1.38,1.87-.72.62-1.5,1.07-2.34,1.33-.85.23-1.74.44-2.66.63l-.03,1,.88.8.48.02,3.49-.58c.34.56.51,1.21.49,1.93-.95.38-1.89.66-2.85.86-.96.21-2.02.24-3.14.16l-1.62-.99c-.38-.87-.51-1.84-.43-2.91l.42-1.66-.06-.31.37-1.76c-.03-.65-.12-1.3-.32-1.95-.17-.65-.36-1.28-.61-1.89l.4-.51c.46-.1.89-.26,1.28-.44l.6.62.83.12c.65-.24,1.31-.5,1.97-.77.63-.29,1.35-.39,2.17-.31.54.21,1.03.61,1.4,1.17h-.01ZM410.27,229.12c-.56.29-1,.68-1.33,1.25-.2.97-.33,1.97-.39,2.98l.35.18c1.09-.27,2.04-.79,2.88-1.53.52-.53.76-1.24.67-2.13l-.51-.61c-.35-.2-.78-.31-1.28-.28l-.39.15v-.01Z"/><path d="M399.35,223.56c-.09.67,0,1.27.32,1.79l-.53.14-1.32-.07-1.41,1.13c-.36.72-.59,1.51-.71,2.32l.55.14c.86-.29,1.75-.51,2.65-.61.58.09,1.05.4,1.46.9.5.45.91.98,1.22,1.53.34.98.51,2.03.51,3.23-.05.72-.19,1.39-.42,2.04-.26.65-.62,1.25-1.07,1.8-.62.58-1.26,1.01-1.93,1.35-.67.34-1.41.58-2.22.75l-.41-.09-.6.1c-.91-.47-1.84-.83-2.8-1.07,0-1.27.02-2.51.06-3.76l.07-.24c-.1-1.94-.13-3.88-.09-5.81.14-.84.42-1.6.83-2.35.41-.74.93-1.44,1.57-2.06.72-.51,1.48-.89,2.29-1.2l.24.05.29-.05.38.05c.19-.19.43-.29.67-.29l.38.29.02-.01ZM396.19,231.56c-1,.72-1.41,1.73-1.21,3l.32,2.77,1.22.36c.65-.05,1.2-.39,1.65-1.01.81-.84,1.24-1.87,1.31-3.07l-.1-.22.09-.38c-.07-.5-.32-.96-.72-1.31-.53-.41-1.17-.55-1.89-.45l-.67.31h0ZM400.14,232.41l.24-.17-.31-.38.07.55Z"/><path d="M389.19,227.74c.68,1.04,1.01,2.19.99,3.49-.12.77-.52,1.42-1.2,1.99-.66.69-1.39,1.21-2.21,1.54-.82.31-1.69.6-2.59.87l.06,1,.95.71.48-.03,3.42-.89c.39.53.62,1.16.66,1.88-.91.46-1.82.82-2.76,1.12-.94.29-1.99.43-3.11.44l-1.7-.84c-.46-.84-.68-1.78-.69-2.86l.26-1.69-.09-.31.21-1.79c-.08-.64-.24-1.28-.49-1.91-.23-.63-.48-1.24-.78-1.83l.35-.55c.45-.15.87-.34,1.24-.55l.66.56.84.05c.63-.3,1.26-.62,1.89-.95.6-.35,1.31-.51,2.13-.51.56.16,1.08.51,1.5,1.04l-.02.02ZM385.56,229.19c-.53.34-.94.77-1.22,1.36-.11.99-.15,2-.11,3l.37.15c1.06-.37,1.96-.98,2.73-1.79.47-.58.64-1.31.47-2.18l-.56-.57c-.37-.17-.8-.24-1.3-.17l-.37.19-.01.01Z"/><path d="M374.39,225.04l.25,1.05c-.21.73-.36,1.5-.43,2.29-.1.81-.15,1.59-.21,2.38.93,1.38,1.87,2.82,2.78,4.23.94,1.43,1.61,3.03,2.04,4.78l-.12.33c-.56.76-1.27,1.2-2.2,1.34-.64-1.21-1.18-2.44-1.66-3.7-.46-1.29-1.04-2.48-1.72-3.64l-.22-.04c-.19,1.17-.35,2.35-.49,3.56-.11,1.2-.33,2.37-.62,3.5l-.6.16-2.38-.04-.16-.58c.59-2.53,1.23-5.07,1.87-7.63.64-2.56,1.18-5.13,1.62-7.67l1.1-.4,1.15.07v.01Z"/><path d="M362.54,230.93c.95.8,1.59,1.82,1.94,3.07.1.78-.09,1.51-.59,2.25-.43.84-.99,1.55-1.68,2.1-.7.53-1.45,1.06-2.24,1.57l.34.95,1.11.41.45-.16,3.03-1.83c.52.4.92.94,1.16,1.62-.74.7-1.51,1.31-2.33,1.85-.82.55-1.79.97-2.86,1.31l-1.87-.32c-.67-.67-1.16-1.52-1.47-2.55l-.23-1.7-.17-.27-.3-1.77c-.26-.59-.59-1.16-1.02-1.7-.4-.54-.81-1.06-1.26-1.53l.18-.62c.39-.27.74-.57,1.03-.88l.79.35.82-.19c.52-.47,1.03-.96,1.54-1.44.48-.5,1.12-.86,1.9-1.09.58,0,1.19.18,1.73.57h0ZM359.47,233.35c-.41.48-.68,1.01-.78,1.65.17.98.42,1.96.74,2.91l.39.04c.91-.66,1.6-1.49,2.11-2.49.29-.69.25-1.44-.16-2.23l-.7-.39c-.4-.06-.84,0-1.3.21l-.3.29v.01Z"/></g></g></symbol>
+</svg>
+
+
+<header class="hd" id="hd">
+  <a class="hd-logo" href="#top" aria-label="シェアハウス わいが舎"><svg class="logo-mark" aria-hidden="true"><use href="#i-logo"/></svg></a>
+  <a class="hd-line" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで聞く</a>
+</header>
+
+<main id="top">
+
+<!-- ========== 1 ファーストビュー【論理・昼】 ========== -->
+<section class="fv tone-day" data-tone="day" id="s1">
+  <div class="fv-photo bleed">
+    {{ph slot="04-06" pos="50% 40%" eager="1"}}
+  </div>
+  <div class="fv-text inner">
+    <h1>リビングの広さは、<br>心の余裕になる。</h1>
+    <p class="fv-sub">心に余裕があると、人との時間が楽しくなる。<br>人との時間が楽しいと、人生は豊かになる。<br>だから、人が集まりたくなる家で暮らしたい。</p>
+    <div class="btns row">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
+      <a class="btn btn-sub" href="#dinner"><svg><use href="#i-bowl"/></svg>晩ごはんの日を見る</a>
+    </div>
+    <!-- 次の集まり（イベントページへの入口）。会の日が過ぎたら data-until で自動で消える。全部消えたら見出しごと消える -->
+    <div class="fv-next" data-next>
+      <p class="fv-next-h">11月の集まり</p>
+      <a href="/event/ai-shigoto-2026-11/" data-until="2026-11-21"><span class="fv-next-d">11/21<small>土</small></span><span class="fv-next-t"><span class="ib">AIエージェントに</span><span class="ib">仕事を任せよう会</span></span></a>
+      <a href="/event/miso-2026-11/" data-until="2026-11-29"><span class="fv-next-d">11/29<small>日</small></span><span class="fv-next-t">味噌をつくる会</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 2 部屋と庭の写真【昼】（説明は4の写真の下へ・2026-09-29 健ちゃん「説明よりまず写真」） ========== -->
+<section class="sec tone-day" data-tone="day" id="s2" style="padding-top:24px">
+  <div class="wide mt-l">
+    <div class="grid c3">
+      {{ph slot="02-01" r="4/3" cap="1"}}
+      {{ph slot="02-02" r="4/3" cap="1"}}
+      {{ph slot="02-03" r="4/3" cap="1"}}
+      {{ph slot="02-04" r="4/3" cap="1"}}
+      {{ph slot="02-05" r="4/3" cap="1"}}
+      {{ph slot="02-06" r="4/3" cap="リビング"}}
+      <div class="span4">{{ph slot="02-07" r="5/2" pos="50% 60%" cap="庭"}}</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 3 ひとりの時間も、誰かといる時間も【論理→切り替え・昼】 ========== -->
+<section class="sec tone-day" data-tone="day" id="s3">
+  <div class="inner">
+    <span class="eyebrow">DISTANCE</span>
+    <h2 class="h2">ひとりの時間も、<br>誰かといる時間も。</h2>
+    <p class="lead">1人で寂しいのは嫌だけど、自分のペースは守りたい。</p>
+  </div>
+  <div class="wide mt-m">
+    <div class="grid c3 s3five">
+      {{ph slot="03-02" r="4/3"}}
+      {{ph slot="03-03" r="4/3"}}
+      {{ph slot="03-01" r="4/3"}}
+      {{ph slot="03-06" r="4/3"}}
+      <div class="span2">{{ph slot="03-04" r="2/1"}}</div>
+    </div>
+  </div>
+  <div class="inner mt-m">
+    <ul class="choose-list">
+      <li>個室には鍵がついています。</li>
+      <li>誰にも会いたくない日は、玄関から自分の部屋へまっすぐ戻れます。</li>
+      <li>トイレも浴室も洗面台も、いくつかあります。順番を待つことは、あまりありません。</li>
+      <li>話したい日は、リビングへ。</li>
+    </ul>
+    <blockquote class="voice mt-l"><span class="vq">「みんな忙しくて、逆に“誰もいない時間”もある。でも、その距離感がちょうどいい。」</span><cite>高山泰樹さん（たいじゅさん）</cite><a class="note-link" href="https://note.com/wake_wake/n/n1f64b8f5b834" target="_blank" rel="noopener">インタビュー全文を読む<svg aria-hidden="true"><use href="#i-ext"/></svg><span class="vh">（noteの記事が別のタブで開きます）</span></a></blockquote>
+  </div>
+</section>
+
+<!-- ========== 蝶番【昼→夕方】写真なし ========== -->
+<section class="hinge" data-tone="day" id="hinge">
+  <p>広い家には、<br>人が遊びに来る。</p>
+</section>
+
+<!-- ========== 5 5年分の記録（2026-09-29 健ちゃん：蝶番「広い家には、人が遊びに来る。」のすぐ下へ）【夕方→夜・写真だけ】撮影時刻の順 ========== -->
+<section class="sec tone-day record" data-tone="day" id="s5" style="padding-bottom:0">
+  <div class="inner record-head">
+    <span class="eyebrow">2021 — 2026</span>
+    <p class="lead record-lead">2021年から、この家で撮った写真です。</p>
+  </div>
+  <div class="wide mt-m">
+    <div class="grid c4">
+      <div class="span2">{{ph slot="05-01" r="2/1" pos="50% 0%" cap="1"}}</div>
+      {{ph slot="05-02" r="1/1" cap="1"}}
+      {{ph slot="05-22" r="1/1" cap="1"}}
+      {{ph slot="05-23" r="1/1" cap="1"}}
+      {{ph slot="05-03" r="1/1" cap="1"}}
+      {{ph slot="05-24" r="1/1" cap="1"}}
+      {{ph slot="05-25" r="1/1" cap="1"}}
+      <div class="span2">{{ph slot="05-06" r="2/1" cap="1"}}</div>
+      {{ph slot="05-05" r="1/1" cap="1"}}
+      {{ph slot="05-07" r="1/1" cap="1"}}
+      {{ph slot="05-08" r="1/1" cap="1"}}
+      {{ph slot="05-09" r="1/1" cap="1"}}
+      {{ph slot="05-10" r="1/1" cap="1"}}
+      <div class="span2">{{ph slot="05-11" r="2/1" cap="1"}}</div>
+      {{ph slot="05-12" r="1/1" cap="1"}}
+      {{ph slot="05-13" r="1/1" cap="1"}}
+    </div>
+  </div>
+</section>
+<section class="sec tone-day record" data-tone="day" id="s5b" style="padding-top:8px">
+  <div class="wide">
+    <div class="grid c4">
+      {{ph slot="05-16" r="1/1" cap="1"}}
+      {{ph slot="05-17" r="1/1" cap="1"}}
+      <div class="span2">{{ph slot="05-19" r="2/1" cap="1"}}</div>
+      <div class="span2">{{ph slot="05-20" r="2/1" cap="1"}}</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 4 この家に住んでいる人、住んだ人【事実・夜】（記録写真で夜まで暮れたあとなので夜の地に） ========== -->
+<section class="sec tone-day" data-tone="day" id="s4" style="padding-top:72px">
+  <div class="inner">
+    <span class="eyebrow">PEOPLE</span>
+    <h2 class="h2">何年もいた人も、<br>遠くへ行った人も、<br>帰ってくる人も。</h2>
+    <p class="lead">この家には、2021年から住んでいる家族がいます。</p>
+    <p class="lead">オーナーの家族です。住人と同じ家で暮らしながら、この家を運営しています。</p>
+    <p class="lead"><a class="to-owners" href="#owners">この家にいる2人の紹介を読む</a></p>
+    <div class="history mt-m">
+      <p>わいが舎は、教育に関わる人たちが住むシェアハウスとして始まりました。</p>
+      <p>住む人がこの家の良さを感じて、そこから少しずつ、いろんな仕事の人が住むようになりました。</p>
+      <p>いまは、暮らしの余白を楽しみ、人との交流を楽しめる家になっています。</p>
+      <p>この家を開く前、オーナーの家族は横浜で、家族で住めるシェアハウスに暮らしていました。</p>
+    </div>
+  </div>
+  <div class="wide mt-m">
+    <div class="grid c6 years">
+      {{ph slot="04-01" r="1/1" pos="50% 45%" cap="1"}}
+      {{ph slot="04-02" r="1/1" cap="1"}}
+      {{ph slot="04-03" r="1/1" cap="1"}}
+      {{ph slot="04-04" r="1/1" pos="40% 50%" cap="1"}}
+      {{ph slot="04-05" r="1/1" cap="1"}}
+      {{ph slot="04-06" r="1/1" pos="60% 50%" cap="1"}}
+    </div>
+  </div>
+  <div class="inner mt-l" id="daily">
+    <span class="eyebrow">DAILY</span>
+    <h2 class="h2">シェアハウスって、<br>こうじゃないの？</h2>
+    <dl class="qa">
+      <div class="qa-row"><dt>晩ごはんは、みんな一緒？</dt><dd>いいえ。ごはんは、それぞれ好きな時間に食べます。みんなで食べるのは、毎月第1月曜の晩ごはんの日だけです。</dd></div>
+      <div class="qa-row"><dt>お風呂は、みんなで入るの？</dt><dd>いいえ。浴室は、鍵をかけて1人で使います。</dd></div>
+      <div class="qa-row"><dt>寮みたいに、いつも誰かといるの？</dt><dd>いいえ。個室は、鍵のかかる自分の部屋です。話したいときだけ、リビングへ行けばいい。</dd></div>
+    </dl>
+    <h3 class="day-title mt-l">わいが舎の一日</h3>
+    <ol class="day-flow">
+      <li><span class="t">朝</span><span class="d">それぞれの時間に起きて、出かけていきます。洗面台もキッチンもいくつかあるので、順番を待つことはあまりありません。</span></li>
+      <li><span class="t">昼</span><span class="d">家で過ごす日は、自分の部屋でも、リビングでも。</span></li>
+      <li><span class="t">夜</span><span class="d">まっすぐ自分の部屋へ戻る日も、リビングで誰かと話しこむ日も。</span></li>
+      <li><span class="t">月に1回</span><span class="d">第1月曜の19時は、みんなで晩ごはん。</span></li>
+    </ol>
+  </div>
+  <div class="inner mt-l oka">
+    <p class="lead">1ヶ月のつもりで入って、何年も住んだ人がいました。</p>
+    <blockquote class="voice mt-s"><span class="vq">「最初は“1ヶ月だけ”住むつもりでした。家具も買わず、身軽な状態で。でも、出るタイミングを逃したっていうか、出る理由がなかったんですよね。」</span><cite>岡勇太郎さん</cite><a class="note-link" href="https://note.com/wake_wake/n/n133cb66e0da5" target="_blank" rel="noopener">インタビュー全文を読む<svg aria-hidden="true"><use href="#i-ext"/></svg><span class="vh">（noteの記事が別のタブで開きます）</span></a></blockquote>
+  </div>
+  <div class="inner mt-l">
+    <p class="lead">これまでに住んだ人の仕事は、ばらばらです。</p>
+    <ul class="jobs mt-s">
+      <li>ITのスタートアップ</li><li>福祉</li><li>学校の先生</li><li>会社員</li><li>起業家</li>
+    </ul>
+    <p class="lead mt-s">家と職場の往復だけでは会わなかった人と、同じ台所に立ってきました。</p>
+  </div>
+  <div class="inner mt-l gens" id="gens">
+    <div class="gens-box">
+      <span class="eyebrow">GENERATIONS</span>
+      <p class="gens-title">子どもも、若者も、<br>子育て世代も、<br class="sp">ご年配の方も。</p>
+      <p class="lead"><span class="ib">同じ年代の人と暮らすのも、</span><span class="ib">すごく楽しいものです。</span></p>
+      <p class="lead"><span class="ib">でも、年代がちがえば、</span><span class="ib">育ってきた背景もちがう。</span><br><span class="ib">もらえる刺激も</span><span class="ib">変わってきます。</span></p>
+      <p class="lead"><span class="ib">支え合ったり、</span><span class="ib">それぞれの挑戦を応援し合ったり。</span><br><span class="ib">若者からご年配の方まで、</span><br><span class="ib">いろんな年代の人が</span><span class="ib">一緒に暮らす家に</span><span class="ib">したいと思っています！</span></p>
+      <div class="gens-hist">
+        <p class="gh-t">これまでに住んだ人（入居した順）</p>
+        <ol>
+          <li>30代前半</li><li>30代前半</li><li>30代後半</li><li>20代後半</li><li>20代前半</li>
+          <li>30代前半と20代後半の夫婦</li><li>40代と、小学生の娘</li><li>30代後半と、幼児2人</li><li>50代の男性</li><li>50代の女性</li>
+        </ol>
+        <p class="gh-own">オーナーの家族は、40代の夫婦と、小学生と幼児の子どもです。</p>
+      </div>
+    </div>
+  </div>
+  <div class="wide mt-m">
+    <div class="grid talk">
+      {{ph slot="04-07" r="1/1" pos="50% 50%"}}
+      {{ph slot="04-08" r="1/1"}}
+      {{ph slot="04-09" r="1/1"}}
+      {{ph slot="05-14" r="1/1" pos="50% 40%"}}
+    </div>
+  </div>
+  <div class="inner mt-l">
+    <p class="lead">この家を出たあと、住んだ人たちは、それぞれの場所へ行きました。</p>
+    <ul class="dest-list mt-s">
+      <li>フィンランドへ</li>
+      <li>島根で、地域づくりの仕事</li>
+      <li>徳島へ移住</li>
+      <li>アルゼンチンへ</li>
+    </ul>
+    <p class="closing-line mt-m">この家が嫌で出た人は、<br>記録にありません。</p>
+    <div class="return-lines mt-s" style="text-align:center">
+      <p>島根から、忘年会に帰ってきた人がいます。</p>
+      <p>毎年秋に、1〜2週間帰ってくる人がいます。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6 夜の食卓【情緒・夜】見出しなし ========== -->
+<section class="sec tone-day" data-tone="day" id="s6" style="padding-top:40px">
+  <div class="return-item">
+    <div class="bleed">{{ph slot="06-01"}}</div>
+    <div class="inner"><blockquote class="voice"><span class="vq">「一人暮らしも、担任も初めてで…毎日いっぱいいっぱいでした。でも、帰ったら話せる人がいる。その存在がほんまに大きかった。」</span><cite>安宅千夏さん（あたけちゃん）</cite><a class="note-link" href="https://note.com/wake_wake/n/nb8cc81e6238c" target="_blank" rel="noopener">インタビュー全文を読む<svg aria-hidden="true"><use href="#i-ext"/></svg><span class="vh">（noteの記事が別のタブで開きます）</span></a></blockquote></div>
+  </div>
+  <div class="return-item">
+    <div class="bleed">{{ph slot="06-02"}}</div>
+    <div class="inner"><blockquote class="voice"><span class="vq">「助け合っているという感覚すらなくて、“あ、これ買ってきたからどうぞ”みたいな自然なやりとりが日常でした。家族って、血のつながりだけじゃないんやなって実感しましたね」</span><cite>崎本優さん</cite><a class="note-link" href="https://note.com/wake_wake/n/n218366c911bb" target="_blank" rel="noopener">インタビュー全文を読む<svg aria-hidden="true"><use href="#i-ext"/></svg><span class="vh">（noteの記事が別のタブで開きます）</span></a></blockquote></div>
+  </div>
+  <div class="inner mt-l" id="dinner">
+    <div class="dinner">
+      <span class="eyebrow" style="margin-bottom:10px">DINNER</span>
+      <p>毎月、第1月曜の19時から、みんなで晩ごはんを食べています。</p>
+      <p>参加費はかかりません。一品だけ持ってきてください！</p>
+      <p>住人だけの月もあります。よかったらどうぞ。</p>
+    </div>
+    <div class="events mt-m">
+      <p class="events-lead">晩ごはんのほかにも、リビングで集まりをひらいています。</p>
+      <ul class="events-list">
+        <li data-until="2026-10-25"><span class="ev-name"><a href="/event/bbq-2026-10/">わいが舎のバーベキュー</a></span><span class="ev-when">10月25日（日）</span></li>
+        <li data-until="2026-11-21"><span class="ev-name"><a href="/event/ai-shigoto-2026-11/">AIエージェントに仕事を任せよう会</a></span><span class="ev-when">11月21日（土）</span></li>
+        <li data-until="2026-11-29"><span class="ev-name"><a href="/event/miso-2026-11/">季節の暮らしごと（味噌をつくる会）</a></span><span class="ev-when">11月29日（日）</span></li>
+        <li><span class="ev-name">哲学カフェ</span><span class="ev-when">2か月に1回ほど</span></li>
+        <li><span class="ev-name">志プレゼンのミニプレゼンと食事会</span><span class="ev-when">毎月第3土曜</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 7.5 住まいのこと【数字はここに集める】 ========== -->
+<section class="sec tone-day space" data-tone="day" id="space" style="padding-top:40px">
+  <div class="inner">
+    <span class="eyebrow">SPACE &amp; PRICE</span>
+    <div class="fv-nums space-nums">
+      <div><span class="num-pre">月</span><span class="num">79,000<small>円</small></span><span class="num-label">家賃・共益費込み</span></div>
+      <div><span class="num-pre">個室</span><span class="num">16.5<small>㎡</small></span><span class="num-label">10畳</span></div>
+      <div><span class="num-pre">リビング</span><span class="num">40<small>畳</small></span><span class="num-label">&nbsp;</span></div>
+    </div>
+    <p class="only-one"><span class="ib">リビングが40畳もあって、</span><span class="ib">新築のシェアハウスなんて、</span><span class="ib">他にはありません。</span></p>
+    <h2 class="h2 mt-l">枚方のシェアハウスで、<br>いちばん高い家賃です。</h2>
+    <p class="lead sieve">安さでシェアハウスを探しているなら、<span class="ib">わいが舎は合いません。</span></p>
+    <p class="lead">そのかわり、一人暮らしではまずできない暮らしがあります。</p>
+    <ul class="rich mt-s">
+      <li>40畳のリビングで、くつろぐ。</li>
+      <li>庭で、バーベキューや焚き火をする。</li>
+      <li>デロンギのコーヒーマシンで、挽きたてのコーヒーを楽しむ。</li>
+    </ul>
+    <p class="lead rich-close mt-s">一人暮らしとほとんど変わらない金額で、この暮らしができます！</p>
+
+    <p class="lead mt-m">シェアハウスの個室は、7.5〜10㎡ほどがふつうです。わいが舎の個室は、そのおよそ2倍あります。</p>
+
+    <h3 class="h3 mt-l">シェアハウス専用に、新築で建てました。</h3>
+    <div class="mt-s">
+      <p class="lead">古民家などを改装したシェアハウスも多いなか、わいが舎は、はじめからシェアハウスとして新築で建てました。</p>
+      <p class="lead">玄関を入って左がリビング、玄関をはさんで右が個室のある居住スペースです。</p>
+      <p class="lead">リビングの音が、個室には聞こえにくい間取りになっています。</p>
+    </div>
+
+    <div class="price mt-m">
+      <div class="price-row"><span class="k">家賃</span><span class="v">67,000円</span></div>
+      <div class="price-row"><span class="k">共益費<br><span style="font-size:12px">13歳未満は6,000円</span></span><span class="v">12,000円</span></div>
+      <div class="price-row total"><span class="k">合計</span><span class="v"><small style="font-size:15px;font-weight:500">月</small>79,000円</span></div>
+    </div>
+    <div class="mt-m">
+      <p class="lead">共益費に、電気・ガス・水道・インターネット・共用部の消耗品が入っています。</p>
+      <p class="lead">家具家電つき。敷金・礼金はありません。</p>
+      <p class="lead">入居のときにお預かりするのは、退去時のクリーニング代20,000円だけです。</p>
+      <p class="lead">洗濯機は3台。使うのにお金はかかりません。</p>
+    </div>
+    <div class="weak mt-m">
+      <span class="v">香里園駅・光善寺駅から、歩いて13分。駅近ではありません。</span>
+    </div>
+  </div>
+  <div class="inner">
+    <div class="src">
+      <p>個室の広さのふつう：国土交通省「シェアハウスに関する市場動向調査」（2015年）</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 8 ご案内【実務・夜のまま】 ========== -->
+<section class="sec tone-day guide" data-tone="day" id="guide" style="padding-top:40px">
+  <div class="inner">
+    <span class="eyebrow">GUIDE</span>
+    <h2 class="h2">ご案内</h2>
+
+    <h3 class="h3 mt-m">料金</h3>
+    <table class="table">
+      <tr><th>家賃</th><td>67,000円／月</td></tr>
+      <tr><th>共益費</th><td>12,000円／月・1人（13歳未満は6,000円）</td></tr>
+      <tr><th>敷金・礼金</th><td>なし</td></tr>
+      <tr><th>退去時のクリーニング代</th><td>20,000円（入居のときにお預かりします）</td></tr>
+    </table>
+
+    <h3 class="h3 mt-l">入居までの流れ</h3>
+    <ol class="flow">
+      <li><span>晩ごはんの日に来る、またはLINEで聞く</span></li>
+      <li><span>内覧（30分）</span></li>
+      <li><span>体験入居（1週間）</span></li>
+      <li><span>入居</span></li>
+    </ol>
+    <p class="note mt-s">体験入居のあと、住むと決めたら、その月の家賃はいただきません。</p>
+
+    <h3 class="h3 mt-l">設備</h3>
+    <table class="table">
+      <tr><th>個室</th><td>6室（10畳・鍵つき・家具家電つき）</td></tr>
+      <tr><th>リビング</th><td>40畳</td></tr>
+      <tr><th>キッチン</th><td>2か所</td></tr>
+      <tr><th>トイレ</th><td>3つ</td></tr>
+      <tr><th>浴室</th><td>2つ（鍵つき）</td></tr>
+      <tr><th>洗面台</th><td>3台</td></tr>
+      <tr><th>洗濯機</th><td>3台（無料）</td></tr>
+      <tr><th>庭</th><td>焚き火台・バーベキューの道具あり</td></tr>
+    </table>
+
+    <h3 class="h3 mt-l">よくある質問</h3>
+    <div class="faq">
+      <details><summary>子どもと一緒に入居できますか？<svg><use href="#i-plus"/></svg></summary><p class="a">できます。0歳のお子さんから一緒に入居していただけます。オーナーの家族も小さな子どもと一緒に住んでいます。</p></details>
+      <details><summary>一人の時間はありますか？<svg><use href="#i-plus"/></svg></summary><p class="a">あります。個室は鍵つきで、共用部でも会話は強制ではありません。</p></details>
+      <details><summary>どんな人が住んでいますか？<svg><use href="#i-plus"/></svg></summary><p class="a">仕事も年齢もばらばらです。これまでに、20代から50代までの人が住んできました。男女もおよそ半々です。若者からご年配の方まで、どの年代の方も歓迎です！</p></details>
+      <details><summary>家族に心配されています。<svg><use href="#i-plus"/></svg></summary><p class="a">個室と浴室には鍵がかかります。オーナーの家族も同じ家に住んでいて、住人は男女およそ半々です。体験入居（1週間）で、実際に暮らしてから決めることもできます。</p></details>
+      <details><summary>駐車場はありますか？<svg><use href="#i-plus"/></svg></summary><p class="a">ありません。車をお持ちの方は、近くの月極駐車場をご自身で契約してください。</p></details>
+      <details><summary>内覧は土日やオンラインでもできますか？<svg><use href="#i-plus"/></svg></summary><p class="a">できます。土日もご案内できます。基本は現地での内覧ですが、遠方などで難しい場合はオンラインでも対応します。</p></details>
+      <details><summary>個室は何階ですか？家の中に段差はありますか？<svg><use href="#i-plus"/></svg></summary><p class="a">個室は1階と2階にあります。建物は2階建てで、1階部分だけなら段差はありません。</p></details>
+      <details><summary>晩ごはんの日は予約が要りますか？<svg><use href="#i-plus"/></svg></summary><p class="a">毎月第1月曜19時の「晩ごはんの日」は、予約してからお越しください。</p></details>
+      <details><summary>在宅勤務はできますか？<svg><use href="#i-plus"/></svg></summary><p class="a">できます。ほかの住人さんへの配慮だけお願いします。</p></details>
+      <details><summary>掃除当番はありますか？<svg><use href="#i-plus"/></svg></summary><p class="a">当番はありません。自分が使ったところは自分できれいに、が基本です。その他の掃除はオーナーがやっています。</p></details>
+      <details><summary>住人が体調をくずしたときは、どうしていますか？<svg><use href="#i-plus"/></svg></summary><p class="a">熱のあいだはなるべく自室で過ごし、キッチンなどで出るときはマスクをつけます。買い物などは、できる範囲でお手伝いします。</p></details>
+    </div>
+
+    <h3 class="h3 mt-l" id="owners">この家にいる2人</h3>
+    <p class="owners-lead">わいが舎には、オーナーの家族が一緒に住んでいます。住人と同じ家で暮らしながら、この家を運営している2人です。</p>
+    <div class="profile">
+      <div class="pf-head">
+        <div class="pf-photo">{{ph slot="owner-kenzo" r="3/4" pos="50% 30%"}}</div>
+        <div class="pf-id">
+          <span class="pf-yomi">健ちゃん</span>
+          <div class="pf-name">野中健次</div>
+        </div>
+      </div>
+      <div class="pf-body">
+        <p>大阪府枚方市で生まれ育ちました。</p>
+        <p>中学・高校の体育祭や文化祭を通して、先生たちが人と人をつないでくれていた。その感謝から先生を目指し、国語の教員になりました。</p>
+        <p>4年間教えたあと、東京のベンチャー企業へ。全国の先生たちと出会い、「頑張ってる先生ほど浮いている」のを見ました。学校の枠組みから少し離れたところで先生を応援したくて、この家を始めました。</p>
+        <p>やっていくうちに、先生だけが幸せになればいいわけではないと思うようになりました。いまは、オンラインのプログラミング塾で子どもたちが「好き」を「得意」に変えるのを支えています。地域の大人たちを集めて、志プレゼンテーション大会も主催しています。大人の挑戦者を増やすために。</p>
+        <p class="pf-word">「何事も挑戦する。やってみたいと思ったことは絶対にやる」</p>
+        <a class="owner-link" href="https://kokorozashi-ouen.com/" target="_blank" rel="noopener">志応援プロジェクト<svg aria-hidden="true"><use href="#i-ext"/></svg><span class="vh">（別のタブで開きます）</span></a>
+      </div>
+    </div>
+    <div class="profile">
+      <div class="pf-head">
+        <div class="pf-photo">{{ph slot="owner-an" r="3/4" pos="50% 30%"}}</div>
+        <div class="pf-id">
+          <span class="pf-yomi">あんちゃん</span>
+          <div class="pf-name">野中あずみ</div>
+        </div>
+      </div>
+      <div class="pf-body">
+        <p>大阪府枚方市で生まれ育ちました。</p>
+        <p>もともとは、シェアハウスが嫌でした。「人と一緒に暮らすなんて考えられへん」という人見知りだった、と健ちゃんは言います。</p>
+        <p>健ちゃんの仕事の都合で横浜へ移り、そこで子どもが生まれました。関東には身寄りがなく、健ちゃんは出張続きで、家にいるのは週末だけ。子育てはとても大変でした。</p>
+        <p>そこで、家族で住めるシェアハウスに移りました。リビングでの交流と、人とのつながりがとてもよくて、シェアハウスへの見方が変わったそうです。</p>
+        <p>味噌や豆腐を作ったり、かぼちゃやスイカを育てたり。料理を作っては、みんなにおすそ分けしています。住人からは「シェアハウスのおかん」と呼ばれています。問い合わせのLINEに答えているのも、あんちゃんです。</p>
+        <p class="pf-word">「僕なんかよりも全然みんなからの信頼の厚い人ですね」<cite>健ちゃん</cite></p>
+      </div>
+    </div>
+    <blockquote class="pair-word"><span class="vq">「僕たち夫婦はすごいいい感じの矛と盾になっていて、みんなが暮らしやすい環境を作りたいって思うのが妻で、僕はずっといろんなことを挑戦し続けてきました。」</span><cite>野中健次</cite></blockquote>
+
+    <h3 class="h3 mt-l">アクセス</h3>
+    <p style="font-size:15px">大阪府枚方市南中振1丁目14-36</p>
+    <p class="note">京阪電車 香里園駅・光善寺駅から、歩いて13分</p>
+    <div class="mt-m">{{ph slot="08-01" r="3/2" pos="50% 60%"}}</div>
+
+    <div class="btns">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
+      <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-bowl"/></svg>晩ごはんの日に行く（第1月曜19時）</a>
+      <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで聞いてみる</a>
+    </div>
+  </div>
+</section>
+
+<div class="seam day-night" aria-hidden="true"></div>
+<!-- ========== 7 感情のスイッチ【夜の灯り】ここから下だけ暗い地（2026-09-29 健ちゃん「基本白で最後だけ暗く」） ========== -->
+<section class="switch tone-night" data-tone="night" id="s7">
+  <div class="switch-photo bleed">
+    {{ph slot="07-01" pos="45% 55%"}}
+  </div>
+  <div class="switch-text inner">
+    <p class="switch-copy">今の暮らしに不満はない。<span class="l2"><span class="ib">でも、このままで</span><span class="ib">いいのかなとも思う。</span></span><span class="l2 glow"><span class="ib">1年後も、同じ部屋で、</span><span class="ib">同じ毎日？</span></span></p>
+    <p class="switch-after">まずは、内覧にどうぞ。</p>
+    <p class="switch-note">体験入居（1週間）もできます。住むと決めたら、その月の家賃はいただきません。</p>
+    <div class="switch-act" id="contact">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
+      <a class="btn btn-sub btn-second" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-bowl"/></svg>晩ごはんの日に行く（第1月曜19時）</a>
+      <p class="an-line">LINEに答えているのは、あんちゃんです。<br>わからないことは、気軽に聞いてください。<br><span class="ib">友だち追加のあと、</span><span class="ib">「内覧したい」など、</span><span class="ib">ひとこと送ってください。</span></p>
+      <div class="small-btns one">
+        <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで聞いてみる</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="coda" data-tone="night" aria-hidden="true">{{ph slot="09-01" pos="50% 45%"}}</div>
+</main>
+
+<footer class="ft tone-night">
+  <svg class="lamp" viewBox="0 0 30 30" aria-hidden="true"><path d="M4 14.5 15 5l11 9.5M7 12v13h16V12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/><rect x="12.5" y="15.5" width="5" height="5" rx=".5" fill="currentColor" opacity=".85"/></svg>
+  <div class="logo" role="img" aria-label="わいが舎"><svg class="logo-mark" aria-hidden="true"><use href="#i-logo"/></svg></div>
+  <p>シェアハウス わいが舎｜大阪府枚方市</p>
+  <span class="perm">試作のプレビューです（本番の sharehouse-waigaya.com とは別のページ）</span>
+</footer>
+
+<nav class="dock" id="dock" aria-label="問い合わせ">
+  <a class="d-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む</a>
+  <a class="d-sub" href="#dinner"><svg><use href="#i-bowl"/></svg>晩ごはんの日</a>
+</nav>
+
+<script>
+// 会の日（data-until）を過ぎた集まりは出さない。当日までは出す。日本時間で見る
+(function(){
+  var today=new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
+  document.querySelectorAll('[data-until]').forEach(function(el){ if(el.getAttribute('data-until')<today) el.remove(); });
+  document.querySelectorAll('[data-next]').forEach(function(box){ if(!box.querySelector('a')) box.remove(); });
+})();
+</script>
+<script>
+(function(){
+  var hd=document.getElementById('hd');
+  var dock=document.getElementById('dock');
+  var fv=document.getElementById('s1');
+  // 棒グラフ：画面に入ったら左から伸ばす（それ以外の動きはつけない）
+  var bars=document.querySelectorAll('.bars');
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('js-bars');
+    var bio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-in');bio.unobserve(e.target);}});},{rootMargin:'0px 0px -15% 0px',threshold:0});
+    bars.forEach(function(b){bio.observe(b);});
+  }
+  function setTone(t){
+    hd.classList.toggle('is-night',t==='night');
+    hd.classList.toggle('is-dusk',t==='dusk');
+    dock.classList.toggle('is-night',t==='night');
+  }
+  function onScroll(){ hd.classList.toggle('is-scrolled',window.scrollY>40); }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  if(!('IntersectionObserver' in window)){dock.classList.add('show');return;}
+  // 画面の上端の細い帯に入ったセクションの地の色で、ヘッダーの色を切り替える
+  // （縦に長いセクションはthresholdでは判定できないので、rootMarginの線で見る）
+  var tones=document.querySelectorAll('[data-tone]');
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ setTone(e.target.getAttribute('data-tone')); } });
+  },{rootMargin:'0px 0px -92% 0px',threshold:0});
+  tones.forEach(function(s){io.observe(s);});
+  // 下の常設ボタン：ファーストビューのボタンを過ぎたら出す／スイッチのボタンが見えている間は隠す
+  var fvOut=false,inSwitch=false;
+  function dockState(){dock.classList.toggle('show',fvOut&&!inSwitch);}
+  new IntersectionObserver(function(es){fvOut=!es[0].isIntersecting&&es[0].boundingClientRect.top<0;dockState();},{threshold:0}).observe(fv.querySelector('.btns'));
+  new IntersectionObserver(function(es){inSwitch=es[0].isIntersecting;dockState();},{threshold:0}).observe(document.getElementById('contact'));
+})();
+</script>
+</body>
+</html>

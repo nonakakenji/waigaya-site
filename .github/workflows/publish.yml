@@ -1,0 +1,83 @@
+name: 本番に公開
+# sharehouse-waigaya.com（Xserver）に、HPかイベントページを出すボタン。
+# - 手で押したとき（workflow_dispatch）だけ動く。push・プルリクエスト・定時では動かない
+#   よそから来たプルリクエストでは、このワークフローは動かず、秘密（FTP）も渡らない
+# - dry-run（既定）＝サーバーと比べるだけ。upload＝許可リストの場所にだけ上書き。削除はしない
+# - Linux（ubuntu-latest）で動く。公開の箱なので Actions の分数はかからない
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "どれを出すか（hp＝ホームページ / event＝イベントページ）"
+        type: choice
+        options: [hp, event]
+        default: hp
+      event_slug:
+        description: "target=event のときだけ：event/pages/ にあるフォルダ名（例 miso-2026-11）。本番の event/<これ>/ にだけ書く"
+        type: string
+        default: ""
+      mode:
+        description: "dry-run＝見るだけ（既定） / upload＝本番に上書き"
+        type: choice
+        options: [dry-run, upload]
+        default: dry-run
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-prod
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # この箱の中で押されたときだけ（コピーされた箱では動かさない）
+    if: github.repository == 'nonakakenji/waigaya-site'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: GitHub の最新（main）を取る
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: OGP画像を作る道具（Pillow）を入れる
+        if: inputs.target == 'hp'
+        run: pip install --quiet pillow
+
+      - name: 本番用を作る（hp のときだけ。止める条件に当たれば止まる）
+        if: inputs.target == 'hp'
+        run: node prod/build-prod.mjs
+
+      - name: イベントページに計測タグを入れる（event のときだけ。書き出しは prod/out-event/）
+        if: inputs.target == 'event'
+        env:
+          EVENT_SLUG: ${{ inputs.event_slug }}
+        run: node prod/build-event.mjs "$EVENT_SLUG"
+
+      - name: 許可リストと中身の検査（FTPにはつながない）
+        env:
+          TARGET: ${{ inputs.target }}
+          EVENT_SLUG: ${{ inputs.event_slug }}
+          OUT_DIR: ${{ inputs.target == 'event' && format('prod/out-event/{0}', inputs.event_slug) || 'prod/out' }}
+        run: python3 prod/publish.py --target "$TARGET" --slug "$EVENT_SLUG" --out "$OUT_DIR" --mode check
+
+      - name: "サーバーと比べる / 上げる（mode=${{ inputs.mode }}）"
+        env:
+          WAIGAYA_FTP_HOST: ${{ secrets.WAIGAYA_FTP_HOST }}
+          WAIGAYA_FTP_USER: ${{ secrets.WAIGAYA_FTP_USER }}
+          WAIGAYA_FTP_PASSWORD: ${{ secrets.WAIGAYA_FTP_PASSWORD }}
+          MODE: ${{ inputs.mode }}
+          TARGET: ${{ inputs.target }}
+          EVENT_SLUG: ${{ inputs.event_slug }}
+          OUT_DIR: ${{ inputs.target == 'event' && format('prod/out-event/{0}', inputs.event_slug) || 'prod/out' }}
+        run: python3 prod/publish.py --target "$TARGET" --slug "$EVENT_SLUG" --out "$OUT_DIR" --mode "$MODE"

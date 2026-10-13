@@ -1,0 +1,93 @@
+/* 「季節の暮らしごと」第1回 味噌をつくる会
+   参考：BEAMS「別府・竹細工」の手書き×細枠×余白。
+   色はわいが舎の「白と黒」（地は白・文字は黒・線は薄いグレー）。2026-10-12 に緑と生成りから直した */
+:root{
+  --bg:#FFFFFF;        /* 地は白（2026-10-12 健ちゃん「基本白と黒」） */
+  --paper:#FFFFFF;
+  --panel:#FFFFFF;     /* 面は塗らず、線で囲む */
+  --ink:#2F2F2F;       /* 文字 */
+  --sub:#6B6B6B;       /* 補助の文字（無彩のグレー） */
+  --green:#1F1F1F;     /* もとは緑の差し色。白黒にそろえて黒寄りに（名前は他の箇所との互換で残す） */
+  --green-soft:#6B6B6B;
+  --line:#E4E4E4;      /* 薄いグレーの罫線 */
+  --serif:"Shippori Mincho","Hiragino Mincho ProN",serif;
+  --hand:"Yomogi","Shippori Mincho",serif;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.95}
+
+/* 全体を囲む細い罫線のフレーム（参考サイトの枠） */
+.frame{
+  max-width:860px;margin:24px auto;background:var(--paper);
+  border:1px solid var(--line);border-radius:4px;
+  padding:0 0 8px;overflow:hidden;position:relative;
+}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+
+/* ヒーロー写真＋縦書きラテン */
+.hero{position:relative;margin:28px 20px 0;border:1px solid var(--line);overflow:hidden;border-radius:2px}
+.hero img{width:100%;height:auto;max-height:68vh;object-fit:cover;object-position:center;display:block}
+.vlatin{
+  position:absolute;top:14px;left:14px;z-index:2;
+  writing-mode:vertical-rl;letter-spacing:.35em;font-size:12px;
+  color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.35);font-family:var(--serif)
+}
+
+/* シリーズ名・タイトル */
+.series{text-align:center;color:var(--green);font-family:var(--serif);font-size:15px;letter-spacing:.1em;margin:34px 0 6px}
+.series .no{color:var(--green-soft);font-size:13px}
+h1.brush{font-family:var(--hand);font-weight:400;color:var(--green);
+  font-size:clamp(34px,9vw,54px);line-height:1.3;text-align:center;margin:4px 0 10px}
+.tagline{font-family:var(--hand);text-align:center;color:var(--ink);
+  font-size:clamp(15px,3.8vw,19px);line-height:1.9;margin:0 0 6px}
+.sprout,.wrap .sprout{width:32px;height:1px;background:var(--ink);margin:18px auto 28px}   /* 区切りの印：黒の細い線（絵文字はやめた） */
+
+/* 本文 */
+.lead{font-family:var(--hand);font-size:clamp(18px,4.6vw,23px);line-height:1.95;text-align:center;color:var(--ink);margin:26px 0}
+.wrap p{margin:18px 0}
+strong{color:var(--green);font-weight:600}
+
+/* 見出し：手書き＋上に黒の細い線 */
+h2.brush{font-family:var(--hand);font-weight:400;color:var(--green);
+  font-size:clamp(23px,5.2vw,30px);text-align:center;margin:46px 0 18px;position:relative}
+h2.brush::before{content:"";display:block;width:32px;height:1px;background:var(--ink);margin:0 auto 14px}
+
+/* 写真ギャラリー */
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:30px 0}
+.gallery figure{margin:0}
+.gallery img{width:100%;height:190px;object-fit:cover;display:block;border:1px solid var(--line);border-radius:3px}
+.gallery figcaption{font-family:var(--hand);color:var(--sub);font-size:14px;text-align:center;margin-top:8px}
+
+/* 情報枠 */
+.info{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:22px 24px;margin:30px 0}
+.info dt{color:var(--green);font-family:var(--serif);font-size:14px;letter-spacing:.06em;margin-top:14px}
+.info dt:first-child{margin-top:0}
+.info dd{margin:2px 0 0}
+.note{color:var(--sub);font-size:14px;line-height:1.85}
+
+/* 当日の流れ */
+.flow{list-style:none;counter-reset:step;padding:0;margin:18px 0}
+.flow li{counter-increment:step;position:relative;padding:16px 0 16px 56px;border-bottom:1px dashed var(--line)}
+.flow li:last-child{border-bottom:none}
+.flow li::before{content:counter(step);position:absolute;left:0;top:15px;width:36px;height:36px;
+  display:flex;align-items:center;justify-content:center;border-radius:50%;
+  background:transparent;border:1.5px solid var(--green);color:var(--green);
+  font-family:var(--serif);font-size:17px}
+
+/* ボタン：参考サイトの囲みピル（アウトライン） */
+.cta{text-align:center}
+.btn{display:inline-block;background:var(--green);color:#fff;text-decoration:none;
+  padding:15px 44px;border-radius:999px;font-size:17px;margin:32px 0;letter-spacing:.04em}
+.btn span{font-size:14px;margin-left:4px}
+
+/* フッター */
+.ft{text-align:center;color:var(--sub);font-size:13px;padding:44px 20px 24px}
+.ft .sprout{margin:0 auto 16px}
+.ft-series{color:var(--green);font-size:18px;margin:0 0 10px}
+.ft a{color:var(--sub)}
+
+/* お申し込み（LINE）欄 */
+.apply-items{font-weight:700;font-size:17px;margin:16px 0}
+.apply-ex{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 20px;line-height:1.9;margin:0 0 16px}
+.apply-ex-label{display:block;font-size:13px;color:var(--green);font-weight:700;margin-bottom:4px}
