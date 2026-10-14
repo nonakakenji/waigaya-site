@@ -60,6 +60,8 @@ def event_allowed(slug, remote):
         return False
     if parts == [".htaccess"]:  # 目隠し用の .htaccess はページ直下だけ
         return True
+    if len(parts) == 2 and parts[0] == "img" and SEG_RE.match(parts[1]) and parts[1].lower().endswith(".mp4"):
+        return True  # 動画（告知リール）は img/ の直下だけ（2026-10-14 任せよう会のページに載せるため）
     return all(SEG_RE.match(p) for p in parts) and parts[-1].lower().endswith(EVENT_EXT)
 
 

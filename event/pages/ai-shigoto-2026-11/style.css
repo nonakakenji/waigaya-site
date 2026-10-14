@@ -182,3 +182,8 @@ svg text{font-family:var(--maru);font-weight:700;fill:var(--ink)}
 .big-h{font-family:var(--maru);font-weight:900;font-size:clamp(20px,5.6vw,28px);line-height:1.4;text-align:center;margin:4px 0 14px}
 .big-c{font-family:var(--maru);font-weight:700;font-size:clamp(16px,4.2vw,19px);line-height:1.8}
 .term-note{margin-top:6px}
+
+/* 告知リール（縦動画）：スマホは幅いっぱい、PCは縦長のまま幅380pxで真ん中。自動再生はしない（音つきなので押した人だけ） */
+.reel{margin:0 auto 40px;max-width:380px}
+.reel-k{margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--sub);text-align:center}
+.reel video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:12px;background:#1F1F1F}
