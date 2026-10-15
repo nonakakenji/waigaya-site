@@ -2,13 +2,13 @@
    参考：BEAMS「別府・竹細工」の手書き×細枠×余白。
    色はわいが舎の「白と黒」（地は白・文字は黒・線は薄いグレー）。2026-10-12 に緑と生成りから直した */
 :root{
-  --bg:#FFFFFF;        /* 地は白（2026-10-12 健ちゃん「基本白と黒」） */
+  --bg:#FAFAFA;        /* やわらかい白（きなりはやめる・2026-10-15 あんちゃん） */
   --paper:#FFFFFF;
-  --panel:#FFFFFF;     /* 面は塗らず、線で囲む */
-  --ink:#2F2F2F;       /* 文字 */
-  --sub:#6B6B6B;       /* 補助の文字（無彩のグレー） */
-  --green:#1F1F1F;     /* もとは緑の差し色。白黒にそろえて黒寄りに（名前は他の箇所との互換で残す） */
-  --green-soft:#6B6B6B;
+  --panel:#F2F2F2;     /* 情報欄：薄いグレー */
+  --ink:#333333;       /* 文字 */
+  --sub:#6B6B6B;       /* 補助の文字 */
+  --green:#2F6B52;     /* 緑の差し色（2026-10-15 あんちゃん・緑デザインに戻す） */
+  --green-soft:#7FA68F;
   --line:#E4E4E4;      /* 薄いグレーの罫線 */
   --serif:"Shippori Mincho","Hiragino Mincho ProN",serif;
   --hand:"Yomogi","Shippori Mincho",serif;
