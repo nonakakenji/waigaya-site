@@ -92,3 +92,4 @@ h2.brush::before{content:"";display:block;width:32px;height:1px;background:var(-
 .apply-steps li{counter-increment:ap;position:relative;padding:10px 0 10px 44px;font-weight:700;line-height:1.7;border-bottom:1px dashed var(--line)}
 .apply-steps li:last-child{border-bottom:none}
 .apply-steps li::before{content:counter(ap);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-size:15px;line-height:30px;text-align:center}
+.ib{display:inline-block}
