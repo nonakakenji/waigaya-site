@@ -52,8 +52,14 @@ p{margin:12px 0}
 .gallery figcaption{font-size:14px;color:var(--sub);margin-top:4px}
 
 .cta{text-align:center}
-/* 申し込みボタンのすぐ上の動画（16:9・音なしで自動再生・タップで音） */
-.movie{position:relative;margin:18px 0 0;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9}
+/* ヒーロー写真のすぐ下の動画（16:9・音なしで自動再生・タップで音）。下に申し込み（#entry）への導線（10/17） */
+html{scroll-behavior:smooth}
+#entry{scroll-margin-top:12px}
+.movie-wrap{margin-top:20px;text-align:center}
+.to-entry{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:14px 0 0;padding:12px 28px;border:2px solid var(--accent);border-radius:999px;
+  color:var(--accent);background:#fff;font-weight:700;font-size:17px;letter-spacing:.06em;text-decoration:none}
+.to-entry:active{background:var(--tint)}
+.movie{position:relative;margin:0;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9}
 .movie video{display:block;width:100%;height:100%;object-fit:cover;cursor:pointer}
 .movie .snd{position:absolute;right:10px;top:10px;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;
   background:rgba(255,255,255,.92);color:var(--accent);font:700 13px/1 var(--sans);padding:8px 12px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
@@ -69,6 +75,8 @@ p{margin:12px 0}
 .ft a{color:var(--accent)}
 
 @media (min-width:760px){
+  .movie-wrap{margin-top:32px}
+  .to-entry{font-size:18px;padding:14px 40px;margin-top:18px}
   body{font-size:18px;line-height:1.9}
   .wrap{padding:0 40px}
   .title{padding:44px 0 8px}
