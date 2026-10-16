@@ -52,6 +52,14 @@ p{margin:12px 0}
 .gallery figcaption{font-size:14px;color:var(--sub);margin-top:4px}
 
 .cta{text-align:center}
+/* 申し込みボタンのすぐ上の動画（16:9・音なしで自動再生・タップで音） */
+.movie{position:relative;margin:18px 0 0;border-radius:8px;overflow:hidden;background:#000;aspect-ratio:16/9}
+.movie video{display:block;width:100%;height:100%;object-fit:cover;cursor:pointer}
+.movie .snd{position:absolute;right:10px;top:10px;display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;
+  background:rgba(255,255,255,.92);color:var(--accent);font:700 13px/1 var(--sans);padding:8px 12px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.movie .snd .on{display:none}
+.movie .snd[aria-pressed="true"] .on{display:inline}
+.movie .snd[aria-pressed="true"] .off{display:none}
 .btn{display:block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;letter-spacing:.06em;padding:18px 24px;border-radius:12px;font-size:19px;margin:16px 0 6px}
 .btn:active{opacity:.85}
 .deadline{font-size:16px;font-weight:700;color:var(--head);margin:8px 0 0}
