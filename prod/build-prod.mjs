@@ -131,6 +131,33 @@ for (const d of OLD_PAGES) {
   fs.writeFileSync(path.join(OUT, d, "index.html"), html);
 }
 
+// ---- プライバシーポリシー（/privacy/）：元は hp/privacy/index.html。head の差し込みと検査はトップと同じ ----
+{
+  const PV_DESC = "シェアハウス わいが舎（大阪府枚方市）のプライバシーポリシー。集める情報と使い道、クッキーについて。";
+  let pv = fs.readFileSync(path.join(ROOT, "..", "hp", "privacy", "index.html"), "utf8");
+  const PV_TAGS = [
+    '<meta name="description" content="' + esc(PV_DESC) + '">',
+    '<link rel="canonical" href="' + SITE + '/privacy/">',
+    '<link rel="icon" type="image/png" href="' + FAVICON + '">',
+    '<meta property="og:type" content="article">',
+    '<meta property="og:site_name" content="シェアハウス わいが舎">',
+    '<meta property="og:title" content="プライバシーポリシー｜シェアハウス わいが舎">',
+    '<meta property="og:description" content="' + esc(PV_DESC) + '">',
+    '<meta property="og:url" content="' + SITE + '/privacy/">',
+    '<meta property="og:image" content="' + ogUrl + '">',
+    ...HEAD_TRACKING,
+  ].join("\n");
+  if (!/<meta name="viewport"[^>]*>/.test(pv)) { console.error("privacy: viewport が無い"); process.exit(1); }
+  pv = pv.replace(/(<meta name="viewport"[^>]*>)/, "$1\n" + PV_TAGS);
+  pv = addBodyTracking(pv, "hp/privacy/index.html");
+  const pf = [];
+  if (/noindex|プレビュー|試作|\{\{|許可待ち|確認中|data:,|waigaya-site-preview|workers\.dev/i.test(pv)) pf.push("止める言葉が入っている");
+  for (const k of [GTM, GA4, PIXEL, "line_click_cv", 'rel="canonical"', "og:image", 'name="description"', "制定日"]) if (!pv.includes(k)) pf.push(k + " が無い");
+  if (pf.length) { console.error("privacy の検査で止めた:\n- " + pf.join("\n- ")); process.exit(1); }
+  fs.mkdirSync(path.join(OUT, "privacy"), { recursive: true });
+  fs.writeFileSync(path.join(OUT, "privacy", "index.html"), pv);
+}
+
 // ---- sitemap：トップだけにする（旧ページは canonical がトップなので載せない。/thanks はSTUDIOの名残） ----
 fs.writeFileSync(path.join(OUT, "sitemap-static.xml"),
   '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n<url>\n<loc>' + SITE + "/</loc>\n</url>\n</urlset>\n");
