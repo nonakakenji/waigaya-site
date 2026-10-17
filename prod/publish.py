@@ -39,7 +39,7 @@ NEVER_CMDS = {"DELE", "RMD", "XRMD", "RNFR", "RNTO", "SITE", "APPE", "STOU"}
 # ---- イベントページ（target=event） ----
 SLUG_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,40}$")
 SEG_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
-EVENT_EXT = (".html", ".css", ".js", ".json", ".svg", ".webp", ".jpg", ".jpeg", ".png", ".avif", ".ico", ".txt")
+EVENT_EXT = (".html", ".css", ".js", ".json", ".svg", ".webp", ".jpg", ".jpeg", ".png", ".gif", ".avif", ".ico", ".txt")  # .gif はメール用の動く画像（2026-10-17 司令塔OK）
 EVENT_ORDER = ["img/", ".css", ".js", ".json", ".htaccess", "index.html"]  # 写真 → CSS等 → 最後にページ本体
 
 
