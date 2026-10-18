@@ -19,10 +19,15 @@ export const HEAD_TRACKING = [
 //   URL に utm_source=meta があったら sessionStorage に印を残し、そのページと、同じタブでそのあと見るページの
 //   LINEボタン lin.ee/wCG7OfR を lin.ee/upx7cmu（広告から来た人の入口）に差し替える。LINEの管理画面の「友だち追加経路」で数が分かれる
 //   計測には via=meta を足す（place は同じ）。utm が無ければ何も変えない
+// 申し込み（2026-10-18 改善提案1・健ちゃん実施）：LINEボタンと Googleフォームのリンクを押したら、Metaの標準イベント Lead も送る。
+//   広告の学習を「ページを開いた人」から「申し込み」に切り替えるための数をためる（切り替えは10/25以降に司令塔が判断）
+//   content_category は line / form（広告から来た人は line_meta / form_meta）。HPの内覧はLINEのメニューから申し込むので、HPではLINEボタンが申し込み
 export const LINE_DEFAULT = "lin.ee/wCG7OfR", LINE_META = "lin.ee/upx7cmu";
 export const LINE_JS = "<script>(function(){var via='';try{if((new URLSearchParams(location.search).get('utm_source')||'').toLowerCase()==='meta')sessionStorage.setItem('wg_via','meta');if(sessionStorage.getItem('wg_via')==='meta')via='meta';}catch(e){if((new URLSearchParams(location.search).get('utm_source')||'').toLowerCase()==='meta')via='meta';}"
   + "if(via==='meta')document.querySelectorAll('a[href*=\"" + LINE_DEFAULT + "\"]').forEach(function(a){a.href=a.href.replace('" + LINE_DEFAULT + "','" + LINE_META + "');});"
-  + "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a||!/lin\\.ee|line\\.me/.test(a.href))return;var t=(a.textContent||'').replace(/\\s+/g,'').slice(0,30);var sec=a.closest('section,header,nav,footer');var place=sec?(sec.id||sec.className||sec.tagName).toString().split(' ')[0]:'';var p={link_url:a.href,link_text:t,place:place,transport_type:'beacon'};if(via)p.via=via;if(window.gtag)gtag('event','line_click_cv',p);if(window.fbq)fbq('track','Contact',via?{content_name:t,content_category:via}:{content_name:t});},true);})();</script>";
+  + "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var isLine=/lin\\.ee|line\\.me/.test(a.href),isForm=/docs\\.google\\.com\\/forms|forms\\.gle/.test(a.href);if(!isLine&&!isForm)return;var t=(a.textContent||'').replace(/\\s+/g,'').slice(0,30);"
+  + "if(isLine){var sec=a.closest('section,header,nav,footer');var place=sec?(sec.id||sec.className||sec.tagName).toString().split(' ')[0]:'';var p={link_url:a.href,link_text:t,place:place,transport_type:'beacon'};if(via)p.via=via;if(window.gtag)gtag('event','line_click_cv',p);if(window.fbq)fbq('track','Contact',via?{content_name:t,content_category:via}:{content_name:t});}"
+  + "if(window.fbq)fbq('track','Lead',{content_name:t,content_category:(isLine?'line':'form')+(via?'_'+via:'')});},true);})();</script>";
 
 export const NOSCRIPT = '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=' + GTM + '" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + PIXEL + '&ev=PageView&noscript=1" alt=""></noscript>';
 
