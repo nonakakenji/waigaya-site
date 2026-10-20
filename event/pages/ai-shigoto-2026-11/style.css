@@ -188,3 +188,29 @@ svg text{font-family:var(--maru);font-weight:700;fill:var(--ink)}
 .reel{margin:0 auto 40px;max-width:380px}
 .reel-k{margin:0 0 8px;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--sub);text-align:center}
 .reel video{display:block;width:100%;height:auto;aspect-ratio:9/16;border-radius:12px;background:#1F1F1F}
+
+/* 最初の画面（2026-10-21）：広告の動画v3とそろえる。スマホ390×844で、見出し・健ちゃん・当日やること・日時場所料金定員・申し込みボタンまでが1画面に入る */
+.fv{padding:22px 0 26px;max-width:520px;margin:0 auto}
+.fv-k{margin:0;font-size:12px;font-weight:700;line-height:1.6;letter-spacing:.04em;color:var(--sub);text-align:center}
+.fv-h{font-family:var(--maru);font-weight:900;font-size:clamp(30px,8.8vw,48px);line-height:1.25;letter-spacing:-.02em;text-align:center;margin:6px 0 16px}
+.fv-host{display:flex;align-items:center;gap:14px;margin:0 0 14px}
+.fv-host img{width:76px;height:92px;object-fit:cover;border-radius:10px;flex:none}
+.fv-host p{margin:0;line-height:1.55}
+.fv-host-k{display:block;font-size:12px;color:var(--sub);font-weight:700}
+.fv-host b{display:block;font-family:var(--maru);font-weight:900;font-size:19px}
+.fv-host-p{display:block;font-size:13px;color:var(--sub);margin-top:2px}
+.fv-do-k{margin:0 0 4px;font-family:var(--maru);font-weight:900;font-size:15px}
+.fv-do{list-style:none;counter-reset:fd;padding:0;margin:0 0 14px}
+.fv-do li{counter-increment:fd;position:relative;padding:7px 0 7px 36px;font-weight:700;font-size:15px;line-height:1.5;border-bottom:1px dashed var(--line)}
+.fv-do li:last-child{border-bottom:none}
+.fv-do li::before{content:counter(fd);position:absolute;left:0;top:6px;width:26px;height:26px;border-radius:50%;background:var(--mark);color:var(--ink);font-family:var(--maru);font-weight:900;font-size:14px;line-height:26px;text-align:center}
+.fv-info{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin:0 0 16px;padding:8px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.fv-info div{display:flex;gap:10px;align-items:baseline;padding:3px 0}
+.fv-info-w{grid-column:1 / -1}
+.fv-info dt{font-size:12px;font-weight:700;color:var(--sub);flex:none}
+.fv-info dd{margin:0;font-weight:700;font-size:15px;line-height:1.5}
+.fv-cta{text-align:center;margin:0}
+.btn-fill{background:var(--ink);color:#fff;border-color:var(--ink);display:block;padding:14px 20px}
+.fv-cta-n{margin:6px 0 0;text-align:center;font-size:12px;color:var(--sub);line-height:1.6}
+.fv-do small{display:block;font-size:12px;font-weight:500;color:var(--sub);line-height:1.4}
+.wrap > .hero{padding:16px 0 40px}
