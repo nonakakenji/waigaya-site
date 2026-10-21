@@ -93,3 +93,26 @@ h2.brush::before{content:"";display:block;width:32px;height:1px;background:var(-
 .apply-steps li:last-child{border-bottom:none}
 .apply-steps li::before{content:counter(ap);position:absolute;left:0;top:9px;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-size:15px;line-height:30px;text-align:center}
 .ib{display:inline-block}
+
+/* 最初の画面（スマホ1画面に、見出し・やること3つ・日時など・申し込みボタンまで入れる 2026-10-22） */
+.fv{max-width:520px;margin:0 auto;padding:0 0 10px}
+.fv .hero{margin:16px 20px 0}
+.fv .hero img{aspect-ratio:3/2;height:auto;max-height:none;object-position:center 55%}
+.fv-in{padding:0 20px}
+.fv .series{margin:14px 0 0;font-size:13px}
+.fv h1.brush{font-size:clamp(32px,8.6vw,46px);line-height:1.25;margin:0 0 10px}
+.fv-do-k{margin:0 0 2px;font-weight:700;font-size:14px;color:var(--green)}
+.fv-do{list-style:none;counter-reset:fd;padding:0;margin:0 0 12px}
+.fv-do li{counter-increment:fd;position:relative;padding:6px 0 6px 36px;font-weight:700;font-size:16px;line-height:1.5;border-bottom:1px dashed var(--line)}
+.fv-do li:last-child{border-bottom:none}
+.fv-do li::before{content:counter(fd);position:absolute;left:0;top:6px;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;line-height:24px;text-align:center}
+.fv-do small{display:block;font-size:12px;font-weight:500;color:var(--sub);line-height:1.5}
+.fv-info{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin:0 0 14px;padding:6px 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.fv-info div{display:flex;gap:10px;align-items:baseline;padding:2px 0}
+.fv-info-w{grid-column:1 / -1}
+.fv-info dt{font-size:12px;font-weight:700;color:var(--green);flex:none}
+.fv-info dd{margin:0;font-weight:700;font-size:15px;line-height:1.5}
+.fv-cta{text-align:center;margin:0}
+.fv-cta .btn{margin:0;padding:13px 44px}
+.fv-cta-n{margin:6px 0 0;text-align:center;font-size:12px;color:var(--sub);line-height:1.6}
+.wrap .tagline{margin-top:0}
