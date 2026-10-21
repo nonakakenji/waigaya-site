@@ -30,9 +30,9 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
 .cta{margin:28px 0;padding:24px 18px;border:1px solid var(--line);border-top:3px solid var(--accent);text-align:center}
 .cta h2{font-size:18px;line-height:1.6;margin:0 0 6px}
 .cta p{margin:0 0 14px;font-size:14px}
-.facts{list-style:none;margin:0 0 18px;padding:0;text-align:left;font-size:14px}
-.facts li{display:flex;justify-content:space-between;gap:12px;padding:6px 2px;border-bottom:1px solid var(--line)}
-.facts li span:last-child{text-align:right}
+.cta-end{margin-top:16px;padding-top:20px}
+.ib{display:inline-block}
+.fact{font-size:13px;color:var(--sub);margin:12px 0 0 !important}
 .btn{display:flex;align-items:center;justify-content:center;min-height:54px;padding:14px 20px;border-radius:6px;
   background:var(--accent);color:#FFFFFF;font-weight:700;font-size:16px;text-decoration:none;letter-spacing:.04em}
 .how{font-size:13px;color:var(--sub);margin:10px 0 0 !important}
@@ -66,9 +66,8 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
 
     <section class="cta" id="mid">
       <h2>わいが舎を、見に来ませんか。</h2>
-      <p>内覧は30分です。</p>
       <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">内覧（30分）を申し込む</a>
-      <p class="how">LINEのトーク画面の下のメニュー「内覧申し込み」からどうぞ！</p>
+      <p class="how"><span class="ib">LINEのトーク画面の下のメニュー</span><span class="ib">「内覧申し込み」からどうぞ！</span></p>
     </section>
 
     <div class="pages">
@@ -79,20 +78,11 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
       <figure class="page" id="p10"><img src="img/p10.jpg" width="1080" height="1350" alt="漫画 10ページ目：まずは、内覧へどうぞ。" loading="lazy" decoding="async"><figcaption>10 / 10</figcaption></figure>
     </div>
 
-    <section class="cta" id="end">
-      <h2>まずは、内覧へどうぞ。</h2>
-      <p>枚方・香里園のシェアハウス、わいが舎。</p>
-      <ul class="facts">
-        <li><span>家賃</span><span>67,000円</span></li>
-        <li><span>共益費</span><span>12,000円</span></li>
-        <li><span>個室</span><span>10畳・鍵つき</span></li>
-        <li><span>共用リビング</span><span>ソファ・家電あり</span></li>
-        <li><span>敷金・礼金</span><span>なし</span></li>
-        <li><span>体験入居</span><span>1週間</span></li>
-        <li><span>駅から</span><span>香里園駅から歩いて13分</span></li>
-      </ul>
+    <!-- 最後の囲み：10枚目の絵の見出し・表・ボタンと言葉を重ねない。絵のボタンは押せないので、押せるボタンと漫画に無いことだけ（2026-10-21 健ちゃん） -->
+    <section class="cta cta-end" id="end" aria-label="内覧の申し込み">
       <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">内覧（30分）を申し込む</a>
-      <p class="how">LINEのトーク画面の下のメニュー「内覧申し込み」からどうぞ！</p>
+      <p class="fact"><span class="ib">共用リビングにソファ・家電あり／</span><span class="ib">香里園駅から歩いて13分</span></p>
+      <p class="how"><span class="ib">LINEのトーク画面の下のメニュー</span><span class="ib">「内覧申し込み」からどうぞ！</span></p>
     </section>
 
     <p class="more"><a href="/">わいが舎のホームページを見る</a></p>
