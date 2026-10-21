@@ -24,13 +24,13 @@ EVENT_PAGES = os.path.join(os.path.dirname(HERE), "event", "pages")
 REMOTE_ROOT = "/"  # このFTPアカウントのルート＝本番の public_html
 
 # ---- 本番で触ってよいもの（名前で固定） ----
-ALLOW_FILES = {"index.html", "kurashi/index.html", "LP40/index.html", "LP20/index.html", "sitemap-static.xml", "img/og.jpg", "privacy/index.html"}
-ALLOW_DIRS = {"img/800", "img/1600"}  # この直下のファイルだけ（さらに下の階層は不可）
+ALLOW_FILES = {"index.html", "kurashi/index.html", "LP40/index.html", "LP20/index.html", "sitemap-static.xml", "img/og.jpg", "privacy/index.html", "manga/index.html"}  # manga＝内覧の漫画広告の行き先（2026-10-21）
+ALLOW_DIRS = {"img/800", "img/1600", "manga/img"}  # この直下のファイルだけ（さらに下の階層は不可）
 IMG_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*\.(jpg|jpeg|webp|png|avif)$")
 # 念のため、触らないものも名前で持っておく（許可リストと重なったら設定ミスとして止める）
 DENY_PREFIXES = ("assets/", "thanks/", "send.php", "_private/", "event/", ".htaccess", "robots.txt", "sitemap.xml", "_nuxt/")
 # 上げる順番（README のとおり）：写真 → 旧ページ → sitemap → 最後にトップ
-ORDER = ["img/", "privacy/", "kurashi/", "LP40/", "LP20/", "sitemap-static.xml", "index.html"]
+ORDER = ["img/", "manga/img/", "manga/", "privacy/", "kurashi/", "LP40/", "LP20/", "sitemap-static.xml", "index.html"]
 
 READ_ONLY_CMDS = {"AUTH", "USER", "PASS", "PBSZ", "PROT", "PWD", "CWD", "TYPE", "PASV", "EPSV", "LIST", "NLST", "SIZE", "MDTM", "MLSD", "MLST", "FEAT", "SYST", "NOOP", "QUIT", "OPTS"}
 NEVER_CMDS = {"DELE", "RMD", "XRMD", "RNFR", "RNTO", "SITE", "APPE", "STOU"}
@@ -120,7 +120,7 @@ def content_check(out, files):
         if "data:," in html: bad.append("空のfavicon")
         for k in ("GTM-P6D9DCST", "G-LH7EEZMVNW", "1296465352381188", "line_click_cv", 'rel="canonical"', "og:image", 'name="description"'):
             if k not in html: bad.append(k + " が無い")
-        if len(re.findall(r'href="https://lin\.ee/', html)) < (1 if rel == "privacy/index.html" else 5): bad.append("lin.ee リンク不足")  # privacy は問い合わせの1か所だけ
+        if len(re.findall(r'href="https://lin\.ee/', html)) < {"privacy/index.html": 1, "manga/index.html": 2}.get(rel, 5): bad.append("lin.ee リンク不足")  # privacy は問い合わせの1か所だけ・manga は途中と最後の2か所
         if re.search(r"waigaya-site-preview|workers\.dev", html): bad.append("プレビューのURL")
         if bad: fail.append(rel + ": " + " / ".join(bad))
     return fail

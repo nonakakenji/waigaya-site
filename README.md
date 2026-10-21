@@ -5,6 +5,7 @@
 
 ## 中身
 - `hp/src/index.html`：ホームページの本文（`{{ph slot="…"}}` の所に写真が入る）
+- `hp/manga/`：わいが舎の漫画（/manga/）。内覧の漫画広告（正方形版）の行き先で、広告のカードi番は `#pi` に飛ぶ。2026-10-21 に publish.py の許可リストへ `manga/index.html` と `manga/img/`（直下のファイルだけ）を足した
 - `photos/web/`：ホームページで使う写真（800px・1600px）と `photos.json`
 - `event/pages/<スラッグ>/`：イベントページ（1ページ1フォルダ）。`sample/` は見本で、そのままでは公開できない
 - `prod/`：本番用の書き出し（`build-prod.mjs`・`build-event.mjs`・`tracking.mjs`）と、本番に上げるしくみ（`publish.py`）

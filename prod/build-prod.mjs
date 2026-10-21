@@ -3,7 +3,7 @@
 // 元：プレビューの src/index.html（../hp/src/index.html）
 //     ＋ 写真 ../photos/web/photos.json（どちらもこのリポジトリの中）
 // プレビュー側（build.mjs・public/）には一切書き込まない
-// out/ の中身＝本番の public_html に置くもの（index.html・kurashi/ LP40/ LP20/ の index.html・img/・sitemap-static.xml）
+// out/ の中身＝本番の public_html に置くもの（index.html・kurashi/ LP40/ LP20/ の index.html・privacy/・manga/・img/・sitemap-static.xml）
 // テンプレートリテラルは使わない（生の改行でJSが死ぬ事故を避ける）
 import fs from "node:fs";
 import path from "node:path";
@@ -156,6 +156,41 @@ for (const d of OLD_PAGES) {
   if (pf.length) { console.error("privacy の検査で止めた:\n- " + pf.join("\n- ")); process.exit(1); }
   fs.mkdirSync(path.join(OUT, "privacy"), { recursive: true });
   fs.writeFileSync(path.join(OUT, "privacy", "index.html"), pv);
+}
+
+// ---- わいが舎の漫画（/manga/）：元は hp/manga/。内覧の漫画広告（正方形版）の行き先。カードi番＝#pi（2026-10-21） ----
+{
+  const MG_DESC = "大阪でひとり暮らし8年目の森さんが、わいが舎に住むまでの漫画です（物語はフィクションです）。枚方・香里園のシェアハウス わいが舎。";
+  const MG = path.join(ROOT, "..", "hp", "manga");
+  let mg = fs.readFileSync(path.join(MG, "index.html"), "utf8");
+  const MG_TAGS = [
+    '<meta name="description" content="' + esc(MG_DESC) + '">',
+    '<link rel="canonical" href="' + SITE + '/manga/">',
+    '<link rel="icon" type="image/png" href="' + FAVICON + '">',
+    '<meta property="og:type" content="article">',
+    '<meta property="og:site_name" content="シェアハウス わいが舎">',
+    '<meta property="og:title" content="わいが舎の漫画｜シェアハウス わいが舎">',
+    '<meta property="og:description" content="' + esc(MG_DESC) + '">',
+    '<meta property="og:url" content="' + SITE + '/manga/">',
+    '<meta property="og:image" content="' + ogUrl + '">',
+    ...HEAD_TRACKING,
+  ].join("\n");
+  if (!/<meta name="viewport"[^>]*>/.test(mg)) { console.error("manga: viewport が無い"); process.exit(1); }
+  mg = mg.replace(/(<meta name="viewport"[^>]*>)/, "$1\n" + MG_TAGS);
+  mg = addBodyTracking(mg, "hp/manga/index.html");
+  const imgs = fs.readdirSync(path.join(MG, "img")).filter(f => /^p\d{2}\.jpg$/.test(f));
+  const mf = [];
+  if (/noindex|プレビュー|試作|\{\{|許可待ち|確認中|data:,|waigaya-site-preview|workers\.dev/i.test(mg)) mf.push("止める言葉が入っている");
+  for (const k of [GTM, GA4, PIXEL, "line_click_cv", 'rel="canonical"', "og:image", 'name="description"']) if (!mg.includes(k)) mf.push(k + " が無い");
+  for (let i = 1; i <= 10; i++) {
+    const f = "p" + String(i).padStart(2, "0") + ".jpg";
+    if (!imgs.includes(f)) mf.push("img/" + f + " が無い");
+    if (!mg.includes('id="p' + i + '"')) mf.push("#p" + i + " が無い");
+  }
+  if (mf.length) { console.error("manga の検査で止めた:\n- " + mf.join("\n- ")); process.exit(1); }
+  fs.mkdirSync(path.join(OUT, "manga", "img"), { recursive: true });
+  fs.writeFileSync(path.join(OUT, "manga", "index.html"), mg);
+  for (const f of imgs) fs.copyFileSync(path.join(MG, "img", f), path.join(OUT, "manga", "img", f));
 }
 
 // ---- sitemap：トップだけにする（旧ページは canonical がトップなので載せない。/thanks はSTUDIOの名残） ----
