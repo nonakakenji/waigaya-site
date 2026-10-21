@@ -206,6 +206,13 @@ ul,ol{list-style:none}
 .events-lead{font-size:15px}
 .events-list{margin-top:12px}
 .events-list li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:15px}
+/* 漫画ページへの入口（2026-10-21）：1枚目を縦長のまま小さく。HPの流れを止めない大きさ */
+.manga-entry{display:flex;align-items:center;gap:16px;margin-top:40px;padding:14px;border:1px solid var(--line);color:var(--ink);text-decoration:none}
+.manga-entry img{flex:none;width:96px;height:120px;object-fit:cover;border:1px solid var(--line)}
+.manga-entry .me-k{display:block;font-size:12px;letter-spacing:.12em;color:var(--sub)}
+.manga-entry .me-t{display:block;margin-top:4px;font-family:var(--serif);font-size:17px;line-height:1.6}
+.manga-entry .me-go{display:inline-block;margin-top:8px;font-size:14px;color:var(--accent);border-bottom:1px solid currentColor}
+@media (min-width:760px){.manga-entry img{width:120px;height:150px}.manga-entry .me-t{font-size:19px}}
 .ev-when{color:var(--sub);font-size:13px}
 
 /* ファーストビューの下：次の集まり（イベントページへの入口） */
@@ -725,6 +732,11 @@ ul,ol{list-style:none}
         <li><span class="ev-name">志プレゼンのミニプレゼンと食事会</span><span class="ev-when">毎月第3土曜</span></li>
       </ul>
     </div>
+    <a class="manga-entry" id="manga-entry" href="/manga/">
+      <img src="/manga/img/p01.jpg" width="1080" height="1350" alt="漫画の1ページ目。大阪でひとり暮らし8年目の女性が、熱の出た夜に冷蔵庫を開けている" loading="lazy" decoding="async">
+      <span><span class="me-k">MANGA</span><span class="me-t">漫画で読む、<br>わいが舎の暮らし（3分）</span><span class="me-go">読んでみる</span></span>
+    </a>
+    <script>document.getElementById('manga-entry').addEventListener('click',function(){if(window.gtag)gtag('event','manga_entry_click',{place:'s6',transport_type:'beacon'});});</script>
   </div>
 </section>
 
