@@ -178,7 +178,7 @@ for (const d of OLD_PAGES) {
   if (!/<meta name="viewport"[^>]*>/.test(mg)) { console.error("manga: viewport が無い"); process.exit(1); }
   mg = mg.replace(/(<meta name="viewport"[^>]*>)/, "$1\n" + MG_TAGS);
   mg = addBodyTracking(mg, "hp/manga/index.html");
-  const imgs = fs.readdirSync(path.join(MG, "img")).filter(f => /^p\d{2}\.jpg$/.test(f));
+  const imgs = fs.readdirSync(path.join(MG, "img")).filter(f => /^p\d{2}(-thumb)?\.jpg$/.test(f)); // p01-thumb＝HPの最初の画面の入口用の小さい絵
   const mf = [];
   if (/noindex|プレビュー|試作|\{\{|許可待ち|確認中|data:,|waigaya-site-preview|workers\.dev/i.test(mg)) mf.push("止める言葉が入っている");
   for (const k of [GTM, GA4, PIXEL, "line_click_cv", 'rel="canonical"', "og:image", 'name="description"']) if (!mg.includes(k)) mf.push(k + " が無い");
