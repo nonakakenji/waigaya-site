@@ -16,11 +16,12 @@
    - 書いてよいのは下の ALLOW_FILES と ALLOW_DIRS の中だけ。外のパスが1つでもあれば、何も送らずに止める
    - 削除・名前変更・権限変更（DELE・RMD・RNFR・RNTO・SITE）は、どのモードでも送らない
    - dry-run では、読み取りのコマンドしか送らない（下の READ_ONLY_CMDS 以外は送る前に止める）"""
-import os, re, sys, argparse
+import os, re, sys, time, argparse
 from ftplib import FTP_TLS, error_perm
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 EVENT_PAGES = os.path.join(os.path.dirname(HERE), "event", "pages")
+CONNECT_RETRIES, CONNECT_WAIT = 3, 30  # FTPにつながらんときのやり直し回数と間（秒）
 REMOTE_ROOT = "/"  # このFTPアカウントのルート＝本番の public_html
 
 # ---- 本番で触ってよいもの（名前で固定） ----
@@ -141,7 +142,18 @@ def connect(write_ok):
             raise SystemExit("dry-run なので書き込み系コマンドを止めた: " + cmd)
         return _put(line)
     ftp.putcmd = guard
-    ftp.connect(host, 21)
+    # GitHubのランナーからXserverのFTPに一時的につながらんことがある（10/21に2回。数分後は成功）。
+    # つながる所（connect）だけ30秒おきに最大3回やり直す。ログイン以降の失敗は今までどおり止める
+    for n in range(CONNECT_RETRIES + 1):
+        try:
+            ftp.connect(host, 21)
+            break
+        except OSError as e:  # TimeoutError・ConnectionRefusedError・名前が引けない等
+            ftp.close()
+            if n == CONNECT_RETRIES:
+                raise
+            print(f"FTPにつながらんかった（{type(e).__name__}）。{CONNECT_WAIT}秒後にやり直す（{n + 1}/{CONNECT_RETRIES}）", flush=True)
+            time.sleep(CONNECT_WAIT)
     ftp.login(user, pw)
     ftp.prot_p()
     ftp.cwd(REMOTE_ROOT)
