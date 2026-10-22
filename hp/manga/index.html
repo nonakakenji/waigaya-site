@@ -36,6 +36,17 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
 .btn{display:flex;align-items:center;justify-content:center;min-height:54px;padding:14px 20px;border-radius:6px;
   background:var(--accent);color:#FFFFFF;font-weight:700;font-size:16px;text-decoration:none;letter-spacing:.04em}
 .how{font-size:13px;color:var(--sub);margin:10px 0 0 !important}
+/* LINEボタンの上の「押す理由」：友だち追加のあいさつで届く特典2つ（2026-10-22。LINEボタンが日本の人で1日0〜1回だったため） */
+.gift{font-size:14px;font-weight:700;line-height:1.7;margin:0 0 10px !important}
+.gift b{color:var(--accent)}
+/* 読み終わったら画面の下に出すボタン（10枚目が見えたら出す。最後の囲みが見えている間はかぶるので隠す） */
+.fix{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));transform:translateY(110%);transition:transform .25s}
+.fix.on{transform:none}
+.fix .wrap{padding:0}
+.fix .gift{font-size:12px;margin:0 0 6px !important;text-align:center}
+.fix .btn{min-height:48px;padding:10px 16px}
+body.fix-on{padding-bottom:110px}
 .more{text-align:center;font-size:14px;margin:0 0 40px}
 .ft{border-top:1px solid var(--line);padding:24px 0 40px;font-size:12px;color:var(--sub);text-align:center}
 .ft a{color:var(--sub)}
@@ -65,9 +76,10 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
     </div>
 
     <section class="cta" id="mid">
-      <h2>わいが舎を、見に来ませんか。</h2>
-      <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">内覧（30分）を申し込む</a>
-      <p class="how"><span class="ib">LINEのトーク画面の下のメニュー</span><span class="ib">「内覧申し込み」からどうぞ！</span></p>
+      <h2>まずは、LINEで気軽に。</h2>
+      <p class="gift"><span class="ib">友だち追加ですぐ届く：</span><span class="ib"><b>暮らし方タイプ診断</b>と</span><span class="ib"><b>小さな整理帳</b>（無料）</span></p>
+      <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">LINEで受け取る（無料）</a>
+      <p class="how"><span class="ib">内覧（30分）の申し込みも、</span><span class="ib">LINEのメニュー「内覧申し込み」からどうぞ！</span></p>
     </section>
 
     <div class="pages">
@@ -80,14 +92,22 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
 
     <!-- 最後の囲み：10枚目の絵の見出し・表・ボタンと言葉を重ねない。絵のボタンは押せないので、押せるボタンと漫画に無いことだけ（2026-10-21 健ちゃん） -->
     <section class="cta cta-end" id="end" aria-label="内覧の申し込み">
-      <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">内覧（30分）を申し込む</a>
+      <p class="gift"><span class="ib">友だち追加ですぐ届く：</span><span class="ib"><b>暮らし方タイプ診断</b>と</span><span class="ib"><b>小さな整理帳</b>（無料）</span></p>
+      <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">LINEで受け取る（無料）</a>
       <p class="fact"><span class="ib">共用リビングにソファ・家電あり／</span><span class="ib">香里園駅から歩いて13分</span></p>
-      <p class="how"><span class="ib">LINEのトーク画面の下のメニュー</span><span class="ib">「内覧申し込み」からどうぞ！</span></p>
+      <p class="how"><span class="ib">内覧（30分）の申し込みも、</span><span class="ib">LINEのメニュー「内覧申し込み」からどうぞ！</span></p>
     </section>
 
     <p class="more"><a href="/">わいが舎のホームページを見る</a></p>
   </div>
 </main>
+
+<section class="fix" id="fix" aria-label="LINEで受け取る">
+  <div class="wrap">
+    <p class="gift">友だち追加ですぐ届く：<b>タイプ診断</b>と<b>小さな整理帳</b>（無料）</p>
+    <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">LINEで受け取る（無料）</a>
+  </div>
+</section>
 
 <footer class="ft">
   <div class="wrap">シェアハウス わいが舎（大阪府枚方市）<br><a href="/privacy/">プライバシーポリシー</a></div>
@@ -95,6 +115,11 @@ h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 
 <script>
 // どのページまで読んだか（GA4 の manga_read。1ページにつき1回だけ送る）
 (function(){if(!('IntersectionObserver' in window))return;var sent={};var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;var n=Number(e.target.id.slice(1));if(sent[n])return;sent[n]=1;io.unobserve(e.target);if(window.gtag)gtag('event','manga_read',{panel:n});});},{threshold:0.5});document.querySelectorAll('.page').forEach(function(f){io.observe(f);});})();
+// 読み終わり（10枚目が半分見えた）で画面下にLINEボタンを出す。最後の囲み #end が見えている間は隠す
+(function(){var fx=document.getElementById('fix'),p10=document.getElementById('p10'),end=document.getElementById('end');if(!fx||!p10||!end||!('IntersectionObserver' in window))return;var done=false,endIn=false;
+function show(){var on=done&&!endIn;fx.classList.toggle('on',on);document.body.classList.toggle('fix-on',done);}
+new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){done=true;show();}});},{threshold:0.5}).observe(p10);
+new IntersectionObserver(function(es){es.forEach(function(e){endIn=e.isIntersecting;show();});},{threshold:0.2}).observe(end);})();
 </script>
 </body>
 </html>

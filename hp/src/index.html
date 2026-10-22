@@ -153,6 +153,10 @@ ul,ol{list-style:none}
 @media (min-width:760px){.fv h1{font-size:40px}}
 .fv-sub{margin-top:14px;font-size:15px;color:var(--sub)}
 /* 漫画ページへの入口（2026-10-21 健ちゃん）：最初の画面のキャッチの下に小さく。10秒で帰る人にも見えるように */
+/* FVのLINEボタンの上の「押す理由」（2026-10-22）：友だち追加のあいさつで届く特典2つ */
+.fv-gift{margin:24px 0 0;font-size:13px;font-weight:700;line-height:1.7;color:var(--ink)}
+.fv-text .fv-gift + .btns{margin-top:10px}
+.fv-gift b{color:var(--accent)}
 .fv-manga{display:inline-flex;align-items:center;gap:12px;margin-top:16px;color:var(--ink);text-decoration:none}
 .fv-manga img{flex:none;width:40px;height:50px;object-fit:cover;border:1px solid var(--line)}
 .fv-manga span{font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
@@ -512,6 +516,7 @@ ul,ol{list-style:none}
     <p class="fv-sub">心に余裕があると、人との時間が楽しくなる。<br>人との時間が楽しいと、人生は豊かになる。<br>だから、人が集まりたくなる家で暮らしたい。</p>
     <a class="fv-manga" id="manga-entry" href="/manga/"><img src="/manga/img/p01-thumb.jpg" width="160" height="200" alt="" decoding="async"><span>漫画で読む、わいが舎の暮らし（3分）</span></a>
     <script>document.getElementById('manga-entry').addEventListener('click',function(){if(window.gtag)gtag('event','manga_entry_click',{place:'fv',transport_type:'beacon'});});</script>
+    <p class="fv-gift"><span class="ib">LINEの友だち追加ですぐ届く：</span><span class="ib"><b>暮らし方タイプ診断</b>と<b>小さな整理帳</b>（無料）</span></p>
     <div class="btns row">
       <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
       <a class="btn btn-sub" href="#dinner"><svg><use href="#i-bowl"/></svg>晩ごはんの日を見る</a>
