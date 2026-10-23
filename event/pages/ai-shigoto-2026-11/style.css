@@ -214,3 +214,7 @@ svg text{font-family:var(--maru);font-weight:700;fill:var(--ink)}
 .fv-cta-n{margin:6px 0 0;text-align:center;font-size:12px;color:var(--sub);line-height:1.6}
 .fv-do small{display:block;font-size:12px;font-weight:500;color:var(--sub);line-height:1.4}
 .wrap > .hero{padding:16px 0 40px}
+
+/* 満席の札（10/23 定員5名に達したため。キャンセル待ちは受け付ける） */
+.full-tag{display:inline-block;margin-left:8px;padding:1px 8px;border:1.5px solid var(--ink);border-radius:3px;font-size:12px;font-weight:700;line-height:1.5;letter-spacing:.06em;vertical-align:1px;background:var(--mark)}
+.full-note{margin:0 0 10px;text-align:center;font-weight:700;font-size:15px}
