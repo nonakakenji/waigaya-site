@@ -22,6 +22,11 @@ export const HEAD_TRACKING = [
 // 申し込み（2026-10-18 改善提案1・健ちゃん実施）：LINEボタンと Googleフォームのリンクを押したら、Metaの標準イベント Lead も送る。
 //   広告の学習を「ページを開いた人」から「申し込み」に切り替えるための数をためる（切り替えは10/25以降に司令塔が判断）
 //   content_category は line / form（広告から来た人は line_meta / form_meta）。HPの内覧はLINEのメニューから申し込むので、HPではLINEボタンが申し込み
+// line_click（2026-10-27 健ちゃんOK・朝の提案1）：広告A・Dから来た人がLINEの友だち追加まで進まない原因を見るため、
+//   同じ押下で GA4 にもう1つ line_click を送る。どのページ（click_page＝パス）・どのボタン（click_button＝囲みの id か class
+//   とページ内で何番目のLINEリンクか。漫画ページなら mid-1・end-2・fix-3）・どの広告から（ad_content＝utm_content。広告以外は (none)）
+//   line_click_cv はキーイベントの設定と今までの数を生かすため、そのまま残す（数えるのは別のイベント名なので二重にはならない）
+//   GTM の中は Clarity だけで GA4 タグは無い（2026-10-27 gtm.js で確かめた）。GA4 に送るのはここの gtag だけ
 export const LINE_DEFAULT = "lin.ee/wCG7OfR", LINE_META = "lin.ee/upx7cmu";
 // 友だち追加経路（2026-10-22・~/squad-reports/わいが舎/line-funnel-1022.md）：LINE Manager の［友だち追加ガイド］＞［友だち追加経路を設定］で
 //   作ったURLを入れると、そのURLに差し替える（Managerの［分析］＞［友だち］＞［追加経路］で経路ごとの友だち追加が分かれる）。空なら今までどおり
@@ -39,7 +44,7 @@ export const LINE_JS = "<script>(function(){var R=" + JSON.stringify(LINE_ROUTES
   + "if(to)document.querySelectorAll('a[href*=\"" + LINE_DEFAULT + "\"]').forEach(function(a){a.href=/^https?:/.test(to)?to:a.href.replace('" + LINE_DEFAULT + "',to);});"
   + "var ua=navigator.userAgent||'',iosApp=/iPhone|iPad|iPod/.test(ua)&&/Instagram|FBAN|FBAV/.test(ua);"
   + "document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var isLine=/lin\\.ee|line\\.me/.test(a.href),isForm=/docs\\.google\\.com\\/forms|forms\\.gle/.test(a.href);if(!isLine&&!isForm)return;var t=(a.textContent||'').replace(/\\s+/g,'').slice(0,30);"
-  + "if(isLine){var sec=a.closest('section,header,nav,footer');var place=sec?(sec.id||sec.className||sec.tagName).toString().split(' ')[0]:'';var p={link_url:a.href,link_text:t,place:place,transport_type:'beacon'};if(via)p.via=via;if(window.gtag)gtag('event','line_click_cv',p);if(window.fbq)fbq('track','Contact',via?{content_name:t,content_category:via}:{content_name:t});}"
+  + "if(isLine){var sec=a.closest('section,header,nav,footer');var place=sec?(sec.id||sec.className||sec.tagName).toString().split(' ')[0]:'';var p={link_url:a.href,link_text:t,place:place,transport_type:'beacon'};if(via)p.via=via;if(window.gtag){gtag('event','line_click_cv',p);var ls=document.querySelectorAll('a[href*=\"lin.ee\"],a[href*=\"line.me\"]'),bi=Array.prototype.indexOf.call(ls,a)+1;gtag('event','line_click',{click_page:location.pathname,click_button:(place||'link')+'-'+bi,link_text:t,link_url:a.href,ad_content:uc||'(none)',via:via||'(none)',transport_type:'beacon'});}if(window.fbq)fbq('track','Contact',via?{content_name:t,content_category:via}:{content_name:t});}"
   + "if(window.fbq)fbq('track','Lead',{content_name:t,content_category:(isLine?'line':'form')+(via?'_'+via:'')});"
   + "var m=isLine&&iosApp&&a.href.match(/lin\\.ee\\/([A-Za-z0-9]+)/),app=m&&APP[m[1]];if(app){e.preventDefault();var back=a.href;setTimeout(function(){location.href=app;},150);setTimeout(function(){if(document.visibilityState==='visible')location.href=back;},2650);}},true);})();</script>";
 
@@ -68,6 +73,7 @@ export function checkTracking(html) {
     "GA4のconfig": "gtag('config','" + GA4 + "')",
     "ピクセル": "fbq('init','" + PIXEL + "')",
     "LINEクリック計測": "'line_click_cv'",
+    "LINEクリック計測（ページ・ボタンつき）": "'line_click'",
     "GTMのnoscript": "ns.html?id=" + GTM,
   };
   const bad = [];
