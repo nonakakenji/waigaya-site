@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>準備の手順書｜AIエージェントに仕事を任せよう会｜シェアハウスわいが舎</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<!-- 任せよう会の申込者に送る「当日までの準備」の手順書（2026-10-29 作成）。
+     インストールの1行は公式の手順（code.claude.com/docs/ja/quickstart・setup・terminal-guide）を 2026-10-29 に読んで写したもの。料金は claude.com/pricing の同日の表示。
+     色は告知ページと同じ：白地・黒文字・差し色は琥珀 #F6C66E の1色だけ。検索には出さない（noindex）。 -->
+<style>
+:root{
+  --bg:#FFFFFF;--ink:#1F1F1F;--text:#2F2F2F;--sub:#6B6B6B;--line:#E4E4E4;--box:#F5F5F5;--mark:#F6C66E;
+  --f:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans",sans-serif;
+  --mono:"SFMono-Regular",Menlo,Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f);font-size:16px;line-height:1.95;-webkit-text-size-adjust:100%}
+main{max-width:640px;margin:0 auto;padding:0 18px}
+a{color:var(--ink)}
+p{margin:12px 0}
+.ib{display:inline-block}
+.mk{background:linear-gradient(transparent 62%,var(--mark) 62%,var(--mark) 94%,transparent 94%);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .1em}
+b,strong{color:var(--ink);font-weight:700}
+.note{color:var(--sub);font-size:14px;line-height:1.85}
+
+/* はじめ */
+.top{padding:30px 0 26px;text-align:center}
+.top-k{margin:0;font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--sub)}
+.top h1{font-weight:900;color:var(--ink);font-size:clamp(26px,7.6vw,40px);line-height:1.3;letter-spacing:-.01em;margin:10px 0 14px}
+.top-lead{text-align:left;margin:0 auto;max-width:30em}
+.deadline{margin:18px 0 0;padding:14px 16px;border:2px solid var(--ink);border-radius:12px;text-align:left;font-size:15px;line-height:1.75}
+.deadline b{display:block;font-size:17px;font-weight:900}
+
+/* もくじ */
+.toc{list-style:none;counter-reset:t;padding:0;text-align:left;margin:22px 0 6px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.toc li{counter-increment:t;border-bottom:1px dashed var(--line)}
+.toc li:last-child{border-bottom:none}
+.toc a{display:flex;align-items:center;gap:12px;padding:10px 2px;text-decoration:none;font-weight:700;line-height:1.5}
+.toc a::before{content:counter(t);flex:none;width:28px;height:28px;border-radius:50%;background:var(--mark);color:var(--ink);font-weight:900;font-size:14px;line-height:28px;text-align:center}
+.toc small{display:block;font-weight:500;font-size:12px;color:var(--sub)}
+
+/* 各ステップ */
+section{padding:38px 0 30px;border-top:1px solid var(--line);scroll-margin-top:8px}
+h2{display:flex;align-items:flex-start;gap:12px;margin:0 0 14px;font-weight:900;color:var(--ink);font-size:clamp(21px,5.6vw,27px);line-height:1.4}
+h2 .n{flex:none;width:38px;height:38px;border-radius:50%;background:var(--ink);color:#fff;font-size:19px;line-height:38px;text-align:center;margin-top:-1px}
+h3{margin:26px 0 8px;font-weight:900;color:var(--ink);font-size:18px;line-height:1.5}
+
+/* 番号つきの手順 */
+.steps{list-style:none;counter-reset:s;padding:0;margin:10px 0}
+.steps>li{counter-increment:s;position:relative;padding:10px 0 12px 40px;border-bottom:1px dashed var(--line)}
+.steps>li:last-child{border-bottom:none}
+.steps>li::before{content:counter(s);position:absolute;left:0;top:11px;width:28px;height:28px;border-radius:50%;border:2px solid var(--ink);color:var(--ink);font-weight:900;font-size:14px;line-height:24px;text-align:center}
+.steps p{margin:4px 0}
+
+/* 用意するもの */
+.need{list-style:none;padding:0;margin:10px 0}
+.need li{padding:12px 14px;margin:0 0 10px;border:1px solid var(--line);border-radius:12px;line-height:1.75}
+.need b{display:block;font-size:17px}
+
+/* 画面に打ちこむ1行（コピーボタンつき） */
+.code{margin:10px 0 6px;border-radius:10px;background:#1F1F1F;color:#fff;overflow:hidden}
+.code pre{margin:0;padding:14px 14px 12px;font-family:var(--mono);font-size:14px;line-height:1.6;white-space:pre-wrap;word-break:break-all}
+.code button{display:block;width:100%;padding:10px;border:0;border-top:1px solid #3A3A3A;background:#2F2F2F;color:#fff;font-family:var(--f);font-weight:700;font-size:14px;cursor:pointer}
+.code button.ok{background:var(--mark);color:var(--ink)}
+code{font-family:var(--mono);font-size:.92em;background:var(--box);padding:1px 6px;border-radius:4px;white-space:nowrap}
+.trouble summary code,.trouble p code{white-space:normal;word-break:normal;overflow-wrap:anywhere}
+.screen{margin:8px 0;padding:10px 14px;border-left:4px solid var(--mark);background:var(--box);font-family:var(--mono);font-size:14px;line-height:1.6;word-break:break-all}
+
+/* Mac／Windows の切りかえ */
+.tabs{display:none;gap:8px;margin:14px 0 4px}
+.js .tabs{display:flex}
+.tabs button{flex:1;padding:12px 8px;border:2px solid var(--ink);border-radius:999px;background:#fff;color:var(--ink);font-family:var(--f);font-weight:900;font-size:16px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.os{margin-top:6px}
+.js .os[hidden]{display:none}
+.os-h{margin:22px 0 4px;font-weight:900;font-size:18px;color:var(--ink)}
+.js .os-h{display:none}
+
+/* 囲み */
+.box{margin:16px 0;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.box-ok{border:2px solid var(--ink)}
+.box-k{margin:0 0 4px;font-weight:900;color:var(--ink)}
+
+/* つまずいたとき */
+.trouble{margin:10px 0;border:1px solid var(--line);border-radius:12px}
+.trouble summary{padding:12px 40px 12px 14px;font-weight:700;color:var(--ink);cursor:pointer;list-style:none;position:relative;line-height:1.6}
+.trouble summary::-webkit-details-marker{display:none}
+.trouble summary::after{content:"+";position:absolute;right:14px;top:9px;font-size:22px;font-weight:500}
+.trouble[open] summary::after{content:"−"}
+.trouble div{padding:0 14px 12px}
+
+/* LINE */
+.contact{margin:18px 0 0;padding:22px 18px;border:2px solid var(--ink);border-radius:14px;text-align:center}
+.contact-h{margin:0 0 6px;font-weight:900;font-size:19px;color:var(--ink)}
+.btn{display:block;margin:14px 0 6px;padding:14px 20px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:700;font-size:16px}
+.relax{margin:18px 0 0;font-weight:900;font-size:18px;color:var(--ink);line-height:1.7}
+
+.ft{padding:30px 0 34px;border-top:1px solid var(--line);margin-top:24px;text-align:center;color:var(--sub);font-size:13px;line-height:1.8}
+.ft a{color:var(--sub)}
+</style>
+</head>
+<body>
+<main>
+
+  <header class="top">
+    <p class="top-k">わいが舎の会 ─ AIエージェントに仕事を任せよう会</p>
+    <h1><span class="ib">当日までの</span><span class="ib"><span class="mk">準備の手順書</span></span></h1>
+    <p class="top-lead">お申し込みありがとうございます！<br>
+      当日の2時間を「AIに仕事を任せる」ことに全部つかえるように、パソコンの準備だけ先に済ませておいてもらえたらうれしいです。<br>
+      パソコンにくわしくなくても大丈夫。<b>上から順に、書いてあるとおりに進めるだけ</b>です♪</p>
+    <div class="deadline">
+      <b>11月20日（金）までに、⑤ の「準備完了」まで</b>
+      会は 11月21日（土）13:00〜15:00、シェアハウスわいが舎で開きます。
+    </div>
+    <ol class="toc">
+      <li><a href="#s1"><span>用意するもの<small>パソコン・ネット・Claudeの有料プラン</small></span></a></li>
+      <li><a href="#s2"><span>Claudeに登録して、Proにする<small>ブラウザでの申し込み</small></span></a></li>
+      <li><a href="#s3"><span>Claude Code を入れる<small>Mac／Windows で手順が分かれます</small></span></a></li>
+      <li><a href="#s4"><span>はじめて起動して、ログインする<small>ブラウザでつなぐだけ</small></span></a></li>
+      <li><a href="#s5"><span>うまく動いたか確かめる<small>これが出たら準備完了</small></span></a></li>
+    </ol>
+    <p class="note" style="text-align:left">つまずいたときの連絡先は、<a href="#help">いちばん下</a>にあります。</p>
+  </header>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2><span class="n">1</span><span>用意するもの</span></h2>
+    <ul class="need">
+      <li><b>パソコン（Mac か Windows）</b>
+        Mac は macOS 13 以上、Windows は Windows 10（バージョン 1809）以上。メモリは 4GB 以上が目安です。<br>
+        <span class="note">スマホやタブレットではできません。当日もこのパソコンを持ってきてください。</span></li>
+      <li><b>インターネット</b>
+        入れるときも、使うときも、ネットにつながっている必要があります。</li>
+      <li><b>Claude の有料プラン（Pro 以上）</b>
+        無料のプランでは Claude Code は使えません。次の ② で申し込みます。<br>
+        <span class="note">すでに Pro・Max に入っている人は ② を飛ばして ③ へ。</span></li>
+    </ul>
+    <p class="note">Mac のバージョンは、画面の左上のりんごのマーク →「このMacについて」で見られます。</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2><span class="n">2</span><span>Claudeに登録して、Proにする</span></h2>
+    <ol class="steps">
+      <li><p>パソコンのブラウザ（Chrome・Safari・Edge など）で <a href="https://claude.ai/" target="_blank" rel="noopener">claude.ai</a> を開きます。</p></li>
+      <li><p>Google のアカウントか、メールアドレスで登録します。</p>
+        <p class="note">メールアドレスで登録したときは、届いたメールの中のリンクを押すと進めます。</p></li>
+      <li><p>料金のページ <a href="https://claude.com/pricing" target="_blank" rel="noopener">claude.com/pricing</a> を開いて、<b>「Pro」</b>を選んで申し込みます。カードの情報を入れたら完了です。</p></li>
+    </ol>
+    <div class="box">
+      <p class="box-k">Pro の料金（2026年10月29日に公式ページで確かめた金額）</p>
+      <p style="margin:0">月ごとに払う：<b>1か月 20ドル</b><br>1年分をまとめて払う：200ドル（1か月あたり 17ドル）</p>
+      <p class="note" style="margin:6px 0 0">表示は米ドルで、税は別です。料金は変わることがあるので、申し込む画面に出る金額で確かめてください。お支払いはご自身のカードになります。</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2><span class="n">3</span><span>Claude Code を入れる</span></h2>
+    <p>Claude Code は、<b>文字で指示を打ちこむ画面</b>（Mac では「ターミナル」、Windows では「PowerShell」）から入れます。<br>見なれない画面ですが、<span class="mk">下の1行をコピーして貼りつけるだけ</span>です！</p>
+
+    <div class="tabs" role="tablist" aria-label="パソコンの種類">
+      <button type="button" role="tab" id="tab-mac" aria-controls="os-mac" aria-selected="true">Mac の人</button>
+      <button type="button" role="tab" id="tab-win" aria-controls="os-win" aria-selected="false">Windows の人</button>
+    </div>
+
+    <div class="os" id="os-mac" role="tabpanel" aria-labelledby="tab-mac" data-os="mac">
+      <p class="os-h">Mac の人</p>
+      <ol class="steps">
+        <li><p><b>ターミナルを開く</b></p>
+          <p>キーボードの <code>command</code> と <code>スペース</code> を同時に押して、出てきた検索窓に「ターミナル」と打って <code>return</code>。</p>
+          <p class="note">白か黒の、文字だけのウィンドウが開きます。これがターミナルです。</p></li>
+        <li><p><b>この1行をコピーして、ターミナルに貼りつける</b></p>
+          <div class="code"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre><button type="button" class="copy">この1行をコピー</button></div>
+          <p>貼りつけは <code>command</code> ＋ <code>V</code>。貼れたら <code>return</code> を押します。</p></li>
+        <li><p><b>終わるまで待つ</b></p>
+          <p>途中は何も表示されないことがありますが、そのまま待ってください。最後にこう出たら入りました！</p>
+          <p class="screen">Claude Code successfully installed!</p></li>
+        <li><p><b>ターミナルをいったん閉じて、もう一度開く</b></p>
+          <p class="note">開き直さないと、次の ④ で「見つからない」と出ることがあります。</p></li>
+      </ol>
+    </div>
+
+    <div class="os" id="os-win" role="tabpanel" aria-labelledby="tab-win" data-os="win">
+      <p class="os-h">Windows の人</p>
+      <ol class="steps">
+        <li><p><b>PowerShell を開く</b></p>
+          <p>キーボードの <code>Windowsキー</code> と <code>X</code> を同時に押して、出てきた一覧から「Windows PowerShell」か「ターミナル」を選びます。</p>
+          <p class="note">名前に「(x86)」とついているものは選ばないでください。</p></li>
+        <li><p><b>PowerShell になっているか確かめる</b></p>
+          <p>行の先頭が <code>PS C:\Users\（あなたの名前）&gt;</code> のように <b>PS</b> から始まっていれば OK です。</p></li>
+        <li><p><b>この1行をコピーして、貼りつける</b></p>
+          <div class="code"><pre>irm https://claude.ai/install.ps1 | iex</pre><button type="button" class="copy">この1行をコピー</button></div>
+          <p>貼りつけは <code>Ctrl</code> ＋ <code>V</code>（または右クリック）。貼れたら <code>Enter</code> を押します。管理者として開く必要はありません。</p></li>
+        <li><p><b>終わるまで待つ</b></p>
+          <p>途中は何も表示されないことがありますが、そのまま待ってください。最後にこう出たら入りました！</p>
+          <p class="screen">Claude Code successfully installed!</p></li>
+        <li><p><b>PowerShell をいったん閉じて、もう一度開く</b></p>
+          <p class="note">開き直さないと、次の ④ で「見つからない」と出ることがあります。</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2><span class="n">4</span><span>はじめて起動して、ログインする</span></h2>
+    <ol class="steps">
+      <li><p><b>練習用のフォルダを作って、そこに移る</b></p>
+        <p>開き直したターミナル（Windows は PowerShell）に、この1行を貼りつけて <code>return</code>（<code>Enter</code>）。Mac も Windows も同じ1行です。</p>
+        <div class="code"><pre>mkdir ai-renshu; cd ai-renshu</pre><button type="button" class="copy">この1行をコピー</button></div>
+        <p class="note">「ai-renshu」という名前の空のフォルダができて、その中に入ります。当日もこのフォルダを使えます。</p></li>
+      <li><p><b>Claude Code を起動する</b></p>
+        <p><code>claude</code> と打って <code>return</code>（<code>Enter</code>）。</p>
+        <div class="code"><pre>claude</pre><button type="button" class="copy">この1行をコピー</button></div></li>
+      <li><p><b>画面の案内にそって進む</b></p>
+        <p>はじめてのときは、英語の質問がいくつか出ます。矢印キーで選んで <code>return</code>（<code>Enter</code>）で進めます。<br>
+          ログインの方法をきかれたら、<b>Claude の有料プラン（Pro など）のアカウント</b>を選んでください。</p>
+        <p class="note">ターミナルの中はマウスで押せません。矢印キーと <code>return</code>（<code>Enter</code>）で動かします。</p></li>
+      <li><p><b>ブラウザでログインする</b></p>
+        <p>自動でブラウザが開くので、② で作ったアカウントでログインして、許可します。ターミナルにこう出たら OK です。<code>return</code>（<code>Enter</code>）で進みます。</p>
+        <p class="screen">Login successful</p>
+        <p class="note">ブラウザが開かないときは、ターミナルで <code>c</code> を押すとログイン用のアドレスがコピーされるので、ブラウザに貼りつけて開いてください。ブラウザにコードが出たときは、ターミナルの <code>Paste code here if prompted</code> のところに貼りつけます。</p></li>
+      <li><p><b>このフォルダを使ってよいかきかれたら</b></p>
+        <p>はい（Yes）を選んで進めてください。さっき作った空の練習用フォルダなので、心配いりません。</p></li>
+    </ol>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2><span class="n">5</span><span>うまく動いたか確かめる</span></h2>
+    <p>文字を打ちこむ欄が出て、その上に Claude Code の番号（バージョン）などが表示されていたら起動できています。<br>ためしに、こう打って <code>return</code>（<code>Enter</code>）を押してみてください。</p>
+    <div class="code"><pre>こんにちは。準備ができたか確かめています</pre><button type="button" class="copy">この1行をコピー</button></div>
+    <div class="box box-ok">
+      <p class="box-k"><span class="mk">日本語で返事が返ってきたら、準備完了です！</span></p>
+      <p style="margin:0">これで当日はすぐに始められます。お疲れさまでした♪</p>
+    </div>
+    <h3>終わるとき</h3>
+    <p><code>exit</code> と打って <code>return</code>（<code>Enter</code>）。そのあとターミナルを閉じて大丈夫です。</p>
+    <h3>入っているかだけ確かめたいとき</h3>
+    <p>ターミナルで次の1行を打つと、番号が表示されます。</p>
+    <div class="code"><pre>claude --version</pre><button type="button" class="copy">この1行をコピー</button></div>
+    <p>たとえば <code>2.1.211 (Claude Code)</code> のように、数字のあとに <code>(Claude Code)</code> と出れば入っています。<span class="note">数字は人によって違います。</span></p>
+  </section>
+
+  <!-- 困ったとき -->
+  <section id="help">
+    <h2><span class="n" style="background:var(--mark);color:var(--ink)">?</span><span>つまずいたとき</span></h2>
+    <p>よくあるつまずきです。出た文字が近いものを開いてみてください。</p>
+
+    <details class="trouble">
+      <summary>Mac：<code>command not found: claude</code> と出る</summary>
+      <div>
+        <p>まずターミナルを閉じて、開き直してからもう一度 <code>claude</code> を打ってみてください。<br>それでも同じなら、この2行を1行ずつ貼りつけて <code>return</code>。</p>
+        <div class="code"><pre>echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</pre><button type="button" class="copy">この1行をコピー</button></div>
+        <div class="code"><pre>source ~/.zshrc</pre><button type="button" class="copy">この1行をコピー</button></div>
+        <p>そのあと、ターミナルを開き直して <code>claude</code> を打ちます。</p>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>Windows：<code>'irm' is not recognized</code> と出る</summary>
+      <div>
+        <p>開いているのが PowerShell ではなく「コマンドプロンプト」です。行の先頭に <b>PS</b> がついていません。<br>ウィンドウを閉じて、③ の手順で PowerShell を開き直してください。</p>
+        <p>そのままのウィンドウで入れたいときは、代わりにこの1行を使います。</p>
+        <div class="code"><pre>curl -fsSL https://claude.ai/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</pre><button type="button" class="copy">この1行をコピー</button></div>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>Windows：<code>'claude' is not recognized</code> と出る</summary>
+      <div>
+        <p>まず PowerShell を閉じて、開き直してからもう一度 <code>claude</code> を打ってみてください。<br>それでも同じなら、PowerShell でこの2行を1行ずつ貼りつけて <code>Enter</code>。</p>
+        <div class="code"><pre>$currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')</pre><button type="button" class="copy">この1行をコピー</button></div>
+        <div class="code"><pre>[Environment]::SetEnvironmentVariable('PATH', "$currentPath;$env:USERPROFILE\.local\bin", 'User')</pre><button type="button" class="copy">この1行をコピー</button></div>
+        <p>そのあと PowerShell を閉じて開き直し、<code>claude</code> を打ちます。</p>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>Mac：<code>dyld</code> や <code>built for Mac OS X 13.0</code> と出る</summary>
+      <div>
+        <p>Mac のバージョンが古いかもしれません。りんごのマーク →「このMacについて」で 13 より前なら、「ソフトウェアアップデート」で新しくしてからもう一度やってみてください。</p>
+      </div>
+    </details>
+
+    <details class="trouble">
+      <summary>ほかの英語のエラーが出た・どこで止まったか分からない</summary>
+      <div>
+        <p>画面をスマホで撮って、下の LINE に送ってください。見て、次にやることをお返しします。</p>
+      </div>
+    </details>
+
+    <div class="contact">
+      <p class="contact-h">困ったら、わいが舎の LINE へ！</p>
+      <p style="margin:0">「任せよう会の準備で止まった」と一言と、<br>画面の写真を送ってもらえたら見ます。</p>
+      <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">わいが舎の LINE を開く <span aria-hidden="true">→</span></a>
+      <p class="relax">当日までにつながらなくても大丈夫です！<br><span class="mk">会場で健ちゃんと一緒に直しましょう。</span></p>
+      <p class="note" style="margin:6px 0 0">そのときは、パソコンと Claude にログインできる情報だけ持ってきてください。</p>
+    </div>
+  </section>
+
+  <footer class="ft">
+    <p style="margin:0">この手順は、2026年10月29日時点の公式の手順<br>（<a href="https://code.claude.com/docs/ja/quickstart" target="_blank" rel="noopener">Claude Code クイックスタート</a>）をもとにしています。</p>
+    <p><a href="/event/ai-shigoto-2026-11/">会の案内ページにもどる</a>　｜　<a href="/">シェアハウスわいが舎</a></p>
+  </footer>
+
+</main>
+<script>
+(function(){
+  var root=document.documentElement;root.className+=' js';
+  // Mac／Windows の切りかえ。Windows のパソコンで開いたら最初から Windows を出す
+  var tabs=[].slice.call(document.querySelectorAll('.tabs button'));
+  function show(os){
+    tabs.forEach(function(t){var on=t.id==='tab-'+os;t.setAttribute('aria-selected',on?'true':'false');});
+    [].forEach.call(document.querySelectorAll('.os'),function(p){p.hidden=p.getAttribute('data-os')!==os;});
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.id.replace('tab-',''));});});
+  show(/Windows/i.test(navigator.userAgent)?'win':'mac');
+  // コピーボタン
+  [].forEach.call(document.querySelectorAll('.code .copy'),function(b){
+    b.addEventListener('click',function(){
+      var txt=b.parentNode.querySelector('pre').textContent;
+      function done(){b.textContent='コピーしました！';b.className='copy ok';setTimeout(function(){b.textContent='この1行をコピー';b.className='copy';},1800);}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback);}else{fallback();}
+      function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}document.body.removeChild(ta);}
+    });
+  });
+})();
+</script>
+</body>
+</html>
