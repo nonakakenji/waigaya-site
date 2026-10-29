@@ -138,6 +138,11 @@ ul,ol{list-style:none}
 .tone-night .btn-main{background:var(--night-accent);color:#171411}
 .tone-night .btn-sub{border-color:rgba(236,185,118,.6);color:var(--night-ink)}
 .btn-note{display:block;font-size:11px;font-weight:500;opacity:.8;letter-spacing:.04em}
+.cta{margin-top:34px}
+.cta .btn{max-width:440px}
+.cta-note{font-size:13px;color:var(--sub);line-height:1.85;margin-top:11px;max-width:460px}
+.cta-note b{color:var(--accent);font-weight:700}
+.tone-night .cta-note b{color:var(--night-accent)}
 
 
 /* ---------- 1 ファーストビュー ---------- */
@@ -189,6 +194,9 @@ ul,ol{list-style:none}
 .weak .v{font-weight:700}
 
 .fv-text .btns{margin-top:32px}
+.fv-scroll{display:inline-flex;align-items:center;gap:5px;margin-top:16px;font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:.02em}
+.fv-scroll svg{width:14px;height:14px}
+.fv-scroll:hover{text-decoration:underline}
 .tone-night .jobs li{background:transparent}
 .space-nums{margin:8px 0 28px}
 .only-one{font-family:var(--serif);font-weight:700;font-size:23px;line-height:1.75;letter-spacing:.04em;text-align:center;padding:26px 8px;border-top:2px solid var(--accent);border-bottom:2px solid var(--accent);color:var(--ink)}
@@ -532,7 +540,7 @@ ul,ol{list-style:none}
 
 <header class="hd" id="hd">
   <a class="hd-logo" href="#top" aria-label="シェアハウス わいが舎"><svg class="logo-mark" aria-hidden="true"><use href="#i-logo"/></svg></a>
-  <a class="hd-line" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで聞く</a>
+  <a class="hd-line" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>友だち追加</a>
 </header>
 
 <main id="top">
@@ -549,9 +557,9 @@ ul,ol{list-style:none}
     <script>document.getElementById('manga-entry').addEventListener('click',function(){if(window.gtag)gtag('event','manga_entry_click',{place:'fv',transport_type:'beacon'});});</script>
     <p class="fv-gift"><span class="ib">LINEの友だち追加ですぐ届く：</span><span class="ib"><b>暮らし方タイプ診断</b>と<b>小さな整理帳</b>（無料）</span></p>
     <div class="btns row">
-      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
-      <a class="btn btn-sub" href="#dinner"><svg><use href="#i-bowl"/></svg>晩ごはんの日を見る</a>
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
     </div>
+    <a class="fv-scroll" href="#dinner">晩ごはんの日までスクロール<svg aria-hidden="true"><use href="#i-down"/></svg></a>
     <!-- 次の集まり（イベントページへの入口）。会の日が過ぎたら data-until で自動で消える。全部消えたら見出しごと消える -->
     <div class="fv-next" data-next>
       <p class="fv-next-h">次の集まり</p>
@@ -601,6 +609,10 @@ ul,ol{list-style:none}
       <li>話したい日は、リビングへ。</li>
     </ul>
     <blockquote class="voice mt-l"><span class="vq">「みんな忙しくて、逆に“誰もいない時間”もある。でも、その距離感がちょうどいい。」</span><cite>高山泰樹さん（たいじゅさん）</cite><a class="note-link" href="https://note.com/wake_wake/n/n1f64b8f5b834" target="_blank" rel="noopener">インタビュー全文を読む<svg aria-hidden="true"><use href="#i-ext"/></svg><span class="vh">（noteの記事が別のタブで開きます）</span></a></blockquote>
+    <div class="cta">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
+      <p class="cta-note">ちょうどいい距離感の暮らし、気になったらまず友だち追加から。<b>暮らし方タイプ診断</b>もすぐ届きます（無料）。</p>
+    </div>
   </div>
 </section>
 
@@ -737,6 +749,10 @@ ul,ol{list-style:none}
       <p>島根から、忘年会に帰ってきた人がいます。</p>
       <p>毎年秋に、1〜2週間帰ってくる人がいます。</p>
     </div>
+    <div class="cta">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
+      <p class="cta-note">こんなふうに、ゆるくつながれる家です。気になったらまず友だち追加で、暮らしの話を聞いてみてください。</p>
+    </div>
   </div>
 </section>
 
@@ -756,6 +772,10 @@ ul,ol{list-style:none}
       <p>毎月、第1月曜の19時から、みんなで晩ごはんを食べています。</p>
       <p>参加費はかかりません。一品だけ持ってきてください！</p>
       <p>住人だけの月もあります。よかったらどうぞ。</p>
+      <div class="cta">
+        <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
+        <p class="cta-note">晩ごはんの日（毎月第1月曜19時）は予約制です。<b>友だち追加のあと、トーク画面のメニュー「晩ごはんに参加」</b>から申し込めます。</p>
+      </div>
     </div>
     <div class="events mt-m">
       <p class="events-lead">晩ごはんのほかにも、リビングで集まりをひらいています。</p>
@@ -812,6 +832,10 @@ ul,ol{list-style:none}
     </div>
     <div class="weak mt-m">
       <span class="v">香里園駅・光善寺駅から、歩いて13分。駅近ではありません。</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
+      <p class="cta-note">安さで選ぶ家ではありません。この暮らしに価値を感じたら、まず友だち追加で。内覧や体験入居の相談も、LINEから。</p>
     </div>
   </div>
   <div class="inner">
@@ -942,10 +966,9 @@ ul,ol{list-style:none}
 
     <div class="mt-m">{{ph slot="08-01" r="3/2" pos="50% 60%"}}</div>
 
-    <div class="btns">
-      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
-      <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-bowl"/></svg>晩ごはんの日に行く（第1月曜19時）</a>
-      <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで聞いてみる</a>
+    <div class="cta">
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
+      <p class="cta-note">内覧（30分）・体験入居（1週間）のお申し込みや、気になることの相談は、<b>友だち追加のあと、トーク画面のメニュー「内覧申し込み」</b>から。晩ごはんの日の予約も、同じメニューでできます。</p>
     </div>
   </div>
 </section>
@@ -961,12 +984,8 @@ ul,ol{list-style:none}
     <p class="switch-after">まずは、内覧にどうぞ。</p>
     <p class="switch-note">体験入居（1週間）もできます。住むと決めたら、その月の家賃はいただきません。</p>
     <div class="switch-act" id="contact">
-      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む（30分）</a>
-      <a class="btn btn-sub btn-second" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-bowl"/></svg>晩ごはんの日に行く（第1月曜19時）</a>
+      <a class="btn btn-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
       <p class="an-line">LINEに答えているのは、あんちゃんです。<br>わからないことは、気軽に聞いてください。<br><span class="ib">内覧と晩ごはんは、</span><span class="ib">友だち追加のあと、</span><span class="ib">トーク画面の下のメニューの</span><span class="ib">「内覧申し込み」</span><span class="ib">「晩ごはんに参加」から</span><span class="ib">申し込めます！</span></p>
-      <div class="small-btns one">
-        <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで聞いてみる</a>
-      </div>
     </div>
   </div>
 </section>
@@ -982,8 +1001,7 @@ ul,ol{list-style:none}
 </footer>
 
 <nav class="dock" id="dock" aria-label="問い合わせ">
-  <a class="d-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-door"/></svg>内覧を申し込む</a>
-  <a class="d-sub" href="#dinner"><svg><use href="#i-bowl"/></svg>晩ごはんの日</a>
+  <a class="d-main" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener"><svg><use href="#i-line"/></svg>LINEで友だち追加</a>
 </nav>
 
 <script>
