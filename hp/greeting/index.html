@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>オーナーからのごあいさつ｜シェアハウス わいが舎</title>
+<meta name="description" content="シェアハウス わいが舎（大阪府枚方市）に一緒に住んでいるオーナーの2人、健ちゃんとあんちゃんからのごあいさつです。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* オーナーからのごあいさつ（/greeting/）。漫画ページと同じ型：白×黒・ゴシック・差し色1色（HPの #7A6450） */
+:root{--bg:#FFFFFF;--ink:#2F2F2F;--sub:#6B655D;--accent:#7A6450;--line:#E4DDD2;--pale:#F5F5F5;
+  --sans:"Zen Kaku Gothic New","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.9;letter-spacing:.02em}
+a{color:var(--accent)}
+img{display:block;max-width:100%;height:auto}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px}
+.hd{border-bottom:1px solid var(--line)}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
+.hd-home{color:var(--ink);text-decoration:none;font-weight:700;letter-spacing:.12em;font-size:15px}
+.hd-back{font-size:13px;text-decoration:none}
+.intro{padding:28px 0 16px}
+h1{font-size:22px;line-height:1.5;font-weight:700;letter-spacing:.04em;margin:0 0 6px}
+.note{color:var(--sub);font-size:13px;margin:0}
+.sec{padding:36px 0 8px;border-top:1px solid var(--line);margin-top:28px}
+.en{font-size:11px;letter-spacing:.24em;color:var(--accent);font-weight:700;margin:0 0 4px}
+h2{font-size:19px;line-height:1.6;margin:0 0 14px;letter-spacing:.04em}
+h3{font-size:16px;line-height:1.6;margin:24px 0 8px}
+p{margin:0 0 14px}
+.toc{margin:4px 0 0;padding:14px 16px;background:var(--pale);font-size:14px;line-height:2}
+.toc a{text-decoration:none}
+/* 動画（自動再生しない・字幕は焼き込み・ポスター画像あり） */
+.movie{margin:0}
+.movie video{width:100%;height:auto;aspect-ratio:16/9;background:#1E1C1A;display:block}
+.movie figcaption{font-size:12px;color:var(--sub);margin-top:4px}
+/* 健ちゃんの確認がいるところ（公開前に必ず消す） */
+.ask{background:#FFF4D6;border:1px dashed #C9A23B;padding:2px 6px;font-size:13px;color:#6B5310}
+.draft{border-left:3px solid #C9A23B;padding-left:12px}
+.draft-tag{display:inline-block;font-size:11px;font-weight:700;color:#6B5310;background:#FFF4D6;padding:0 6px;margin-bottom:6px}
+.person{margin:20px 0 8px}
+.person img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%}
+.person .name{margin:10px 0 2px;font-size:18px;font-weight:700}
+.person .name small{font-size:13px;font-weight:400;color:var(--sub);margin-left:8px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pair img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%}
+.quote{margin:16px 0;padding:14px 16px;background:var(--pale);font-size:15px}
+.quote cite{display:block;font-style:normal;font-size:12px;color:var(--sub);margin-top:6px}
+.role{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0 16px}
+.role th,.role td{border-top:1px solid var(--line);padding:10px 6px;text-align:left;vertical-align:top}
+.role th{width:6.5em;white-space:nowrap;color:var(--accent)}
+.photo{margin:16px 0}
+.photo img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.photo figcaption{font-size:12px;color:var(--sub);text-align:right;margin-top:2px}
+.day{margin:0;padding:0;list-style:none}
+.day li{display:grid;grid-template-columns:5em 1fr;gap:8px;border-top:1px solid var(--line);padding:10px 0;font-size:14px}
+.day b{color:var(--accent)}
+.ev{margin:0;padding:0;list-style:none}
+.ev li{border-top:1px solid var(--line);padding:10px 0;font-size:14px}
+.ev .when{display:block;font-size:12px;color:var(--sub)}
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:12px 0 12px 44px;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s);position:absolute;left:0;top:12px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:14px}
+.steps b{display:block}
+.faq dt{font-weight:700;margin-top:16px}
+.faq dt::before{content:"Q. ";color:var(--accent)}
+.faq dd{margin:4px 0 0;font-size:14px}
+.cta{margin:32px 0;padding:24px 18px;border:1px solid var(--line);border-top:3px solid var(--accent);text-align:center}
+.cta h2{font-size:18px;margin:0 0 6px}
+.cta p{margin:0 0 14px;font-size:14px}
+.ib{display:inline-block}
+.gift{font-size:14px;font-weight:700;line-height:1.7;margin:0 0 10px !important}
+.gift b{color:var(--accent)}
+.btn{display:flex;align-items:center;justify-content:center;min-height:54px;padding:14px 20px;border-radius:6px;
+  background:var(--accent);color:#FFFFFF;font-weight:700;font-size:16px;text-decoration:none;letter-spacing:.04em}
+.btn-sub{background:#fff;color:var(--accent);border:1px solid var(--accent);margin-top:10px}
+.how{font-size:13px;color:var(--sub);margin:10px 0 0 !important}
+.more{text-align:center;font-size:14px;margin:0 0 40px}
+.ft{border-top:1px solid var(--line);padding:24px 0 40px;font-size:12px;color:var(--sub);text-align:center}
+.ft a{color:var(--sub)}
+</style>
+</head>
+<body>
+<header class="hd">
+  <div class="wrap">
+    <a class="hd-home" href="/">シェアハウス わいが舎</a>
+    <a class="hd-back" href="/">ホームページへ</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="intro">
+      <h1>オーナーからのごあいさつ</h1>
+      <p class="note">わいが舎には、オーナーの家族が一緒に住んでいます。住人と同じ家で暮らしながら、この家を運営している2人からのごあいさつです。</p>
+    </div>
+
+    <figure class="movie" id="movie">
+      <!-- 動画：LINEの最初の動画（10/22）の軽い版（720p・約19MB）。字幕は映像に焼き込み済みなので track は付けない。自動再生しない -->
+      <video controls playsinline preload="none" poster="movie-poster.jpg" width="1280" height="720">
+        <source src="movie.mp4" type="video/mp4">
+      </video>
+      <figcaption>健ちゃんとあんちゃんが、わいが舎のことを話しています（2分55秒）。音が出せないところでも、字幕で読めます。</figcaption>
+    </figure>
+
+    <nav class="toc" aria-label="このページの中身">
+      <a href="#hello">ごあいさつ</a> ／ <a href="#two">2人の紹介</a> ／ <a href="#roles">2人の役割</a> ／ <a href="#story">この家の成り立ち</a> ／ <a href="#life">いまの暮らし</a> ／ <a href="#flow">入居までの流れ</a> ／ <a href="#faq">よくある質問</a> ／ <a href="#access">アクセス</a>
+    </nav>
+
+    <section class="sec" id="hello">
+      <p class="en">GREETING</p>
+      <h2>ごあいさつ</h2>
+      <div class="draft">
+        <span class="draft-tag">下書き（健ちゃんの確認がいる）</span>
+        <p>はじめまして。わいが舎のオーナーの、野中健次（健ちゃん）と野中あずみ（あんちゃん）です。</p>
+        <p>わいが舎は、2021年から、わたしたち家族も一緒に住んでいるシェアハウスです。40畳のリビングと庭のある家で、仕事も年代もちがう人たちと暮らしています。</p>
+        <p>ひとりの時間も、誰かといる時間も、どちらも大事にできる家にしたいと思っています。話したい日はリビングへ。誰にも会いたくない日は、自分の部屋へ。</p>
+        <p>一歩踏み出すのは勇気がいるけど、でも何かやってみたい。そんな人に来てほしいなって思ってます。何か一緒に始めたいなって思うような人と、一緒に住みたいなって。</p>
+        <p>まずは一度、見に来てください。</p>
+      </div>
+    </section>
+
+    <section class="sec" id="two">
+      <p class="en">PROFILE</p>
+      <h2>この家にいる2人</h2>
+      <div class="pair">
+        <img src="/img/800/owner-kenzo.jpg" width="800" height="1000" alt="健ちゃん（野中健次）の写真" loading="lazy" decoding="async">
+        <img src="/img/800/owner-an.jpg" width="800" height="1000" alt="あんちゃん（野中あずみ）の写真" loading="lazy" decoding="async">
+      </div>
+
+      <div class="person">
+        <p class="name">健ちゃん<small>野中健次</small></p>
+        <p>1984年生まれ。大阪府枚方市で育ちました。</p>
+        <p>中学・高校の体育祭や文化祭を通して、先生たちが人と人をつないでくれていた。その感謝から先生を目指し、国語の教員になりました。高校では体育祭の応援団長をして、ブレイクダンスのチームも組んでいました。</p>
+        <p>先生を目指すと決めたのは、大学2年の終わり。文学部に編入して勉強を続け、教員採用試験に1回で合格しました。2009年から4年間、大阪府の公立中学校で国語を教えました。</p>
+        <p>2013年、「もっと広い世界で挑戦したい」と東京へ。2015年からは、学校の授業で使うアプリ「ロイロノート」の会社で、日本中の学校をまわって営業と研修をしました。全国の先生たちと出会い、「頑張ってる先生ほど浮いている」のを見ました。先生や学生、保護者が集まって教育を語り合う「edcamp」にも通い、川崎で主催もしました。</p>
+        <p>学校の枠組みから少し離れたところで先生を応援したくて、この家を始めました。2021年3月に会社を辞めて、独立しています。</p>
+        <p>やっていくうちに、先生だけが幸せになればいいわけではないと思うようになりました。いまは、オンラインのプログラミング塾で子どもたちが「好き」を「得意」に変えるのを支えています。地域の大人たちを集めて、<a href="https://kokorozashi-ouen.com/" target="_blank" rel="noopener">志プレゼンテーション大会</a>も主催しています。大人の挑戦者を増やすために。</p>
+        <div class="quote">「何事も挑戦する。やってみたいと思ったことは絶対にやる」<cite>健ちゃん</cite></div>
+      </div>
+
+      <div class="person">
+        <p class="name">あんちゃん<small>野中あずみ</small></p>
+        <p>1984年生まれ。3歳から大阪府枚方市で育ちました。</p>
+        <p>小さいころから、お菓子作りが上手なお父さんと一緒にお菓子を作る時間が好きでした。高校を出て製菓衛生師の資格を取り、お菓子屋さんで働きました。そのあと介護の仕事に移り、介護福祉士、ケアマネジャーになって、介護の仕事を10年ほど続けました。</p>
+        <p>健ちゃんとは、共通の友だちの結婚式で出会いました。</p>
+        <p>もともとは、シェアハウスが嫌でした。「人と一緒に暮らすなんて考えられへん」という人見知りだった、と健ちゃんは言います。</p>
+        <p>健ちゃんの仕事の都合で横浜へ移り、そこで子どもが生まれました。関東には身寄りがなく、健ちゃんは出張続きで、家にいるのは週末だけ。子育てはとても大変でした。</p>
+        <p>そこで、家族で住めるシェアハウスに移りました。リビングでの交流と、人とのつながりがとてもよくて、シェアハウスへの見方が変わったそうです。</p>
+        <p>味噌や豆腐を作ったり、かぼちゃやスイカを育てたり。料理を作っては、みんなにおすそ分けしています。住人からは「シェアハウスのおかん」と呼ばれています。</p>
+        <div class="quote">「僕なんかよりも全然みんなからの信頼の厚い人ですね」<cite>健ちゃん</cite></div>
+      </div>
+
+      <p>オーナーの家族は、40代の夫婦と、小学生と幼児の子どもです。</p>
+    </section>
+
+    <section class="sec" id="roles">
+      <p class="en">ROLES</p>
+      <h2>2人の役割</h2>
+      <div class="quote">「僕たち夫婦はすごいいい感じの矛と盾になっていて、みんなが暮らしやすい環境を作りたいって思うのが妻で、僕はずっといろんなことを挑戦し続けてきました。」<cite>野中健次</cite></div>
+      <table class="role">
+        <tr><th>あんちゃん</th><td>LINEの問い合わせに答えています。味噌をつくる会など、季節の暮らしごとを開いています。</td></tr>
+        <tr><th>健ちゃん</th><td>バーベキューの日の案内や、AIエージェントに仕事を任せよう会の講師をしています。</td></tr>
+        <tr><th>2人で</th><td>内覧のあと、住みたい人と一緒にごはんを食べて、お話しします。掃除当番はなく、共用部の掃除はオーナーがやっています。</td></tr>
+      </table>
+    </section>
+
+    <section class="sec" id="story">
+      <p class="en">STORY</p>
+      <h2>この家の成り立ち</h2>
+      <h3>家族で住めるシェアハウスで、考えが変わった</h3>
+      <p>この家を開く前、オーナーの家族は関東で、家族で住めるシェアハウスに暮らしていました。大きなリビングと鍵つきの個室、広い庭のある家です。住人が子どもにごはんを食べさせてくれたり、小学生のお姉ちゃんが一緒に遊んでくれたりしました。</p>
+      <div class="quote">「シェアハウスに住むって生き方自体はとてもいい。誰と住むのかってのがとても大事」<cite>そのころ2人で話したこと</cite></div>
+      <p>そのシェアハウスは、真ん中にリビングがあって、話し声や子どもの夜泣きが部屋に響く間取りでした。わいが舎では、玄関をはさんでリビングと個室を分け、リビングの音が個室に聞こえにくいようにしています。</p>
+
+      <h3>先生シェアハウスとして、みんなで建てた</h3>
+      <p>2019年の終わりに、地元の枚方へ戻りました。土地を探しながら、何人もの先生に「シェアハウスを作りたい」と話し、2020年10月に「先生シェアハウスを作ろうプロジェクト」が始まりました。</p>
+      <p>土地は、もとは近所の人が畑として使っていた空き地です。残っていた農具などは、軽トラックを借りて、近くの先生たちと一緒に片づけました。</p>
+      <p>2021年3月ごろから工事が始まりました。間取りはプロジェクトの仲間と相談して決め、住人ごとに分けた大きな靴箱も、みんなで作りました。</p>
+      <figure class="photo">
+        <img src="/img/800/04-01.jpg" width="800" height="1067" alt="完成前のリビングで、子どもがローラーで壁を白く塗っている写真" loading="lazy" decoding="async" style="aspect-ratio:3/4">
+        <figcaption>2021年7月、完成前のリビング。壁はみんなで塗りました。</figcaption>
+      </figure>
+      <p>2021年8月6日、家が完成。着替えも何も持ってきていなかったけれど、その日のうちに家族で泊まりました。ソファーや乾燥機、お箸やコップは、ほしい物リストを見た多くの人が贈ってくれたものです。</p>
+      <figure class="photo">
+        <img src="/img/800/01-01.jpg" width="800" height="600" alt="建てたばかりの、誰もいない広いリビングの写真" loading="lazy" decoding="async">
+        <figcaption>2021年9月、リビング。</figcaption>
+      </figure>
+      <p>はじめのテーマは「主体性の爆発 〜でも、ゆるさを忘れない〜」。わいが舎は、教育に関わる人たちが住むシェアハウスとして始まりました。</p>
+      <figure class="photo">
+        <img src="/img/800/05-07.jpg" width="800" height="600" alt="庭のテントの下で、大人たちがバーベキューの準備をしている写真" loading="lazy" decoding="async">
+        <figcaption>2021年9月、庭。</figcaption>
+      </figure>
+
+      <h3>いろんな仕事の人が住む家へ</h3>
+      <p>住む人がこの家の良さを感じて、そこから少しずつ、いろんな仕事の人が住むようになりました。</p>
+      <p>これまでに住んだ人の仕事は、ITのスタートアップ・福祉・学校の先生・会社員・起業家と、ばらばらです。この家を出たあと、フィンランドへ、島根で地域づくりの仕事へ、徳島へ、アルゼンチンへ。島根から忘年会に帰ってきた人も、毎年秋に1〜2週間帰ってくる人もいます。</p>
+      <p>先生という枠組みを取り払って、いまは、みんなが集まってワイワイガヤガヤできる場所。だから「わいが舎」です。</p>
+
+      <h3>どんな人と暮らしたいか</h3>
+      <p>同じ年代の人と暮らすのも、すごく楽しいものです。でも、年代がちがえば、育ってきた背景もちがう。もらえる刺激も変わってきます。</p>
+      <p>支え合ったり、それぞれの挑戦を応援し合ったり。若者からご年配の方まで、いろんな年代の人が一緒に暮らす家にしたいと思っています。</p>
+    </section>
+
+    <section class="sec" id="life">
+      <p class="en">DAILY</p>
+      <h2>いまの暮らし</h2>
+      <p>ごはんは、それぞれ好きな時間に食べます。個室と浴室には鍵がかかります。話したいときだけ、リビングへ行けばいい家です。</p>
+      <ul class="day">
+        <li><b>朝</b><span>それぞれの時間に起きて、出かけていきます。洗面台もキッチンもいくつかあるので、順番を待つことはあまりありません。</span></li>
+        <li><b>昼</b><span>家で過ごす日は、自分の部屋でも、リビングでも。</span></li>
+        <li><b>夜</b><span>まっすぐ自分の部屋へ戻る日も、リビングで誰かと話しこむ日も。</span></li>
+        <li><b>月に1回</b><span>第1月曜の19時は、みんなで晩ごはん。参加費はかかりません。一品だけ持ってきてください。</span></li>
+      </ul>
+      <figure class="photo">
+        <img src="/img/800/05-06.jpg" width="800" height="600" alt="昼のリビングで、大人たちが大きな食卓を囲んで食べている写真" loading="lazy" decoding="async">
+        <figcaption>2026年1月、リビング。</figcaption>
+      </figure>
+
+      <h3>季節の行事と、リビングの集まり</h3>
+      <ul class="ev">
+        <li><a href="/event/bbq-2026-10/">わいが舎のバーベキュー</a><span class="when">10月25日（日）・庭で</span></li>
+        <li><a href="/event/ai-shigoto-2026-11/">AIエージェントに仕事を任せよう会</a><span class="when">11月21日（土）</span></li>
+        <li><a href="/event/miso-2026-11/">季節の暮らしごと（味噌をつくる会）</a><span class="when">11月29日（日）</span></li>
+        <li>晩ごはんの日<span class="when">毎月第1月曜 19時</span></li>
+        <li>哲学カフェ<span class="when">2か月に1回ほど</span></li>
+        <li>志プレゼンのミニプレゼンと食事会<span class="when">毎月第3土曜</span></li>
+      </ul>
+      <figure class="photo">
+        <img src="/img/800/05-23.jpg" width="800" height="600" alt="畑で女性と子どもがさつまいもを掘っている写真" loading="lazy" decoding="async">
+        <figcaption>2024年6月、畑。</figcaption>
+      </figure>
+      <p>庭には焚き火台とバーベキューの道具があります。畑では、さつまいもやえんどう豆を育てています。あんちゃんは、味噌や豆腐を作ったり、かぼちゃやスイカを育てたりしています。</p>
+    </section>
+
+    <section class="sec" id="flow">
+      <p class="en">FLOW</p>
+      <h2>入居までの流れ</h2>
+      <ol class="steps">
+        <li><b>一度、見に来てください</b>内覧は30分ほど。土日も、遠方ならオンラインでも案内します。</li>
+        <li><b>健ちゃん・あんちゃんと、ごはん</b>一緒にごはんを食べながら、お互いのことを話します（面談）。</li>
+        <li><b>体験入居（1週間）</b>実際に暮らしてから決められます。住むと決めたら、その月の家賃はいただきません。</li>
+        <li><b>2人がよければ、決まり</b>入居日などは、そのあと一緒に決めます。</li>
+      </ol>
+      <p class="how">家賃・共益費などは、<a href="/#guide">ホームページのご案内</a>にまとめています。</p>
+    </section>
+
+    <section class="sec" id="faq">
+      <p class="en">Q&amp;A</p>
+      <h2>よくある質問</h2>
+      <dl class="faq">
+        <dt>一人の時間はありますか？</dt>
+        <dd>あります。個室は鍵つきで、共用部でも会話は強制ではありません。</dd>
+        <dt>どんな人が住んでいますか？</dt>
+        <dd>仕事も年齢もばらばらです。これまでに、20代から50代までの人が住んできました。男女もおよそ半々です。</dd>
+        <dt>子どもと一緒に入居できますか？</dt>
+        <dd>できます。0歳のお子さんから一緒に入居していただけます。オーナーの家族も小さな子どもと一緒に住んでいます。</dd>
+        <dt>家族に心配されています。</dt>
+        <dd>個室と浴室には鍵がかかります。オーナーの家族も同じ家に住んでいて、住人は男女およそ半々です。</dd>
+        <dt>掃除当番はありますか？</dt>
+        <dd>当番はありません。自分が使ったところは自分できれいに、が基本です。その他の掃除はオーナーがやっています。</dd>
+        <dt>住人が体調をくずしたときは、どうしていますか？</dt>
+        <dd>熱のあいだはなるべく自室で過ごし、キッチンなどで出るときはマスクをつけます。買い物などは、できる範囲でお手伝いします。</dd>
+        <dt>在宅勤務はできますか？</dt>
+        <dd>できます。ほかの住人さんへの配慮だけお願いします。</dd>
+      </dl>
+      <p class="how">ほかの質問は、<a href="/#guide">ホームページのよくある質問</a>にもあります。</p>
+    </section>
+
+    <section class="sec" id="access">
+      <p class="en">ACCESS</p>
+      <h2>アクセス</h2>
+      <p>大阪府枚方市。京阪電車 香里園駅・光善寺駅から、歩いて13分です。駅近ではありません。駐車場はありません。</p>
+      <figure class="photo">
+        <img src="/img/800/08-01.jpg" width="800" height="600" alt="外観の写真" loading="lazy" decoding="async">
+        <figcaption>2021年9月、外観。</figcaption>
+      </figure>
+    </section>
+
+    <section class="cta" id="end">
+      <h2>まずは、LINEで気軽に。</h2>
+      <p class="gift"><span class="ib">友だち追加ですぐ届く：</span><span class="ib"><b>暮らし方タイプ診断</b>と</span><span class="ib"><b>小さな整理帳</b>（無料）</span></p>
+      <a class="btn" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">LINEで受け取る（無料）</a>
+      <a class="btn btn-sub" href="https://lin.ee/wCG7OfR" target="_blank" rel="noopener">内覧を申し込む（30分）</a>
+      <p class="how">LINEに答えているのは、あんちゃんです。内覧と晩ごはんは、友だち追加のあと、トーク画面の下のメニューから申し込めます。</p>
+    </section>
+
+    <p class="more"><a href="/manga/">漫画で読む、わいが舎の暮らし（3分）</a><br><a href="/">わいが舎のホームページを見る</a></p>
+  </div>
+</main>
+
+<footer class="ft">
+  <div class="wrap">シェアハウス わいが舎（大阪府枚方市）<br><a href="/privacy/">プライバシーポリシー</a></div>
+</footer>
+</body>
+</html>
