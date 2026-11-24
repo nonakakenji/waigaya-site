@@ -233,6 +233,11 @@ ul,ol{list-style:none}
 .fv-next-d small{font-size:11px;font-weight:500;margin-left:3px;color:var(--sub)}
 .fv-next-t{font-size:15px;font-weight:700;letter-spacing:.04em;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
 .fv-next-t .ib{text-decoration:inherit;text-decoration-color:inherit;text-underline-offset:inherit}
+.fv-next-h span{margin-left:10px;letter-spacing:.06em;font-size:11px}
+.fv-news{margin-top:22px;border-top:none;background:var(--dusk-bg);border-radius:12px;padding:2px 16px 4px}
+.fv-news a{border-bottom:none}
+.fv-news .fv-next-t{font-weight:500;font-size:14px;text-decoration:none}
+.fv-news-tag{flex:none;font-size:11px;font-weight:700;letter-spacing:.08em;border:1px solid var(--day-ink);border-radius:999px;padding:2px 10px;line-height:1.6}
 .full-tag{display:inline-block;flex:none;margin-left:8px;padding:0 7px;border:1px solid var(--ink);border-radius:3px;font-size:11px;font-weight:700;line-height:1.6;letter-spacing:.06em;color:var(--ink);white-space:nowrap}
 .space .h3{font-family:var(--serif);font-weight:600;font-size:19px}
 
@@ -562,16 +567,17 @@ ul,ol{list-style:none}
     <a class="fv-scroll" href="#dinner">晩ごはんの日までスクロール<svg aria-hidden="true"><use href="#i-down"/></svg></a>
     <!-- 次の集まり（イベントページへの入口）。会の日が過ぎたら data-until で自動で消える。全部消えたら見出しごと消える -->
     <div class="fv-next" data-next>
-      <p class="fv-next-h">次の集まり</p>
+      <p class="fv-next-h">次の集まり<span>申し込み受付中</span></p>
       <a href="/event/bbq-2026-10/" data-until="2026-10-25"><span class="fv-next-d">10/25<small>日</small></span><span class="fv-next-t"><span class="ib">わいが舎の</span><span class="ib">バーベキュー</span></span></a>
       <a href="/event/ai-shigoto-2026-11/" data-until="2026-11-21"><span class="fv-next-d">11/21<small>土</small></span><span class="fv-next-t"><span class="ib">AIエージェントに</span><span class="ib">仕事を任せよう会</span></span><span class="full-tag">満員御礼</span></a>
       <a href="/event/miso-2026-11/" data-until="2026-11-29"><span class="fv-next-d">11/29<small>日</small></span><span class="fv-next-t">味噌をつくる会</span></a>
       <a href="/event/ai-shigoto-2026-12/" data-until="2026-12-19"><span class="fv-next-d">12/19<small>土</small></span><span class="fv-next-t"><span class="ib">AIエージェントに</span><span class="ib">仕事を任せよう会</span></span></a>
     </div>
     <!-- NEWS（開催レポートなどのお知らせ）。data-until の日を過ぎたら自動で消える。全部消えたら見出しごと消える（2026-11-24 健ちゃん「NEWSみたいな感じに」） -->
-    <div class="fv-next" data-next>
-      <p class="fv-next-h">NEWS</p>
-      <a href="/event/ai-shigoto-2026-11-report/" data-until="2026-12-31"><span class="fv-next-d">11/24</span><span class="fv-next-t"><span class="ib">任せよう会（11/21）の</span><span class="ib">開催レポート</span></span></a>
+    <!-- 2026-11-24 健ちゃん「次の集まりとNEWSの区別がわかりにくい」→ NEWSは色のついた箱に入れ、日付のかわりに「レポート」の札をつけた -->
+    <div class="fv-next fv-news" data-next>
+      <p class="fv-next-h">NEWS<span>お知らせ</span></p>
+      <a href="/event/ai-shigoto-2026-11-report/" data-until="2026-12-31"><span class="fv-news-tag">レポート</span><span class="fv-next-t"><span class="ib">任せよう会（11/21）の</span><span class="ib">ようすをまとめました</span></span></a>
     </div>
   </div>
 </section>
