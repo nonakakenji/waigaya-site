@@ -74,7 +74,11 @@ def event_content_check(slug, out, files):
             continue
         txt = open(os.path.join(out, rel), encoding="utf-8").read()
         bad = []
-        others = sorted({m for m in re.findall(r"/event/([^/\"'?#)\s]+)/", txt) if m != slug})
+        # ほかのイベントページへの「ページのリンク」（<a href="/event/<あるスラッグ>/">）だけは通す（レポート→次回の申込 など。2026-11-24）。
+        # 写真・CSS など中身を指しているもの（/event/<別>/img/… など）は今までどおり止める
+        known = event_slugs()
+        txt_links = re.sub(r'href="/event/([a-z0-9-]+)/(#[^"]*)?"', lambda m: 'href=""' if m.group(1) in known else m.group(0), txt)
+        others = sorted({m for m in re.findall(r"/event/([^/\"'?#)\s]+)/", txt_links) if m != slug})
         if others: bad.append("他のイベントの場所を指している: " + ", ".join(others))
         if "{{" in txt: bad.append("{{")
         if re.search(r"waigaya-site-preview|workers\.dev|localhost", txt): bad.append("プレビュー/手元のURL")
